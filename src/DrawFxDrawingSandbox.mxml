@@ -105,7 +105,7 @@
             
             private function onCreationComplete():void
             {
-                canvas.addElement(_view);
+                _canvas.viewport = _view;
                 _stencilMouseController.addEventListeners(_basicStencil as IView);
                 _stencilMouseController.addEventListeners(_customStencil as IView);
                 _stencilDropController.addEventListeners(_customStencil as IView);
@@ -140,10 +140,10 @@
             {
                 if (_opening)
                 {
-                    canvas.removeElement(_view);
+                    _canvas.viewport = null;
                     _model.fromJSON(new String(event.target.data));
                     _view = _document.openView("XDrawing") as XDrawing;
-                    canvas.addElement(_view);
+                    _canvas.viewport = _view;
                     _opening = false;
                 }
             }
@@ -158,7 +158,7 @@
             private function initPerspective():void
             {
                 transform.perspectiveProjection = new PerspectiveProjection();
-                transform.perspectiveProjection.projectionCenter = new Point(canvas.width / 2, canvas.height / 2);
+                transform.perspectiveProjection.projectionCenter = new Point(_canvas.width / 2, _canvas.height / 2);
                 transform.perspectiveProjection.fieldOfView = 1;
             }
             
@@ -312,20 +312,25 @@
             <s:Panel id="stencil" width="225" height="100%" title="Stencils">
                 <mx:Accordion top="5" left="5" bottom="5" right="5" backgroundColor="0xDEDEDE">
                     <s:NavigatorContent width="100%" height="100%" label="Basic">
-                        <view:XStencil 
-                            id="_basicStencil" 
-                            model="{_basicStencilModel}" 
-                            top="5" 
-                            bottom="5" 
-                            scaleX="0.50" 
-                            scaleY="0.50" 
-                            left="5" 
-                            right="5"/>
+                        <s:Scroller top="1" left="1" bottom="1" right="1">
+                            <view:XStencil 
+                                id="_basicStencil" 
+                                clipAndEnableScrolling="true"
+                                model="{_basicStencilModel}" 
+                                top="5" 
+                                bottom="5" 
+                                scaleX="0.50" 
+                                scaleY="0.50" 
+                                left="5" 
+                                right="5"/>
+                        </s:Scroller>
                     </s:NavigatorContent>
                     <s:NavigatorContent id="_customStencilContainer" width="100%" height="100%" label="Custom"/>
                 </mx:Accordion>
             </s:Panel>
-            <s:Panel id="canvas" width="100%" height="100%" title="{_model.name}"/>
+            <s:Panel width="100%" height="100%" title="{_model.name}">
+                <s:Scroller id="_canvas" top="1" left="1" bottom="1" right="1"/>
+            </s:Panel>
         </mx:HDividedBox>
         <s:Panel id="editors" title="Properties" width="275" height="100%">
             <mx:Accordion top="5" left="5" bottom="5" right="5" backgroundColor="0xDEDEDE">
