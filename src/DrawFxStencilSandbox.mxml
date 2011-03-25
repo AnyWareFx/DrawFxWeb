@@ -130,24 +130,7 @@
                 _model.fromJSON(json);
                 _view = _document.openView("XStencilDesigner") as XStencilDesigner;
                 _canvas.viewport = _view;
-                _stencil = _document.openView("XStencil") as XStencil;
-                
-                // FIXME Move to DrawFxFactoryInitializer
-                var layout:TileLayout = new TileLayout();
-                layout.horizontalAlign = "center";
-                layout.verticalAlign = "middle";
-                layout.columnAlign = "justifyUsingWidth";
-                layout.verticalGap = 30;
-                layout.requestedColumnCount = 1;
-                layout.clipAndEnableScrolling = true;
-                _stencil.layout = layout;
-                
-                _stencil.top = 5;
-                _stencil.bottom = 5;
-                _stencil.left = 5;
-                _stencil.right = 5;
-                _stencil.scaleX = 0.50; 
-                _stencil.scaleY = 0.50;
+                _stencil = _document.openView("XCustomStencil") as XStencil;
                 
                 _stencilContainer.viewport = _stencil;
                 cursorManager.removeBusyCursor();
