@@ -14,28 +14,20 @@
     <fx:Script>
         <![CDATA[
             import com.anywarefx.XFactory;
-            import com.anywarefx.XLogger;
             import com.anywarefx.command.XCommand;
             import com.anywarefx.command.XCommandContext;
-            import com.anywarefx.event.XViewUpdateEvent;
             import com.anywarefx.manager.XSelectionManager;
-            import com.anywarefx.view.IView;
             import com.drawfx.DrawFxFactoryInitializer;
             import com.drawfx.DrawFxStencilInitializer;
             import com.drawfx.XStencilDocument;
             import com.drawfx.command.XRemoveSelectionsCommand;
-            import com.drawfx.controller.XStencilDropController;
-            import com.drawfx.controller.XStencilMouseController;
             import com.drawfx.model.XStencilModel;
             import com.drawfx.view.XStencil;
             import com.drawfx.view.XStencilDesigner;
             
-            import mx.controls.Alert;
             import mx.events.MenuEvent;
             import mx.logging.Log;
             import mx.logging.targets.TraceTarget;
-            
-            import spark.layouts.TileLayout;
             
             
             private var _document:XStencilDocument;
@@ -48,7 +40,6 @@
             [Bindable] private var _storage:SharedObject;
             
             [Bindable] private var _basicStencilModel:XStencilModel;
-            private var _stencilMouseController:XStencilMouseController;
             
             private var _opening:Boolean;
             private var _fileFilter:FileFilter;
@@ -73,14 +64,12 @@
                 _selectionManager = _document.selectionManager;
                 
                 _basicStencilModel = DrawFxStencilInitializer.initialize("Basic");
-                _stencilMouseController = XFactory.instance.getComponent("XStencilMouseController");
             }
             
             
             private function onCreationComplete():void
             {
                 _canvas.viewport = _view;
-                _stencilMouseController.addEventListeners(_basicStencil as IView);
             }
             
             
@@ -130,7 +119,7 @@
                 _model.fromJSON(json);
                 _view = _document.openView("XStencilDesigner") as XStencilDesigner;
                 _canvas.viewport = _view;
-                _stencil = _document.openView("XCustomStencil") as XStencil;
+                _stencil = _document.openStencil("XCustomStencil") as XStencil;
                 
                 _stencilContainer.viewport = _stencil;
                 cursorManager.removeBusyCursor();
