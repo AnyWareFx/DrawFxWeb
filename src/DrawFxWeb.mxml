@@ -3,8 +3,21 @@
                xmlns:s="library://ns.adobe.com/flex/spark" 
                xmlns:mx="library://ns.adobe.com/flex/mx"
                xmlns:drawfx="com.drawfx.*"
+               preinitialize="onPreinitialize();"
                minWidth="955" minHeight="600">
 
+    <fx:Script>
+        <![CDATA[
+            import com.drawfx.DrawFxFactoryInitializer;
+
+
+            private function onPreinitialize():void
+            {
+                DrawFxFactoryInitializer.initialize();
+            }
+        ]]>
+    </fx:Script>
+    
     <fx:Declarations>
         <!-- Place non-visual elements (e.g., services, value objects) here -->
     </fx:Declarations>
