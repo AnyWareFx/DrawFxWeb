@@ -16,8 +16,6 @@
   </compiler>
   <applications>
     <application path="DrawFxWeb.mxml"/>
-    <application path="DrawFxDrawingSandbox.mxml"/>
-    <application path="DrawFxStencilSandbox.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
