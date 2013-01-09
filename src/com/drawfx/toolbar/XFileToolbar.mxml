@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  gap="3">
+	
+	<fx:Script>
+		<![CDATA[
+			/*
+			Copyright (c) 2013 Dave Jackson
+			
+			MIT License
+			
+			Permission is hereby granted, free of charge, to any person obtaining
+			a copy of this software and associated documentation files (the
+			"Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to
+			permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+			
+			The above copyright notice and this permission notice shall be
+			included in all copies or substantial portions of the Software.
+			
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			*/		
+			
+            import com.anywarefx.XFactory;
+            import com.anywarefx.command.XCommandContext;
+            import com.drawfx.XDrawingDocument;
+            import com.drawfx.model.XDrawingModel;
+            import com.drawfx.model.XStencilModel;
+            
+            import mx.managers.CursorManager;
+            
+            import assets.Icons;
+
+
+            [Bindable] private var _context:XCommandContext;
+			private var _storage:SharedObject;
+			private var _model:XDrawingModel;
+			private var _timer:Timer;
+			private var _autoSave:Boolean;
+            
+            
+            public function get context():XCommandContext
+            {
+                return _context;
+            }
+            
+            public function set context(value:XCommandContext):void
+            {
+                _context = value;
+            }
+
+
+			public function get autoSave():Boolean
+			{
+				return _autoSave;
+			}
+
+			public function set autoSave(value:Boolean):void
+			{
+				_autoSave = value;
+				if (_autoSave)
+				{
+					if (_timer == null)
+					{
+						_timer = new Timer(60000);
+						_timer.addEventListener(TimerEvent.TIMER, onAutoSave);
+						_timer.start();
+					}
+				}
+				else if (_timer != null)
+				{
+					_timer.stop();
+					_timer.removeEventListener(TimerEvent.TIMER, onAutoSave);
+					_timer = null;
+				}
+			}
+
+			private function onAutoSave(event:TimerEvent):void
+			{
+				onSaveDrawing();
+			}
+
+			
+			public function get storage():SharedObject
+			{
+				return _storage;
+			}
+			
+			public function set storage(value:SharedObject):void
+			{
+				_storage = value;
+			}
+			
+
+			public function get model():XDrawingModel
+			{
+				return _model;
+			}
+
+			public function set model(value:XDrawingModel):void
+			{
+				_model = value;
+			}
+
+
+			public function onNewDrawing():void
+			{
+				
+			}
+			
+			public function onOpenDrawing():void
+			{
+                openDrawing("current");
+			}
+			
+			public function onSaveDrawing():void
+			{
+				CursorManager.setBusyCursor();
+				_saveDrawing.enabled = false;
+				var json:String = _model.toJSON();
+                var kind:String = (_model is XStencilModel) ? "stencils" : "drawings";
+				_storage.data[kind] = _storage.data[kind] || {};
+				_storage.data[kind][_model.name] = json;
+				_storage.data[kind].current = json;
+				_storage.flush();
+				_saveDrawing.enabled = true;
+				CursorManager.removeBusyCursor();
+			}
+			
+			public function onPrintDrawing():void
+			{
+				
+			}
+
+
+            private function openDrawing(name:String):XDrawingDocument
+            {
+                var document:XDrawingDocument = XFactory.instance.getComponent("XDrawingDocument");
+                if (_storage.data.drawings != null && _storage.data.drawings[name] != null)
+                {
+                    var json:String = _storage.data.drawings[name];
+                    document.model.fromJSON(json);
+                }
+                return document;
+            }
+        ]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<mx:Button id="_newDrawing" width="30" click="onNewDrawing();" toolTip="New Drawing"
+			   icon="{Icons.DrawingAdd}" enabled="false"/>
+	<mx:Button id="_openDrawing" width="30" click="onOpenDrawing();" toolTip="Open Drawing"
+			   icon="{Icons.DrawingOpen}" enabled="false"/>
+	<mx:Button id="_saveDrawing" width="30" click="onSaveDrawing();" toolTip="Save"
+			   disabledIcon="{Icons.SaveDisabled}" enabled="{_context.canUndo}"
+			   icon="{Icons.Save}"/>
+	<mx:Button id="_printDrawing" width="30" click="onPrintDrawing();" toolTip="Print"
+			   disabledIcon="{Icons.PrintDisabled}"
+			   icon="{Icons.Print}" enabled="false"/>
+</s:HGroup>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  gap="3">
+
+	<fx:Script>
+		<![CDATA[
+			/*
+			Copyright (c) 2013 Dave Jackson
+			
+			MIT License
+			
+			Permission is hereby granted, free of charge, to any person obtaining
+			a copy of this software and associated documentation files (the
+			"Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to
+			permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+			
+			The above copyright notice and this permission notice shall be
+			included in all copies or substantial portions of the Software.
+			
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			*/		
+			
+			import com.anywarefx.command.XCommandContext;
+			import com.anywarefx.manager.XSelectionManager;
+			import com.anywarefx.model.IModel;
+			import com.drawfx.command.XCopySelectionsCommand;
+			import com.drawfx.command.XCutSelectionsCommand;
+			import com.drawfx.command.XPasteCommand;
+			import com.drawfx.manager.XClipboardManager;
+			import com.drawfx.model.XShapeModel;
+			
+			import assets.Icons;
+
+			
+			[Bindable] private var _clipboard:XClipboardManager = new XClipboardManager();
+			[Bindable] private var _selectionManager:XSelectionManager;
+			private var _context:XCommandContext;
+			private var _model:IModel;
+
+			
+			public function get selectionManager():XSelectionManager
+			{
+				return _selectionManager;
+			}
+			
+			public function set selectionManager(value:XSelectionManager):void
+			{
+				_selectionManager = value;
+			}
+			
+			
+			public function get context():XCommandContext
+			{
+				return _context;
+			}
+			
+			public function set context(value:XCommandContext):void
+			{
+				_context = value;
+			}
+			
+			
+			public function get model():IModel
+			{
+				return _model;
+			}
+			
+			public function set model(value:IModel):void
+			{
+				_model = value;
+			}
+			
+
+			public function onCut():void
+			{
+				var command:XCutSelectionsCommand = new XCutSelectionsCommand(model, _clipboard, selectionManager.selections);
+				_context.execute(command);
+			}
+			
+			
+			public function onCopy():void
+			{
+				var command:XCopySelectionsCommand = new XCopySelectionsCommand(model, _clipboard, selectionManager.selections);
+				_context.execute(command);
+			}
+			
+			
+			public function onPaste():void
+			{
+				var selection:IModel = (_selectionManager.lastSelection) ? _selectionManager.lastSelection.model : null;
+				var container:IModel = (selection is XShapeModel) ? selection : _model;
+				var command:XPasteCommand = new XPasteCommand(container, _clipboard);;
+				_context.execute(command);
+			}
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+
+	<mx:Button id="cutSelection" width="30" click="onCut();" toolTip="Cut"
+			   disabledIcon="{Icons.CutDisabled}"
+			   enabled="{_selectionManager.lastSelection != null}"
+			   icon="{Icons.Cut}"/>
+	<mx:Button id="copySelection" width="30" click="onCopy();" toolTip="Copy"
+			   disabledIcon="{Icons.CopyDisabled}"
+			   enabled="{_selectionManager.lastSelection != null}"
+			   icon="{Icons.Copy}"/>
+	<mx:Button id="paste" width="30" click="onPaste();" toolTip="Paste"
+			   disabledIcon="{Icons.PasteDisabled}"
+			   enabled="{_clipboard.hasContent}"
+			   icon="{Icons.Paste}"/>
+</s:HGroup>

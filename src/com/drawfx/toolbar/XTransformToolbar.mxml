@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+          enabled="{_selectionManager.lastSelection != null}">
+	
+	<fx:Script>
+		<![CDATA[
+			/*
+			Copyright (c) 2013 Dave Jackson
+			
+			MIT License
+			
+			Permission is hereby granted, free of charge, to any person obtaining
+			a copy of this software and associated documentation files (the
+			"Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to
+			permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+			
+			The above copyright notice and this permission notice shall be
+			included in all copies or substantial portions of the Software.
+			
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			*/		
+			
+			import com.anywarefx.command.XCommandContext;
+			import com.anywarefx.manager.XSelectionManager;
+			import com.drawfx.command.XRotateSelectionsCommand;
+			import com.drawfx.model.XDrawingModel;
+			
+			import assets.Icons;
+			
+			
+			[Bindable] private var _selectionManager:XSelectionManager;
+			private var _context:XCommandContext;
+			private var _model:XDrawingModel;
+			
+			
+			public function get selectionManager():XSelectionManager
+			{
+				return _selectionManager;
+			}
+			
+			public function set selectionManager(value:XSelectionManager):void
+			{
+				_selectionManager = value;
+			}
+			
+			
+			public function get context():XCommandContext
+			{
+				return _context;
+			}
+			
+			public function set context(value:XCommandContext):void
+			{
+				_context = value;
+			}
+			
+			
+			public function get model():XDrawingModel
+			{
+				return _model;
+			}
+			
+			public function set model(value:XDrawingModel):void
+			{
+				_model = value;
+			}
+			
+			
+			private function onRotateSelections(axis:String, angle:Number):void
+			{
+				var command:XRotateSelectionsCommand = new XRotateSelectionsCommand(
+					_model, 
+					_selectionManager.selections, 
+					axis,
+					angle
+				);
+				_context.execute(command);
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:HGroup gap="3">
+		<mx:Button id="rotateY" width="30" toolTip="Rotate Y Axis"
+				   click="onRotateSelections('rotationY', 45);" 
+				   disabledIcon="{Icons.RotateYDisabled}"
+				   icon="{Icons.RotateY}"/>
+		<mx:Button id="rotateZ" width="30" toolTip="Rotate Z Axis"
+				   click="onRotateSelections('rotationZ', 45);" 
+				   disabledIcon="{Icons.RotateZDisabled}"
+				   icon="{Icons.RotateZ}"/>
+	</s:HGroup>
+	<mx:Button id="rotateX" width="30" toolTip="Rotate X Axis"
+			   click="onRotateSelections('rotationX', 45);" 
+			   disabledIcon="{Icons.RotateXDisabled}"
+			   icon="{Icons.RotateX}"/>
+	
+</s:VGroup>

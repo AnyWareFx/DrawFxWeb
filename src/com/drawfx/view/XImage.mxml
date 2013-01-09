@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view:XComposite xmlns:fx="http://ns.adobe.com/mxml/2009" 
+            xmlns:s="library://ns.adobe.com/flex/spark" 
+            xmlns:mx="library://ns.adobe.com/flex/mx" 
+            xmlns:view="com.drawfx.view.*"
+            implements="com.drawfx.view.IBoundedView, com.drawfx.view.IConstrainedView"
+            top="{_constraints.top}"
+            left="{_constraints.left}"
+            bottom="{_constraints.bottom}"
+            right="{_constraints.right}"
+            horizontalCenter="{_constraints.horizontalCenter}"
+            verticalCenter="{_constraints.verticalCenter}"
+            x="{_bounds.x}"
+            y="{_bounds.y}"
+            z="{_bounds.z}"
+            depth="{_bounds.depth}"
+            width="{_bounds.width}" 
+            height="{_bounds.height}"
+            rotationX="{_bounds.rotationX}" 
+            rotationY="{_bounds.rotationY}" 
+            rotationZ="{_bounds.rotationZ}"
+            scaleX="{_bounds.scaleX}" 
+            scaleY="{_bounds.scaleY}" 
+            scaleZ="{_bounds.scaleZ}"
+            transformX="{_bounds.width / 2}"
+            transformY="{_bounds.height / 2}"
+            maintainProjectionCenter="true">
+
+    <fx:Script>
+        <![CDATA[
+			/*
+			Copyright (c) 2013 Dave Jackson
+			
+			MIT License
+			
+			Permission is hereby granted, free of charge, to any person obtaining
+			a copy of this software and associated documentation files (the
+			"Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to
+			permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+			
+			The above copyright notice and this permission notice shall be
+			included in all copies or substantial portions of the Software.
+			
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			*/		
+			
+            import com.anywarefx.model.IModel;
+            import com.drawfx.fx.model.XBevelModel;
+            import com.drawfx.fx.model.XBlurModel;
+            import com.drawfx.fx.model.XDropShadowModel;
+            import com.drawfx.fx.model.XGlowModel;
+            import com.drawfx.model.XBoundsModel;
+            import com.drawfx.model.XConstraintsModel;
+            import com.drawfx.model.XImageModel;
+            
+            import mx.collections.ArrayCollection;
+            import mx.core.UIComponent;
+            
+            import assets.Icons;
+            import assets.Images;
+
+
+            [Bindable] private var _isEmbedded:Boolean;
+            [Bindable] private var _imageModel:XImageModel;
+            [Bindable] private var _bounds:XBoundsModel;
+            [Bindable] private var _constraints:XConstraintsModel;
+            [Bindable] private var _bevel:XBevelModel;
+            [Bindable] private var _blur:XBlurModel;
+            [Bindable] private var _dropShadow:XDropShadowModel;
+            [Bindable] private var _glow:XGlowModel;
+            
+            
+            public static function getImage(target:UIComponent):XImage
+            {
+                while (!(target is XImage) && target != null && target.parent != null)
+                {
+                    target = target.parent as UIComponent;
+                }
+                return target as XImage;
+            }
+
+
+            override public function set model(value:IModel):void
+            {
+                super.model = value;
+                _imageModel = value as XImageModel;
+                _bounds = _imageModel.bounds;
+                _constraints = _imageModel.constraints;
+                _bevel = _imageModel.fx.bevel;
+                _blur = _imageModel.fx.blur;
+                _dropShadow = _imageModel.fx.dropShadow;
+                _glow = _imageModel.fx.glow;
+            }
+            
+            
+            public function get isEmbedded():Boolean
+            {
+                return _isEmbedded;
+            }
+            
+            public function set isEmbedded(value:Boolean):void
+            {
+                _isEmbedded = value;
+            }
+            
+            
+            public function get resizeHandle():UIComponent
+            {
+                return _resizeHandle;
+            }
+
+
+            public function get bounds():XBoundsModel
+            {
+                return _bounds;
+            }
+            
+            
+            public function get constraints():XConstraintsModel
+            {
+                return _constraints;
+            }
+            
+            
+            public function get locks():ArrayCollection
+            {
+                return new ArrayCollection([_top, _left, _bottom, _right]);
+            }
+        ]]>
+    </fx:Script>
+
+    <view:states>
+        <s:State name="selected"/>
+        <s:State name="unselected"/>
+    </view:states>
+    
+    <view:layout>
+        <s:BasicLayout/>
+    </view:layout>
+    
+    <fx:Declarations>
+        
+        <s:BevelFilter
+            id="_bevelFx"
+            angle="{_bevel.angle}"
+            blurX="{_bevel.blurX}"
+            blurY="{_bevel.blurY}"
+            distance="{_bevel.distance}"
+            highlightAlpha="{_bevel.highlightAlpha}"
+            highlightColor="{_bevel.highlightColor}"
+            quality="{_bevel.quality}"
+            shadowAlpha="{_bevel.shadowAlpha}"
+            shadowColor="{_bevel.shadowColor}"
+            strength="{_bevel.strength}"/>
+        
+        <s:BlurFilter
+            id="_blurFx"
+            blurX="{_blur.blurX}"
+            blurY="{_blur.blurY}"
+            quality="{_blur.quality}"/>
+        
+        <s:DropShadowFilter 
+            id="_dropShadowFx"
+            alpha="{_dropShadow.alpha}"
+            angle="{_dropShadow.angle}"
+            blurX="{_dropShadow.blurX}"
+            blurY="{_dropShadow.blurY}"
+            color="{_dropShadow.color}"
+            distance="{_dropShadow.distance}"
+            inner="{_dropShadow.inner}"
+            knockout="{_dropShadow.knockout}"
+            quality="{_dropShadow.quality}"
+            strength="{_dropShadow.strength}"/>
+        
+        <s:GlowFilter
+            id="_glowFx"
+            alpha="{_glow.alpha}"
+            blurX="{_glow.blurX}"
+            blurY="{_glow.blurY}"
+            color="{_glow.color}"
+            inner="{_glow.inner}"
+            knockout="{_glow.knockout}"
+            quality="{_glow.quality}"
+            strength="{_glow.strength}"/>
+        
+    </fx:Declarations>
+
+    <mx:Image
+        id="_image"
+        filters.selected="{[_bevelFx, _blurFx, _dropShadowFx, _glowFx]}"
+        filters.unselected="{[_bevelFx, _blurFx, _dropShadowFx, _glowFx]}"
+        width="{_bounds.width}" 
+        height="{_bounds.height}"
+        alpha="{_imageModel.alpha}"
+        scaleContent="{_imageModel.scaleContent}"
+        autoLoad="{_imageModel.autoLoad}"
+        maintainAspectRatio="{_imageModel.maintainAspectRatio}"
+        smoothBitmapContent="{_imageModel.smoothBitmapContent}"
+        source="{_imageModel.sourceClass || _imageModel.sourceData || _imageModel.sourcePath || Images.ImageThumbnail}"/>
+
+    <s:BorderContainer 
+        id="_selectedBorder" 
+        borderColor="0x70B2EE" 
+        borderWeight="2"
+        backgroundAlpha="0.0"
+        width="{_bounds.width}"
+        height="{_bounds.height}"
+        visible="false" 
+        visible.selected="true">
+        
+        <s:BorderContainer 
+            id="_resizeHandle" 
+            backgroundAlpha="1.0" 
+            backgroundColor="0x70B2EE" 
+            borderColor="0x70B2EE" 
+            visible="false"
+            visible.selected="true"
+            x="{_bounds.width - 5 - 5}" 
+            y="{_bounds.height - 5 - 5}" 
+            width="11"
+            height="11"/>
+        
+        <mx:Image 
+            id="_top" 
+            source="{isNaN(_constraints.top) ? Icons.Unlocked : Icons.Locked}"
+            visible="false"
+            x="{(_bounds.width / 2) - 5 - 5}" 
+            y="{-8}" 
+            width="12"
+            height="12"/>
+        
+        <mx:Image 
+            id="_left" 
+            source="{isNaN(_constraints.left) ? Icons.Unlocked : Icons.Locked}"
+            visible="false"
+            x="{-8}" 
+            y="{(_bounds.height / 2) - 5 - 5}" 
+            width="12"
+            height="12"/>
+        
+        <mx:Image 
+            id="_bottom" 
+            source="{isNaN(_constraints.bottom) ? Icons.Unlocked : Icons.Locked}"
+            visible="false"
+            x="{(_bounds.width / 2) - 5 - 5}" 
+            y="{_bounds.height - 5 - 5}" 
+            width="12"
+            height="12"/>
+        
+        <mx:Image 
+            id="_right" 
+            source="{isNaN(_constraints.right) ? Icons.Unlocked : Icons.Locked}"
+            visible="false"
+            x="{_bounds.width - 5 - 5}" 
+            y="{(_bounds.height / 2) - 5 - 4}" 
+            width="12"
+            height="12"/>
+        
+    </s:BorderContainer>
+    
+</view:XComposite>

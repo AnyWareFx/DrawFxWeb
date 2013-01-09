@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<editor:XModelEditor xmlns:fx="http://ns.adobe.com/mxml/2009" 
+                     xmlns:s="library://ns.adobe.com/flex/spark" 
+                     xmlns:mx="library://ns.adobe.com/flex/mx" 
+                     xmlns:editor="com.anywarefx.editor.*"
+                     enabled="{_editable}">
+    
+    <fx:Script>
+        <![CDATA[
+			/*
+			Copyright (c) 2013 Dave Jackson
+			
+			MIT License
+			
+			Permission is hereby granted, free of charge, to any person obtaining
+			a copy of this software and associated documentation files (the
+			"Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to
+			permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+			
+			The above copyright notice and this permission notice shall be
+			included in all copies or substantial portions of the Software.
+			
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			*/		
+			
+            import com.anywarefx.command.XUpdateCollectionCommand;
+            import com.anywarefx.manager.XSelectionManager;
+            import com.anywarefx.model.IModel;
+            import com.anywarefx.view.IView;
+            import com.drawfx.model.IBoundedModel;
+            import com.drawfx.model.XBoundsModel;
+            
+            import mx.collections.ArrayCollection;
+            import mx.events.PropertyChangeEvent;
+            
+            
+            [Bindable] private var _editable:Boolean;
+            [Bindable] private var _selectionManager:XSelectionManager;
+            [Bindable] private var _boundsModel:XBoundsModel;
+            
+            
+            public function get editable():Boolean
+            {
+                return _editable;
+            }
+            
+            public function set editable(value:Boolean):void
+            {
+                _editable = value;
+            }
+            
+            
+            public function get selectionManager():XSelectionManager
+            {
+                return _selectionManager;
+            }
+            
+            public function set selectionManager(value:XSelectionManager):void
+            {
+                _selectionManager = value;
+                _selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
+                updateModel(_selectionManager.lastSelection);
+            }
+            
+            
+            override public function set model(value:IModel):void
+            {
+                if (value is IBoundedModel)
+                {
+                    super.model = value["bounds"];
+                    _boundsModel = super.model as XBoundsModel;
+                }
+            }
+            
+            
+            private function onSelectionChange(event:PropertyChangeEvent):void
+            {
+                if (event.property == "lastSelection")
+                {
+                    updateModel(event.newValue as IView);
+                }
+                else if (event.property == "count")
+                {
+                    updateModel(_selectionManager.lastSelection);
+                }
+            }
+            
+            private function updateModel(view:IView):void
+            {
+                editable = (view != null && view.model is IBoundedModel);
+                if (editable)
+                {
+                    model = view.model;
+                }
+                else
+                {
+                    for each (var selection:IView in selectionManager.selections)
+                    {
+                        editable = (selection != null && selection.model is IBoundedModel);
+                        if (editable)
+                        {
+                            model = selection.model;
+                            break;
+                        }
+                    }
+                }
+                /* TODO
+                if (!editable)
+                {
+                model = _defaults;
+                }
+                */
+            }
+            
+            
+            override protected function setProperty(property:String, value:*):void
+            {
+                var items:ArrayCollection = new ArrayCollection();
+                for each (var selection:IView in selectionManager.selections)
+                {
+                    if (selection.model is IBoundedModel)
+                    {
+                        items.addItem((selection.model as IBoundedModel).bounds);
+                    }
+                }
+                var command:XUpdateCollectionCommand = new XUpdateCollectionCommand(model, items, property, value);
+                context.execute(command);
+            }
+        ]]>
+    </fx:Script>
+    
+    <s:VGroup>
+        <s:HGroup>
+            <s:VGroup>
+                <s:HGroup>
+                    <s:Label text="X:" verticalAlign="middle" height="22" textAlign="right" fontSize="11"/>
+                    <s:NumericStepper id="_x" width="55" change="onStepperChange(event);"
+                                      fontSize="11" maximum="10000" minimum="1"
+                                      value="{_boundsModel.x}"/>
+                </s:HGroup>
+                <s:HGroup>
+                    <s:Label text="Y:" verticalAlign="middle" height="22" textAlign="right" fontSize="11"/>
+                    <s:NumericStepper id="_y" width="55" change="onStepperChange(event);"
+                                      fontSize="11" maximum="10000" minimum="1"
+                                      value="{_boundsModel.y}"/>
+                </s:HGroup>
+            </s:VGroup>
+            <s:VGroup>
+                <s:HGroup>
+                    <s:Label text="W:" verticalAlign="middle" height="22" textAlign="right" fontSize="11"/>
+                    <s:NumericStepper id="__width" width="55" change="onStepperChange(event);"
+                                      fontSize="11" maximum="10000" minimum="1"
+                                      value="{_boundsModel.width}"/>
+                </s:HGroup>
+                <s:HGroup>
+                    <s:Label text="H:" verticalAlign="middle" width="14" height="22" textAlign="right" fontSize="11"/>
+                    <s:NumericStepper id="__height" width="55" change="onStepperChange(event);"
+                                      fontSize="11" maximum="10000" minimum="1"
+                                      value="{_boundsModel.height}"/>
+                </s:HGroup>
+            </s:VGroup>
+        </s:HGroup>
+        <s:HGroup>
+            <s:Label text="Rotation:" verticalAlign="middle" width="92" height="22" textAlign="right" fontSize="11"/>
+            <s:NumericStepper id="_rotationZ" width="55" change="onStepperChange(event);"
+                              fontSize="11" maximum="360" minimum="-360" enabled="false"
+                              value="{_boundsModel.rotationZ}"/>
+        </s:HGroup>
+    </s:VGroup>
+    
+</editor:XModelEditor>

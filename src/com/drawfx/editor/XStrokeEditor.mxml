@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<editor:XModelEditor xmlns:fx="http://ns.adobe.com/mxml/2009"
+				   xmlns:s="library://ns.adobe.com/flex/spark"
+				   xmlns:mx="library://ns.adobe.com/flex/mx"
+				   xmlns:editor="com.anywarefx.editor.*" 
+				   enabled="{_selectionManager.lastSelection != null}"
+				   width="230" height="210">
+
+	<fx:Script>
+		<![CDATA[
+			/*
+			Copyright (c) 2013 Dave Jackson
+			
+			MIT License
+			
+			Permission is hereby granted, free of charge, to any person obtaining
+			a copy of this software and associated documentation files (the
+			"Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to
+			permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+			
+			The above copyright notice and this permission notice shall be
+			included in all copies or substantial portions of the Software.
+			
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			*/		
+			
+			import com.anywarefx.command.XUpdateSelectionsCommand;
+			import com.anywarefx.manager.XSelectionManager;
+			import com.anywarefx.model.IModel;
+			import com.anywarefx.view.IView;
+			import com.drawfx.model.XStrokeModel;
+			import com.drawfx.view.XShape;
+			import com.drawfx.view.XTextBox;
+			
+			import mx.collections.ArrayCollection;
+			
+
+			[Bindable] private var _strokeModel:XStrokeModel;
+			[Bindable] private var _selectionManager:XSelectionManager;
+
+
+			public function get selectionManager():XSelectionManager
+			{
+				return _selectionManager;
+			}
+			
+			public function set selectionManager(value:XSelectionManager):void
+			{
+				_selectionManager = value;
+			}
+			
+
+			override public function set model(value:IModel):void
+			{
+				super.model = value;
+				_strokeModel = value as XStrokeModel;
+			}
+
+
+			override protected function setProperty(property:String, value:*):void
+			{
+				var textBoxes:ArrayCollection = new ArrayCollection();
+				for each (var selection:IView in selectionManager.selections)
+				{
+					if (selection is XShape)
+					{
+						textBoxes.addItem((selection as XShape)._textBox);
+					}
+					else if (selection is XTextBox)
+					{
+						textBoxes.addItem(selection);
+					}
+				}
+				var command:XUpdateSelectionsCommand = new XUpdateSelectionsCommand(model, textBoxes, property, value);
+				context.execute(command);
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+
+	<s:Group>
+		<mx:Form>
+			<mx:FormItem label="Color:">
+				<mx:ColorPicker id="_color" selectedColor="{_strokeModel.color}" change="onColorChange(event);"/>
+			</mx:FormItem>
+			<mx:FormItem label="Alpha:">
+				<s:NumericStepper id="__alpha" width="60" change="onStepperChange(event);" maximum="1"
+								  minimum="0" stepSize="0.025" value="{_strokeModel.alpha}"/>
+			</mx:FormItem>
+			<mx:FormItem label="Weight:">
+				<s:NumericStepper id="_weight" width="60" change="onStepperChange(event);"
+								  maximum="100" minimum="1" value="{_strokeModel.weight}"/>
+			</mx:FormItem>
+			<mx:FormItem label="Style:">
+				<s:DropDownList id="_style" selectedItem="{_strokeModel.style}" change="onIndexChange(event);">
+					<s:dataProvider>
+						<s:ArrayList>
+							<fx:String>solid</fx:String>
+							<fx:String>inset</fx:String>
+						</s:ArrayList>
+					</s:dataProvider>
+				</s:DropDownList>
+			</mx:FormItem>
+		</mx:Form>
+	</s:Group>
+
+</editor:XModelEditor>
