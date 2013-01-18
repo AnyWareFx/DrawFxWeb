@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<editor:XModelEditor xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				   xmlns:s="library://ns.adobe.com/flex/spark" 
+				   xmlns:mx="library://ns.adobe.com/flex/mx" 
+				   xmlns:editor="com.anywarefx.editor.*" 
+				   enabled="{_editable}"
+				   width="100%" height="100%">
+
+	<fx:Script>
+		<![CDATA[
+			/*
+			Copyright (c) 2013 Dave Jackson
+			
+			MIT License
+			
+			Permission is hereby granted, free of charge, to any person obtaining
+			a copy of this software and associated documentation files (the
+			"Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to
+			permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+			
+			The above copyright notice and this permission notice shall be
+			included in all copies or substantial portions of the Software.
+			
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			*/		
+			
+			import com.anywarefx.command.XUpdateCollectionCommand;
+			import com.anywarefx.manager.XSelectionManager;
+			import com.anywarefx.model.IModel;
+			import com.anywarefx.view.IView;
+			import com.drawfx.model.IFilledModel;
+			import com.drawfx.model.XFillModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.ArrayList;
+			import mx.events.PropertyChangeEvent;
+
+			
+			[Bindable] private var _editable:Boolean;
+			[Bindable] private var _selectionManager:XSelectionManager;
+			[Bindable] private var _fillModel:XFillModel;
+			[Bindable] private var _blendModes:ArrayList = new ArrayList([
+				BlendMode.NORMAL,
+				BlendMode.ADD,
+				BlendMode.ALPHA,
+				BlendMode.DARKEN,
+				BlendMode.DIFFERENCE,
+				BlendMode.ERASE,
+				BlendMode.HARDLIGHT,
+				BlendMode.INVERT,
+				BlendMode.LAYER,
+				BlendMode.LIGHTEN,
+				BlendMode.MULTIPLY,
+				BlendMode.OVERLAY,
+				BlendMode.SCREEN,
+				BlendMode.SUBTRACT 
+			]);			
+			
+
+			public function get editable():Boolean
+			{
+				return _editable;
+			}
+
+			public function set editable(value:Boolean):void
+			{
+				_editable = value;
+			}
+
+
+			public function get selectionManager():XSelectionManager
+			{
+				return _selectionManager;
+			}
+
+			public function set selectionManager(value:XSelectionManager):void
+			{
+				_selectionManager = value;
+				_selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
+				updateModel(_selectionManager.lastSelection);
+			}
+
+
+			override public function set model(value:IModel):void
+			{
+				if (value is IFilledModel)
+				{
+					super.model = value["fill"];
+					_fillModel = super.model as XFillModel;
+				}
+			}
+
+
+			private function onSelectionChange(event:PropertyChangeEvent):void
+			{
+				if (event.property == "lastSelection")
+				{
+					updateModel(event.newValue as IView);
+				}
+				else if (event.property == "count")
+				{
+					updateModel(_selectionManager.lastSelection);
+				}
+			}
+
+			private function updateModel(view:IView):void
+			{
+				editable = (view != null && view.model is IFilledModel);
+				if (editable)
+				{
+					model = view.model;
+				}
+				else
+				{
+					for each (var selection:IView in selectionManager.selections)
+					{
+						editable = (selection != null && selection.model is IFilledModel);
+						if (editable)
+						{
+							model = selection.model;
+							break;
+						}
+					}
+				}
+				/* TODO
+				if (!editable)
+				{
+				model = _defaults;
+				}
+				*/
+			}
+
+
+			override protected function setProperty(property:String, value:*):void
+			{
+				var items:ArrayCollection = new ArrayCollection();
+				for each (var selection:IView in selectionManager.selections)
+				{
+					if (selection.model is IFilledModel)
+					{
+						items.addItem((selection.model as IFilledModel).fill);
+					}
+				}
+				var command:XUpdateCollectionCommand = new XUpdateCollectionCommand(model, items, property, value);
+				context.execute(command);
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+
+	<s:VGroup left="10" right="10" top="10" bottom="10">
+		<mx:Form>
+			<mx:FormItem label="Color:">
+				<mx:ColorPicker id="_color" selectedColor="{_fillModel.color}" change="onColorChange(event);"/>
+			</mx:FormItem>
+			<mx:FormItem label="Blend Mode:">
+				<s:DropDownList 
+					id="__blendMode"
+					dataProvider="{_blendModes}"
+					selectedItem="{_fillModel.blendMode}" 
+					change="onIndexChange(event);"/>
+			</mx:FormItem>
+			<mx:FormItem label="Alpha:">
+				<s:NumericStepper id="__alpha" width="60" change="onStepperChange(event);" maximum="1"
+								  minimum="0" stepSize="0.025" value="{_fillModel.alpha}"/>
+			</mx:FormItem>
+		</mx:Form>
+	</s:VGroup>
+
+</editor:XModelEditor>

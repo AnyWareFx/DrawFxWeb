@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view:XSelectableView xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			xmlns:s="library://ns.adobe.com/flex/spark" 
+			xmlns:mx="library://ns.adobe.com/flex/mx" 
+			xmlns:view="com.anywarefx.view.*" 
+			initialize="onInitialize();"
+			width="100%" height="100%">
+	
+	<fx:Script>
+		<![CDATA[
+			/*
+			Copyright (c) 2013 Dave Jackson
+			
+			MIT License
+			
+			Permission is hereby granted, free of charge, to any person obtaining
+			a copy of this software and associated documentation files (the
+			"Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to
+			permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+			
+			The above copyright notice and this permission notice shall be
+			included in all copies or substantial portions of the Software.
+			
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			*/		
+			
+            import com.anywarefx.XFactory;
+            import com.anywarefx.event.XViewUpdateEvent;
+            import com.anywarefx.model.IModel;
+            import com.drawfx.event.XDrawingEvent;
+            import com.drawfx.model.XCompositeModel;
+            import com.drawfx.model.XGroupModel;
+            import com.drawfx.model.XImageModel;
+            import com.drawfx.model.XLineModel;
+            import com.drawfx.model.XShapeModel;
+            import com.drawfx.model.XTextBoxModel;
+			
+			
+			[Bindable] 
+			private var _composite:XCompositeModel;
+
+			protected var _groups:* = {};
+            protected var _lines:* = {};
+            protected var _images:* = {};
+			protected var _shapes:* = {};
+			protected var _textBoxes:* = {};
+
+
+            private function onInitialize():void
+			{
+                if (_composite != null)
+                {
+                    if (_composite.groups.length > 0)
+                    {
+                        for each (var group:XGroupModel in _composite.groups)
+                        {
+                            addGroup(group);
+                        }
+                    }
+                    if (_composite.shapes.length > 0)
+                    {
+                        for each (var shape:XShapeModel in _composite.shapes)
+                        {
+                            addShape(shape);
+                        }
+                    }
+                    if (_composite.images.length > 0)
+                    {
+                        for each (var image:XImageModel in _composite.images)
+                        {
+                            addImage(image);
+                        }
+                    }
+                    if (_composite.textBoxes.length > 0)
+                    {
+                        for each (var textBox:XTextBoxModel in _composite.textBoxes)
+                        {
+                            addTextBox(textBox);
+                        }
+                    }
+                    if (_composite.lines.length > 0)
+                    {
+                        for each (var line:XLineModel in _composite.lines)
+                        {
+                            addLine(line);
+                        }
+                    }
+                }
+			}
+			
+			
+			override public function set model(value:IModel):void
+			{
+				_composite = value as XCompositeModel;
+				super.model = value;
+			}
+			
+			
+			override protected function addEventListeners():void
+			{
+                _composite.addEventListener(XDrawingEvent.LINE_ADDED, onLineAdded);
+                _composite.addEventListener(XDrawingEvent.LINE_REMOVED, onLineRemoved);
+				_composite.addEventListener(XDrawingEvent.GROUP_ADDED, onGroupAdded);
+				_composite.addEventListener(XDrawingEvent.GROUP_REMOVED, onGroupRemoved);
+                _composite.addEventListener(XDrawingEvent.IMAGE_ADDED, onImageAdded);
+                _composite.addEventListener(XDrawingEvent.IMAGE_REMOVED, onImageRemoved);
+				_composite.addEventListener(XDrawingEvent.SHAPE_ADDED, onShapeAdded);
+				_composite.addEventListener(XDrawingEvent.SHAPE_REMOVED, onShapeRemoved);
+				_composite.addEventListener(XDrawingEvent.TEXT_BOX_ADDED, onTextBoxAdded);
+				_composite.addEventListener(XDrawingEvent.TEXT_BOX_REMOVED, onTextBoxRemoved);
+			}
+            
+            override protected function removeEventListeners():void
+            {
+                _composite.removeEventListener(XDrawingEvent.LINE_ADDED, onLineAdded);
+                _composite.removeEventListener(XDrawingEvent.LINE_REMOVED, onLineRemoved);
+                _composite.removeEventListener(XDrawingEvent.GROUP_ADDED, onGroupAdded);
+                _composite.removeEventListener(XDrawingEvent.GROUP_REMOVED, onGroupRemoved);
+                _composite.removeEventListener(XDrawingEvent.IMAGE_ADDED, onImageAdded);
+                _composite.removeEventListener(XDrawingEvent.IMAGE_REMOVED, onImageRemoved);
+                _composite.removeEventListener(XDrawingEvent.SHAPE_ADDED, onShapeAdded);
+                _composite.removeEventListener(XDrawingEvent.SHAPE_REMOVED, onShapeRemoved);
+                _composite.removeEventListener(XDrawingEvent.TEXT_BOX_ADDED, onTextBoxAdded);
+                _composite.removeEventListener(XDrawingEvent.TEXT_BOX_REMOVED, onTextBoxRemoved);
+            }
+            
+            
+            private function onLineAdded(event:XDrawingEvent):void
+            {
+                addLine(event.model as XLineModel);
+            }
+            
+            protected virtual function addLine(model:XLineModel):XLine
+            {
+                var line:XLine = XFactory.instance.getComponent("XLine");
+                line.model = model;
+                addElement(line);
+                _lines[line.uid] = line;
+                
+                var event:XViewUpdateEvent = new XViewUpdateEvent(XViewUpdateEvent.VIEW_ADDED);
+                event.view = line;
+                dispatchEvent(event);
+                return line;
+            }
+            
+            private function onLineRemoved(event:XDrawingEvent):void
+            {
+                removeLine(event.model as XLineModel);
+            }
+            
+            protected virtual function removeLine(model:XLineModel):XLine
+            {
+                var line:XLine = _lines[model.uid];
+                if (line != null)
+                {
+                    removeElement(line);
+                    delete _lines[line.uid];
+                    
+                    var event:XViewUpdateEvent = new XViewUpdateEvent(XViewUpdateEvent.VIEW_REMOVED);
+                    event.view = line;
+                    dispatchEvent(event);
+                }
+                return line;
+            }
+			
+			
+			private function onGroupAdded(event:XDrawingEvent):void
+			{
+				addGroup(event.model as XGroupModel);
+			}
+
+			protected virtual function addGroup(model:XGroupModel):XGroup
+			{
+				var group:XGroup = XFactory.instance.getComponent("XGroup");
+				group.model = model;
+				addElement(group);
+				_groups[group.uid] = group;
+
+				var event:XViewUpdateEvent = new XViewUpdateEvent(XViewUpdateEvent.VIEW_ADDED);
+				event.view = group;
+				dispatchEvent(event);
+                return group;
+			}
+
+			private function onGroupRemoved(event:XDrawingEvent):void
+			{
+				removeGroup(event.model as XGroupModel);
+			}
+
+			protected virtual function removeGroup(model:XGroupModel):XGroup
+			{
+				var group:XGroup = _groups[model.uid];
+                if (group != null)
+                {
+                    removeElement(group);
+                    delete _groups[group.uid];
+
+                    var event:XViewUpdateEvent = new XViewUpdateEvent(XViewUpdateEvent.VIEW_REMOVED);
+                    event.view = group;
+                    dispatchEvent(event);
+                }
+                return group;
+			}
+            
+            
+            private function onImageAdded(event:XDrawingEvent):void
+            {
+                addImage(event.model as XImageModel);
+            }
+            
+            protected virtual function addImage(model:XImageModel):XImage
+            {
+                var image:XImage = XFactory.instance.getComponent("XImage");
+                image.model = model;
+                addElement(image);
+                _images[image.uid] = image;
+                
+                var event:XViewUpdateEvent = new XViewUpdateEvent(XViewUpdateEvent.VIEW_ADDED);
+                event.view = image;
+                dispatchEvent(event);
+                return image;
+            }
+            
+            private function onImageRemoved(event:XDrawingEvent):void
+            {
+                removeImage(event.model as XImageModel);
+            }
+            
+            protected virtual function removeImage(model:XImageModel):XImage
+            {
+                var image:XImage = _images[model.uid];
+                if (image != null)
+                {
+                    removeElement(image);
+                    delete _images[image.uid];
+                    
+                    var event:XViewUpdateEvent = new XViewUpdateEvent(XViewUpdateEvent.VIEW_REMOVED);
+                    event.view = image;
+                    dispatchEvent(event);
+                }
+                return image;
+            }
+
+
+			private function onShapeAdded(event:XDrawingEvent):void
+			{
+				addShape(event.model as XShapeModel);
+			}
+
+			protected virtual function addShape(model:XShapeModel):XShape
+			{
+				var shape:XShape = XFactory.instance.getComponent("XShape");
+				shape.model = model;
+				addElement(shape);
+				_shapes[shape.uid] = shape;
+
+				var event:XViewUpdateEvent = new XViewUpdateEvent(XViewUpdateEvent.VIEW_ADDED);
+				event.view = shape;
+				dispatchEvent(event);
+                return shape;
+			}
+			
+			private function onShapeRemoved(event:XDrawingEvent):void
+			{
+				removeShape(event.model as XShapeModel);
+			}
+
+			protected virtual function removeShape(model:XShapeModel):XShape
+			{
+				var shape:XShape = _shapes[model.uid];
+                if (shape != null)
+                {
+                    removeElement(shape);
+                    delete _shapes[shape.uid];
+
+                    var event:XViewUpdateEvent = new XViewUpdateEvent(XViewUpdateEvent.VIEW_REMOVED);
+                    event.view = shape;
+                    dispatchEvent(event);
+                }
+                return shape;
+			}
+			
+
+			private function onTextBoxAdded(event:XDrawingEvent):void
+			{
+				addTextBox(event.model as XTextBoxModel);
+			}
+
+			protected virtual function addTextBox(model:XTextBoxModel):XTextBox
+			{
+				var textBox:XTextBox = XFactory.instance.getComponent("XTextBox");
+				textBox.model = model;
+				addElement(textBox);
+				_textBoxes[textBox.uid] = textBox;
+
+				var event:XViewUpdateEvent = new XViewUpdateEvent(XViewUpdateEvent.VIEW_ADDED);
+				event.view = textBox;
+				dispatchEvent(event);
+
+				if (textBox._input.text == "" || textBox._input.text == "Text Box")
+				{
+					textBox.currentState = "input";
+				}
+                return textBox;
+			}
+			
+			private function onTextBoxRemoved(event:XDrawingEvent):void
+			{
+				removeTextBox(event.model as XTextBoxModel);
+			}
+
+			protected virtual function removeTextBox(model:XTextBoxModel):XTextBox
+			{
+				var textBox:XTextBox = _textBoxes[model.uid];
+                if (textBox != null)
+                {
+                    removeElement(textBox);
+                    delete _textBoxes[textBox.uid];
+
+                    var event:XViewUpdateEvent = new XViewUpdateEvent(XViewUpdateEvent.VIEW_REMOVED);
+                    event.view = textBox;
+                    dispatchEvent(event);
+                }
+                return textBox;
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<view:layout>
+		<s:BasicLayout/>
+	</view:layout>
+	
+</view:XSelectableView>

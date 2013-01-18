@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+            xmlns:s="library://ns.adobe.com/flex/spark" 
+            xmlns:mx="library://ns.adobe.com/flex/mx" 
+            implements="com.anywarefx.view.IView">
+    
+    <fx:Script>
+        <![CDATA[
+			/*
+			Copyright (c) 2013 Dave Jackson
+			
+			MIT License
+			
+			Permission is hereby granted, free of charge, to any person obtaining
+			a copy of this software and associated documentation files (the
+			"Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to
+			permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+			
+			The above copyright notice and this permission notice shall be
+			included in all copies or substantial portions of the Software.
+			
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			*/		
+			
+			import com.anywarefx.command.XCommandContext;
+			import com.anywarefx.command.XSetPropertyCommand;
+			import com.anywarefx.model.IModel;
+			
+			import mx.controls.ColorPicker;
+			import mx.events.ColorPickerEvent;
+			import mx.events.FlexEvent;
+			
+			import spark.components.CheckBox;
+			import spark.components.DropDownList;
+			import spark.components.NumericStepper;
+			import spark.components.TextInput;
+			import spark.events.IndexChangeEvent;
+            
+
+            private var _context:XCommandContext;
+			private var _model:IModel;
+
+
+            [Bindable]
+            public function get context():XCommandContext
+            {
+                return _context;
+            }
+            
+            public function set context(value:XCommandContext):void
+            {
+                _context = value;
+            }
+            
+			
+			[Bindable]
+			public function get model():IModel
+			{
+				return _model;
+			}
+			
+			public function set model(value:IModel):void
+			{
+				_model = value;
+			}
+            
+
+			protected function getPropertyName(identifier:String):String
+            {
+                return identifier.replace(/_/g, "");
+            }
+
+
+            protected function setProperty(property:String, value:*):void
+            {
+                if (model && model[property] != value)
+                {
+                    var command:XSetPropertyCommand = new XSetPropertyCommand(model, property, value);
+                    _context.execute(command);
+                }
+            }
+            
+            
+            protected function onStepperChange(event:Event):void
+            {
+                var stepper:NumericStepper = event.target as NumericStepper;
+                if (stepper != null)
+                {
+                    var property:String = getPropertyName(stepper.id);
+                    setProperty(property, stepper.value);
+                }
+            }
+            
+            
+            protected function onColorChange(event:ColorPickerEvent):void
+            {
+                var picker:ColorPicker = event.target as ColorPicker;
+                if (picker != null)
+                {
+                    var property:String = getPropertyName(picker.id);
+                    setProperty(property, picker.selectedColor);
+                }
+            }
+            
+            
+            protected function onIndexChange(event:IndexChangeEvent):void
+            {
+                var dropdown:DropDownList = event.target as DropDownList;
+                if (dropdown != null)
+                {
+                    var property:String = getPropertyName(dropdown.id);
+                    setProperty(property, dropdown.selectedItem);
+                }
+            }
+            
+            
+            protected function onCheckBoxChange(event:Event):void
+            {
+                var checkbox:CheckBox = event.target as CheckBox;
+                if (checkbox != null)
+                {
+                    var property:String = getPropertyName(checkbox.id);
+                    setProperty(property, checkbox.selected);
+                }
+            }
+            
+            
+            protected function onEnter(event:FlexEvent):void
+            {
+                var input:TextInput = event.target as TextInput;
+                if (input != null)
+                {
+                    var property:String = getPropertyName(input.id);
+                    setProperty(property, input.text);
+                }
+            }
+            
+            protected function onFocusOut(event:FocusEvent):void
+            {
+                var input:TextInput = event.currentTarget as TextInput;
+                if (input != null)
+                {
+                    var property:String = getPropertyName(input.id);
+                    setProperty(property, input.text);
+                }
+            }
+        ]]>
+    </fx:Script>
+
+</s:Group>

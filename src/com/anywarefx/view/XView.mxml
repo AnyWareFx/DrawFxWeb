@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
-			   xmlns:s="library://ns.adobe.com/flex/spark"
-			   xmlns:mx="library://ns.adobe.com/flex/mx"
-			   xmlns:drawfx="com.drawfx.*"
-			   minWidth="955" minHeight="600" 
-			   preinitialize="onPreinitialize();"
-			   viewSourceURL="srcview/index.html">
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 implements="com.anywarefx.view.IView">
 	
 	<fx:Script>
 		<![CDATA[
@@ -34,12 +31,42 @@
 			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			*/		
 			
-			import com.drawfx.DrawFxFactoryInitializer;
+			import com.anywarefx.model.IModel;
 			
 			
-			private function onPreinitialize():void
+			private var _model:IModel;
+			
+			
+			[Bindable]
+			public function get model():IModel
 			{
-				DrawFxFactoryInitializer.initialize();
+				return _model;
+			}
+			
+			public function set model(value:IModel):void
+			{
+				if (_model != null)
+				{
+					removeEventListeners();
+					_model = null;
+				}
+				if (value != null)
+				{
+					_model = value;
+					uid = _model.uid;
+					addEventListeners();
+				}
+			}
+			
+			
+			protected function addEventListeners():void
+			{
+				// override
+			}
+			
+			protected function removeEventListeners():void
+			{
+				// override
 			}
 		]]>
 	</fx:Script>
@@ -47,7 +74,4 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	
-	<drawfx:XWorkspace width="100%" height="100%"/>
-	
-</s:Application>
+</s:Group>

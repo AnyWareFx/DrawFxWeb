@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view:XComposite xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			xmlns:s="library://ns.adobe.com/flex/spark" 
+			xmlns:mx="library://ns.adobe.com/flex/mx" 
+			xmlns:view="com.drawfx.view.*" 
+			clipAndEnableScrolling="true"
+			width="100%" height="100%">
+
+	<fx:Script>
+		<![CDATA[
+			/*
+			Copyright (c) 2013 Dave Jackson
+			
+			MIT License
+			
+			Permission is hereby granted, free of charge, to any person obtaining
+			a copy of this software and associated documentation files (the
+			"Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to
+			permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+			
+			The above copyright notice and this permission notice shall be
+			included in all copies or substantial portions of the Software.
+			
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			*/		
+			
+            import mx.core.UIComponent;
+            import mx.graphics.codec.JPEGEncoder;
+            import mx.graphics.codec.PNGEncoder;
+			
+			
+			public static function getParent(view:UIComponent):XComposite
+			{
+				var initial:UIComponent = view;
+				while (view != null && view.parent != null)
+				{
+					if (view is XDrawing || view is XComposite)
+					{
+						break;
+					}
+					else
+					{
+						view = view.parent as UIComponent;
+					}
+				}
+				return view as XComposite;
+			}
+            
+            
+            public static function getDrawing(target:UIComponent):XDrawing
+            {
+                while (!(target is XDrawing) && target != null && target.parent != null)
+                {
+                    target = target.parent as UIComponent;
+                }
+                return target as XDrawing;
+            }
+
+
+            public function toPNG():ByteArray
+            {
+                var bitmap:BitmapData = new BitmapData(width, height);
+                bitmap.draw(this);
+                var encoder:PNGEncoder = new PNGEncoder();
+                return encoder.encode(bitmap);
+            }
+
+
+            public function toJPG():ByteArray
+            {
+                var bitmap:BitmapData = new BitmapData(width, height);
+                bitmap.draw(this);
+                var encoder:JPEGEncoder = new JPEGEncoder();
+                return encoder.encode(bitmap);
+            }
+        ]]>
+	</fx:Script>
+
+	<view:XRubberBand id="rubberBand"/>
+    <view:XSnapshot id="snapshot" drawing="{this}"/>
+
+</view:XComposite>

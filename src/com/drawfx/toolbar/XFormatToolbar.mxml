@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<editor:XModelEditor xmlns:fx="http://ns.adobe.com/mxml/2009"
+					 xmlns:s="library://ns.adobe.com/flex/spark"
+					 xmlns:mx="library://ns.adobe.com/flex/mx"
+					 xmlns:editor="com.anywarefx.editor.*"
+                     currentState="expanded"
+                     enabled="{_editable}">
+	
+	<fx:Script>
+		<![CDATA[
+			/*
+			Copyright (c) 2013 Dave Jackson
+			
+			MIT License
+			
+			Permission is hereby granted, free of charge, to any person obtaining
+			a copy of this software and associated documentation files (the
+			"Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to
+			permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+			
+			The above copyright notice and this permission notice shall be
+			included in all copies or substantial portions of the Software.
+			
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			*/		
+			
+            import com.anywarefx.command.XUpdateCollectionCommand;
+            import com.anywarefx.manager.XSelectionManager;
+            import com.anywarefx.model.IModel;
+            import com.anywarefx.view.IView;
+            import com.drawfx.model.IFormattedModel;
+            import com.drawfx.model.XTextFormatModel;
+            
+            import mx.collections.ArrayCollection;
+            import mx.events.PropertyChangeEvent;
+            
+            import assets.Icons;
+			
+			
+            [Bindable] private var _editable:Boolean;
+			[Bindable] private var _format:XTextFormatModel;
+			[Bindable] private var _selectionManager:XSelectionManager;
+            
+            
+            public function get editable():Boolean
+            {
+                return _editable;
+            }
+            
+            public function set editable(value:Boolean):void
+            {
+                _editable = value;
+            }
+			
+			
+			public function get selectionManager():XSelectionManager
+			{
+				return _selectionManager;
+			}
+			
+			public function set selectionManager(value:XSelectionManager):void
+			{
+				_selectionManager = value;
+                if (_selectionManager != null)
+                {
+                    _selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
+                    updateModel(_selectionManager.lastSelection);
+                }
+			}
+			
+			
+			override public function set model(value:IModel):void
+			{
+                if (value is IFormattedModel)
+                {
+                    super.model = value["format"];
+                    _format = super.model as XTextFormatModel;
+                }
+			}
+            
+            
+            private function onSelectionChange(event:PropertyChangeEvent):void
+            {
+                if (event.property == "lastSelection")
+                {
+                    updateModel(event.newValue as IView);
+                }
+                else if (event.property == "count")
+                {
+                    updateModel(_selectionManager.lastSelection);
+                }
+            }
+            
+            private function updateModel(view:IView):void
+            {
+                editable = (view != null && view.model is IFormattedModel);
+                if (editable)
+                {
+                    model = view.model;
+                }
+                else
+                {
+                    for each (var selection:IView in selectionManager.selections)
+                    {
+                        editable = (selection != null && selection.model is IFormattedModel);
+                        if (editable)
+                        {
+                            model = selection.model;
+                            break;
+                        }
+                    }
+                }
+                /* TODO
+                if (!editable)
+                {
+                model = _defaults;
+                }
+                */
+            }
+
+
+			private function onToggleClick(event:MouseEvent):void
+			{
+				var button:Button = event.target as Button;
+				if (button != null)
+				{
+					var selected:Boolean = !button.selected;
+					var value:* = "";
+					var property:String = getPropertyName(button.id);
+					switch (property)
+					{
+						case "fontWeight":
+							value = selected ? "bold" : "normal";
+							break;
+
+						case "fontStyle":
+							value = selected ? "italic" : "normal";
+							break;
+						
+						case "textDecoration":
+							value = selected ? "underline" : "none";
+							break;
+						
+						case "lineThrough":
+							value = selected;
+							break;
+
+						case "alignLeft":
+							property = "textAlign";
+							value = "left";
+							break;
+
+						case "alignCenter":
+							property = "textAlign";
+							value = "center";
+							break;
+
+						case "alignRight":
+							property = "textAlign";
+							value = "right";
+							break;
+
+						case "alignJustify":
+							property = "textAlign";
+							value = "justify";
+							break;
+					}
+					setProperty(property, value);
+				}
+			}
+
+
+			override protected function setProperty(property:String, value:*):void
+			{
+                if (_selectionManager == null)
+                {
+                    super.setProperty(property, value);
+                }
+                else
+                {
+    				var formatModels:ArrayCollection = new ArrayCollection();
+    				for each (var selection:IView in selectionManager.selections)
+    				{
+    					if (selection.model is IFormattedModel)
+    					{
+    						formatModels.addItem((selection.model as IFormattedModel).format);
+    					}
+    				}
+    				var command:XUpdateCollectionCommand = new XUpdateCollectionCommand(model, formatModels, property, value);
+    				context.execute(command);
+                }
+			}
+		]]>
+	</fx:Script>
+
+    <editor:states>
+        <s:State name="iconic"/>
+        <s:State name="expanded"/>
+    </editor:states>
+    
+	<s:HGroup visible="true" visible.iconic="false">
+		<s:VGroup>
+			<s:HGroup gap="3">
+				<mx:Button width="30" id="_fontWeight" toolTip="Bold" 
+						   selected="{_format.fontWeight == 'bold'}"
+						   disabledIcon="{Icons.TextBoldDisabled}" click="onToggleClick(event);"
+						   icon="{Icons.TextBold}"/>
+				<mx:Button width="30" id="_fontStyle" toolTip="Italic" 
+						   selected="{_format.fontStyle == 'italic'}"
+						   disabledIcon="{Icons.TextItalicDisabled}" click="onToggleClick(event);"
+						   icon="{Icons.TextItalic}"/>
+				<mx:Button width="30" id="_textDecoration" toolTip="Underline"
+						   selected="{_format.textDecoration == 'underline'}"
+						   disabledIcon="{Icons.TextUnderlineDisabled}" click="onToggleClick(event);"
+						   icon="{Icons.TextUnderline}"/>
+				<mx:Button width="30" id="_lineThrough" toolTip="Strikethrough"
+						   selected="{_format.lineThrough == true}"
+						   disabledIcon="{Icons.TextStrikethroughDisabled}" click="onToggleClick(event);"
+						   icon="{Icons.TextStrikethrough}"/>
+			</s:HGroup>
+			<s:HGroup gap="3">
+				<mx:Button width="30" id="_alignLeft" toolTip="Align Left"
+						   selected="{_format.textAlign == 'left'}"
+						   disabledIcon="{Icons.TextAlignLeftDisabled}"
+                           click="onToggleClick(event);"
+						   icon="{Icons.TextAlignLeft}"/>
+				<mx:Button width="30" id="_alignCenter" toolTip="Align Center"
+						   selected="{_format.textAlign == 'center'}"
+						   disabledIcon="{Icons.TextAlignCenterDisabled}"
+                           click="onToggleClick(event);"
+						   icon="{Icons.TextAlignCenter}"/>
+				<mx:Button width="30" id="_alignRight" toolTip="Align Right"
+						   selected="{_format.textAlign == 'right'}"
+						   disabledIcon="{Icons.TextAlignRightDisabled}" click="onToggleClick(event);"
+						   icon="{Icons.TextAlignRight}"/>
+				<mx:Button width="30" id="_alignJustify" toolTip="Justify"
+						   selected="{_format.textAlign == 'justify'}"
+						   disabledIcon="{Icons.TextAlignJustifyDisabled}" click="onToggleClick(event);"
+						   icon="{Icons.TextAlignJustify}"/>
+			</s:HGroup>
+		</s:VGroup>
+		<s:VGroup>
+			<s:DropDownList id="_fontFamily" width="130" change="onIndexChange(event);"
+							selectedItem="{_format.fontFamily}">
+				<s:dataProvider>
+					<s:ArrayList>
+						<fx:String>Arial</fx:String>
+                        <fx:String>Comic Sans MS</fx:String>
+						<fx:String>Courier New</fx:String>
+						<fx:String>Times New Roman</fx:String>
+						<fx:String>Georgia</fx:String>
+						<fx:String>Verdana</fx:String>
+					</s:ArrayList>
+				</s:dataProvider>
+			</s:DropDownList>
+			<s:HGroup gap="3">
+				<mx:ColorPicker 
+					id="_color" 
+					selectedColor="{_format.color}" 
+					change="onColorChange(event);"/>
+				<s:Label width="42" height="22" fontSize="11" text="Size:" textAlign="right" verticalAlign="middle"/>
+				<s:NumericStepper 
+					id="_fontSize" 
+					width="60" 
+					value="{_format.fontSize}" 
+					change="onStepperChange(event);" 
+					minimum="6" 
+					maximum="128"/>
+			</s:HGroup>
+		</s:VGroup>
+	</s:HGroup>
+</editor:XModelEditor>

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<editor:XModelEditor xmlns:fx="http://ns.adobe.com/mxml/2009" 
+                     xmlns:s="library://ns.adobe.com/flex/spark" 
+                     xmlns:mx="library://ns.adobe.com/flex/mx" 
+                     xmlns:editor="com.anywarefx.editor.*" 
+                     xmlns:net="flash.net.*"
+                     enabled="{_editable}"
+                     width="100%" height="100%">
+    
+    <fx:Script>
+        <![CDATA[
+			/*
+			Copyright (c) 2013 Dave Jackson
+			
+			MIT License
+			
+			Permission is hereby granted, free of charge, to any person obtaining
+			a copy of this software and associated documentation files (the
+			"Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to
+			permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+			
+			The above copyright notice and this permission notice shall be
+			included in all copies or substantial portions of the Software.
+			
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			*/		
+			
+            import com.anywarefx.command.XUpdateCollectionCommand;
+            import com.anywarefx.manager.XSelectionManager;
+            import com.anywarefx.model.IModel;
+            import com.anywarefx.view.IView;
+            import com.drawfx.model.XImageModel;
+            import com.drawfx.view.XImage;
+            
+            import mx.collections.ArrayCollection;
+            import mx.collections.ArrayList;
+            import mx.events.PropertyChangeEvent;
+            import mx.graphics.codec.PNGEncoder;
+            
+            import assets.Icons;
+            
+
+            [Bindable] private var _camera:Camera;
+            [Bindable] private var _editable:Boolean;
+            [Bindable] private var _selectionManager:XSelectionManager;
+            [Bindable] private var _imageModel:XImageModel;
+            [Bindable] private var _blendModes:ArrayList = new ArrayList([
+                BlendMode.NORMAL,
+                BlendMode.ADD,
+                BlendMode.ALPHA,
+                BlendMode.DARKEN,
+                BlendMode.DIFFERENCE,
+                BlendMode.ERASE,
+                BlendMode.HARDLIGHT,
+                BlendMode.INVERT,
+                BlendMode.LAYER,
+                BlendMode.LIGHTEN,
+                BlendMode.MULTIPLY,
+                BlendMode.OVERLAY,
+                BlendMode.SCREEN,
+                BlendMode.SUBTRACT 
+            ]);			
+            
+            
+            public function get editable():Boolean
+            {
+                return _editable;
+            }
+            
+            public function set editable(value:Boolean):void
+            {
+                _editable = value;
+            }
+            
+            
+            public function get selectionManager():XSelectionManager
+            {
+                return _selectionManager;
+            }
+            
+            public function set selectionManager(value:XSelectionManager):void
+            {
+                _selectionManager = value;
+                _selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
+                updateModel(_selectionManager.lastSelection);
+            }
+            
+            
+            override public function set model(value:IModel):void
+            {
+                super.model = value;
+                _imageModel = value as XImageModel;
+            }
+            
+            
+            private function onSelectionChange(event:PropertyChangeEvent):void
+            {
+                if (event.property == "lastSelection")
+                {
+                    updateModel(event.newValue as IView);
+                }
+                else if (event.property == "count")
+                {
+                    updateModel(_selectionManager.lastSelection);
+                }
+            }
+            
+
+            private function updateModel(view:IView):void
+            {
+                editable = (view is XImage);
+                if (editable)
+                {
+                    model = view.model;
+                }
+                else
+                {
+                    for each (var selection:IView in selectionManager.selections)
+                    {
+                        editable = (selection is XImage);
+                        if (editable)
+                        {
+                            model = selection.model;
+                            break;
+                        }
+                    }
+                }
+                /* TODO
+                if (!editable)
+                {
+                model = _defaults;
+                }
+                */
+            }
+            
+            
+            private function onImportImage():void
+            {
+                var fileFilters:Array = [];
+                fileFilters.push(new FileFilter("Images", "*.gif;*.jpeg;*.jpg;*.png"));
+                _fileReference.browse(fileFilters);
+            }
+            
+            private function onImageSelect(evt:Event):void {
+                _fileReference.load();
+            }
+            
+            private function onImportComplete(evt:Event):void {
+                _imageModel.sourceData = _fileReference.data;
+            }
+            
+            
+            private function onCaptureImage():void
+            {
+                if (!_captureImage.selected)
+                {
+                    if (_camera == null)
+                    {
+                        _camera = Camera.getCamera();
+                        _videoDisplay.attachCamera(_camera);
+                    }
+                    _videoGroup.visible = true;
+                    _captureImage.selected = true;
+                }
+                else
+                {
+                    _videoGroup.visible = false;
+                    _captureImage.selected = false;
+                }
+            }
+
+            private function onSnapshot():void
+            {
+                var bitmapData:BitmapData = new BitmapData(_videoDisplay.width, _videoDisplay.height);
+                bitmapData.draw(_videoDisplay);
+                
+                var encoder:PNGEncoder = new PNGEncoder();
+                var byteArray:ByteArray = encoder.encode(bitmapData);
+                _imageModel.sourceData = byteArray;
+
+                _videoGroup.visible = false;
+                _captureImage.selected = false;
+            }
+            
+
+            override protected function setProperty(property:String, value:*):void
+            {
+                var items:ArrayCollection = new ArrayCollection();
+                for each (var selection:IView in selectionManager.selections)
+                {
+                    if (selection is XImage)
+                    {
+                        items.addItem(selection.model);
+                    }
+                }
+                var command:XUpdateCollectionCommand = new XUpdateCollectionCommand(model, items, property, value);
+                context.execute(command);
+            }
+        ]]>
+    </fx:Script>
+    
+    <fx:Declarations>
+        <net:FileReference
+            id="_fileReference"
+            select="onImageSelect(event);"
+            complete="onImportComplete(event);"/>
+    </fx:Declarations>
+    
+    <s:VGroup left="10" right="10" top="10" bottom="10">
+        <mx:Form>
+<!--  TODO Implement Image blend mode
+            <mx:FormItem label="Blend Mode:">
+                <s:DropDownList 
+                    id="__blendMode"
+                    dataProvider="{_blendModes}"
+                    selectedItem="{_imageModel.blendMode}" 
+                    change="onIndexChange(event);"/>
+            </mx:FormItem>
+-->
+            <mx:FormItem label="Alpha:">
+                <s:NumericStepper id="__alpha" width="60" change="onStepperChange(event);" maximum="1"
+                                  minimum="0" stepSize="0.025" value="{_imageModel.alpha}"/>
+            </mx:FormItem>
+            <mx:FormItem>
+                <s:CheckBox 
+                    id="_scaleContent" 
+                    label="Scale content" 
+                    selected="{_imageModel.scaleContent}" 
+                    change="onCheckBoxChange(event);"/>
+            </mx:FormItem>
+            <mx:FormItem>
+                <s:CheckBox 
+                    id="_maintainAspectRatio" 
+                    label="Maintain aspect ratio" 
+                    selected="{_imageModel.maintainAspectRatio}" 
+                    change="onCheckBoxChange(event);"/>
+            </mx:FormItem>
+            <mx:FormItem>
+                <s:CheckBox 
+                    id="_smoothBitmapContent" 
+                    label="Smooth content" 
+                    selected="{_imageModel.smoothBitmapContent}" 
+                    change="onCheckBoxChange(event);"/>
+            </mx:FormItem>
+        </mx:Form>
+        <mx:FormItem label="Source:">
+            <s:HGroup>
+                <mx:Button width="30" click="onImportImage();" toolTip="Import Image"
+                           icon="{Icons.DrawingOpen}" disabledIcon="{Icons.DrawingOpenDisabled}"/>
+                <mx:Button id="_captureImage" width="30" click="onCaptureImage();" toolTip="Capture Image"
+                           icon="{Icons.Camera}" disabledIcon="{Icons.CameraDisabled}"/>
+            </s:HGroup>
+        </mx:FormItem>
+        <s:Group id="_videoGroup" visible="false">
+            <mx:VideoDisplay id="_videoDisplay" width="240" height="180" y="10"/>
+            <mx:Button label="Take a Snapshot" click="onSnapshot();" horizontalCenter="0" top="200"/>
+        </s:Group>
+    </s:VGroup>
+    
+</editor:XModelEditor>

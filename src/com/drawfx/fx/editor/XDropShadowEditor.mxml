@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<editor:XModelEditor xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					 xmlns:s="library://ns.adobe.com/flex/spark" 
+					 xmlns:mx="library://ns.adobe.com/flex/mx" 
+					 xmlns:editor="com.anywarefx.editor.*"
+					 enabled="{_selectionManager.lastSelection != null}"
+					 width="100%" height="100%">
+	
+	<fx:Script>
+		<![CDATA[
+			/*
+			Copyright (c) 2013 Dave Jackson
+			
+			MIT License
+			
+			Permission is hereby granted, free of charge, to any person obtaining
+			a copy of this software and associated documentation files (the
+			"Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to
+			permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+			
+			The above copyright notice and this permission notice shall be
+			included in all copies or substantial portions of the Software.
+			
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			*/		
+			
+			import com.anywarefx.command.XUpdateCollectionCommand;
+			import com.anywarefx.manager.XSelectionManager;
+			import com.anywarefx.model.IModel;
+			import com.anywarefx.view.IView;
+			import com.drawfx.fx.model.IFxEnabledModel;
+			import com.drawfx.fx.model.XDropShadowModel;
+			
+			import mx.collections.ArrayCollection;
+			
+
+			[Bindable] private var _effect:XDropShadowModel;
+			[Bindable] private var _selectionManager:XSelectionManager;
+
+
+			public function get selectionManager():XSelectionManager
+			{
+				return _selectionManager;
+			}
+
+			public function set selectionManager(value:XSelectionManager):void
+			{
+				_selectionManager = value;
+			}
+
+			
+			override public function set model(value:IModel):void
+			{
+				super.model = value;
+				_effect = value as XDropShadowModel;
+			}
+
+
+			override protected function setProperty(property:String, value:*):void
+			{
+				var models:ArrayCollection = new ArrayCollection();
+				for each (var selection:IView in selectionManager.selections)
+				{
+					if (selection.model is IFxEnabledModel)
+					{
+						models.addItem(selection.model["fx"]["dropShadow"]);
+					}
+				}
+				var command:XUpdateCollectionCommand = new XUpdateCollectionCommand(model, models, property, value);
+				context.execute(command);
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:VGroup top="10" left="10" bottom="10" right="10" clipAndEnableScrolling="true">
+		<mx:Form width="100%" height="100%">
+<!--
+			<mx:FormItem>
+				<s:CheckBox 
+					id="_active"
+					label="Visible?"
+					selected="{_effect.active}" 
+					change="onCheckBoxChange(event);"/>
+			</mx:FormItem>
+-->
+			<mx:FormItem label="Color">
+				<mx:ColorPicker 
+					id="_color" 
+					selectedColor="{_effect.color}" 
+					change="onColorChange(event);"/>
+			</mx:FormItem>
+			<mx:FormItem label="Alpha">
+				<s:NumericStepper 
+					id="__alpha" 
+					width="60" 
+					minimum="0" 
+					maximum="1"
+					stepSize="0.025" 
+					value="{_effect.alpha}" 
+					change="onStepperChange(event);"/>
+			</mx:FormItem>
+			<mx:FormItem label="Angle">
+				<s:NumericStepper 
+					id="_angle"
+					width="60" 
+					minimum="0"
+					maximum="360"
+					value="{_effect.angle}" 
+					change="onStepperChange(event);"/>
+			</mx:FormItem>
+			<mx:FormItem label="Blur X">
+				<s:NumericStepper 
+					id="_blurX" 
+					width="60" 
+					minimum="0"
+					maximum="20"
+					value="{_effect.blurX}" 
+					change="onStepperChange(event);"/>
+			</mx:FormItem>
+			<mx:FormItem label="Blur Y">
+				<s:NumericStepper 
+					id="_blurY" 
+					width="60" 
+					minimum="0"
+					maximum="20"
+					value="{_effect.blurY}" 
+					change="onStepperChange(event);"/>
+			</mx:FormItem>
+			<mx:FormItem label="Distance">
+				<s:NumericStepper 
+					id="_distance" 
+					width="60" 
+					minimum="0"
+					maximum="20"
+					value="{_effect.distance}" 
+					change="onStepperChange(event);"/>
+			</mx:FormItem>
+			<mx:FormItem label="Quality">
+				<s:NumericStepper 
+					id="_quality" 
+					width="60" 
+					value="{_effect.quality}" 
+					change="onStepperChange(event);"/>
+			</mx:FormItem>
+			<mx:FormItem label="Strength">
+				<s:NumericStepper 
+					id="_strength" 
+					width="60" 
+					value="{_effect.strength}" 
+					change="onStepperChange(event);"/>
+			</mx:FormItem>
+			<mx:FormItem>
+				<s:CheckBox 
+					id="_inner"
+					label="Inner?"
+					selected="{_effect.inner}" 
+					change="onCheckBoxChange(event);"/>
+			</mx:FormItem>
+			<mx:FormItem>
+				<s:CheckBox 
+					id="_knockout"
+					label="Knockout?"
+					selected="{_effect.knockout}" 
+					change="onCheckBoxChange(event);"/>
+			</mx:FormItem>
+		</mx:Form>
+	</s:VGroup>
+	
+</editor:XModelEditor>

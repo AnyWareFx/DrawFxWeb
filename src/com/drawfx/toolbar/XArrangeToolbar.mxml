@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+          enabled="{_selectionManager.selections.length > 1 || _selectionManager.lastSelection is XGroup}"
+		  gap="3">
+	
+	<fx:Script>
+		<![CDATA[
+			/*
+			Copyright (c) 2013 Dave Jackson
+			
+			MIT License
+			
+			Permission is hereby granted, free of charge, to any person obtaining
+			a copy of this software and associated documentation files (the
+			"Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to
+			permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+			
+			The above copyright notice and this permission notice shall be
+			included in all copies or substantial portions of the Software.
+			
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			*/		
+			
+			import com.anywarefx.command.XCommandContext;
+			import com.anywarefx.manager.XSelectionManager;
+			import com.drawfx.command.XGroupSelectionsCommand;
+			import com.drawfx.command.XUnGroupCommand;
+			import com.drawfx.model.XDrawingModel;
+			import com.drawfx.view.XGroup;
+			
+			import assets.Icons;
+			
+			
+			[Bindable] private var _selectionManager:XSelectionManager;
+			private var _context:XCommandContext;
+			private var _model:XDrawingModel;
+			
+			
+			public function get selectionManager():XSelectionManager
+			{
+				return _selectionManager;
+			}
+			
+			public function set selectionManager(value:XSelectionManager):void
+			{
+				_selectionManager = value;
+			}
+			
+			
+			public function get context():XCommandContext
+			{
+				return _context;
+			}
+			
+			public function set context(value:XCommandContext):void
+			{
+				_context = value;
+			}
+			
+			
+			public function get model():XDrawingModel
+			{
+				return _model;
+			}
+			
+			public function set model(value:XDrawingModel):void
+			{
+				_model = value;
+			}
+			
+			
+			private function onGroupSelections():void
+			{
+				var command:XGroupSelectionsCommand = new XGroupSelectionsCommand(
+					_model, 
+					_selectionManager.selections
+				);
+				_context.execute(command);
+			}
+			
+
+			private function onUnGroupLastSelection():void
+			{
+				var command:XUnGroupCommand = new XUnGroupCommand(
+					_model, 
+					_selectionManager.selections
+				);
+				_context.execute(command);
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<mx:Button width="30" toolTip="Group Selections"
+			   click="onGroupSelections();" 
+			   disabledIcon="{Icons.GroupSelectionsDisabled}"
+			   enabled="{_selectionManager.selections.length > 1}"
+			   icon="{Icons.GroupSelections}"/>
+	
+	<mx:Button width="30" toolTip="Un-Group Selections"
+			   click="onUnGroupLastSelection();" 
+			   disabledIcon="{Icons.UnGroupSelectionsDisabled}"
+			   enabled="{_selectionManager.lastSelection is XGroup}"
+			   icon="{Icons.UnGroupSelections}"/>
+</s:HGroup>

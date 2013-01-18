@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+          enabled="{_selectionManager.selections.length > 1}">
+
+	<fx:Script>
+		<![CDATA[
+			/*
+			Copyright (c) 2013 Dave Jackson
+			
+			MIT License
+			
+			Permission is hereby granted, free of charge, to any person obtaining
+			a copy of this software and associated documentation files (the
+			"Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to
+			permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+			
+			The above copyright notice and this permission notice shall be
+			included in all copies or substantial portions of the Software.
+			
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			*/		
+			
+			import com.anywarefx.command.XCommandContext;
+			import com.anywarefx.manager.XSelectionManager;
+			import com.drawfx.command.XAlignSelectionsCommand;
+			import com.drawfx.command.XDistributeSelectionsCommand;
+			import com.drawfx.model.XDrawingModel;
+			
+			import assets.Icons;
+
+
+			[Bindable] private var _selectionManager:XSelectionManager;
+			private var _context:XCommandContext;
+			private var _model:XDrawingModel;
+			
+
+			public function get selectionManager():XSelectionManager
+			{
+				return _selectionManager;
+			}
+			
+			public function set selectionManager(value:XSelectionManager):void
+			{
+				_selectionManager = value;
+			}
+			
+			
+			public function get context():XCommandContext
+			{
+				return _context;
+			}
+			
+			public function set context(value:XCommandContext):void
+			{
+				_context = value;
+			}
+			
+			
+			public function get model():XDrawingModel
+			{
+				return _model;
+			}
+			
+			public function set model(value:XDrawingModel):void
+			{
+				_model = value;
+			}
+			
+			
+			private function onAlignSelections(alignment:String):void
+			{
+				var command:XAlignSelectionsCommand = new XAlignSelectionsCommand(
+					_model, 
+					_selectionManager.selections, 
+					_selectionManager.lastSelection,
+					alignment
+				);
+				_context.execute(command);
+			}
+			
+			
+			private function onDistributeSelections(distribution:String):void
+			{
+				var command:XDistributeSelectionsCommand = new XDistributeSelectionsCommand(
+					_model, 
+					_selectionManager.selections, 
+					_selectionManager.lastSelection,
+					distribution
+				);
+				_context.execute(command);
+			}
+
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+
+	<s:HGroup gap="3">
+		<mx:Button id="alignTop" width="30" toolTip="Align to top"
+				   click="onAlignSelections(XAlignSelectionsCommand.ALIGN_TOP);" 
+				   disabledIcon="{Icons.AlignTopDisabled}"
+                   enabled="{_selectionManager.selections.length > 1}"
+				   icon="{Icons.AlignTop}"/>
+		<mx:Button id="alignLeft" width="30" toolTip="Align to left"
+				   click="onAlignSelections(XAlignSelectionsCommand.ALIGN_LEFT);"
+				   disabledIcon="{Icons.AlignLeftDisabled}"
+				   enabled="{_selectionManager.selections.length > 1}" 
+				   icon="{Icons.AlignLeft}"/>
+		<mx:Button id="alignBottom" width="30" toolTip="Align to bottom"
+				   click="onAlignSelections(XAlignSelectionsCommand.ALIGN_BOTTOM);"
+				   disabledIcon="{Icons.AlignBottomDisabled}"
+				   enabled="{_selectionManager.selections.length > 1}" 
+				   icon="{Icons.AlignBottom}"/>
+		<mx:Button id="alignRight" width="30" toolTip="Align to right"
+				   click="onAlignSelections(XAlignSelectionsCommand.ALIGN_RIGHT);"
+				   disabledIcon="{Icons.AlignRightDisabled}"
+				   enabled="{_selectionManager.selections.length > 1}" 
+				   icon="{Icons.AlignRight}"/>
+		<mx:Button id="alignHorizontalCenter" width="30" toolTip="Align horizontal center"
+				   click="onAlignSelections(XAlignSelectionsCommand.ALIGN_HORIZONTAL_CENTER);"
+				   disabledIcon="{Icons.AlignHorizontalCenterDisabled}"
+				   enabled="{_selectionManager.selections.length > 1}" 
+				   icon="{Icons.AlignHorizontalCenter}"/>
+		<mx:Button id="alignVerticalCenter" width="30" toolTip="Align vertical center"
+				   click="onAlignSelections(XAlignSelectionsCommand.ALIGN_VERTICAL_CENTER);"
+				   disabledIcon="{Icons.AlignVerticalCenterDisabled}"
+				   enabled="{_selectionManager.selections.length > 1}" 
+				   icon="{Icons.AlignVerticalCenter}"/>
+	</s:HGroup>
+	<s:HGroup gap="3">
+		<mx:Button id="distributeTop" width="30"  
+				   click="onDistributeSelections(XDistributeSelectionsCommand.DISTRIBUTE_TOP);"
+				   disabledIcon="{Icons.DistributeTopDisabled}"
+				   enabled="{_selectionManager.selections.length > 1}"
+				   icon="{Icons.DistributeTop}"/>
+		<mx:Button id="distributeLeft" width="30" 
+				   click="onDistributeSelections(XDistributeSelectionsCommand.DISTRIBUTE_LEFT);"
+				   disabledIcon="{Icons.DistributeLeftDisabled}"
+				   enabled="{_selectionManager.selections.length > 1}"
+				   icon="{Icons.DistributeLeft}"/>
+		<mx:Button id="distributeBottom" width="30" 
+				   click="onDistributeSelections(XDistributeSelectionsCommand.DISTRIBUTE_BOTTOM);"
+				   disabledIcon="{Icons.DistributeBottomDisabled}"
+				   enabled="{_selectionManager.selections.length > 1}"
+				   icon="{Icons.DistributeBottom}"/>
+		<mx:Button id="distributeRight" width="30" 
+				   click="onDistributeSelections(XDistributeSelectionsCommand.DISTRIBUTE_RIGHT);"
+				   disabledIcon="{Icons.DistributeRightDisabled}"
+				   enabled="{_selectionManager.selections.length > 1}"
+				   icon="{Icons.DistributeRight}"/>
+		<mx:Button id="distributeHorizontalCenter" width="30" 
+				   click="onDistributeSelections(XDistributeSelectionsCommand.DISTRIBUTE_HORIZONTAL_CENTER);"
+				   disabledIcon="{Icons.DistributeHorizontalCenterDisabled}"
+				   enabled="{_selectionManager.selections.length > 1}"
+				   icon="{Icons.DistributeHorizontalCenter}"/>
+		<mx:Button id="distributeVerticalCenter" width="30" 
+				   click="onDistributeSelections(XDistributeSelectionsCommand.DISTRIBUTE_VERTICAL_CENTER);"
+				   disabledIcon="{Icons.DistributeVerticalCenterDisabled}"
+				   enabled="{_selectionManager.selections.length > 1}"
+				   icon="{Icons.DistributeVerticalCenter}"/>
+	</s:HGroup>
+	
+</s:VGroup>
