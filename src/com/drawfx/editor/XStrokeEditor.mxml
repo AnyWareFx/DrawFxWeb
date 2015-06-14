@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <editor:XModelEditor xmlns:fx="http://ns.adobe.com/mxml/2009"
-				   xmlns:s="library://ns.adobe.com/flex/spark"
-				   xmlns:mx="library://ns.adobe.com/flex/mx"
-				   xmlns:editor="com.anywarefx.editor.*" 
-				   enabled="{_selectionManager.lastSelection != null}"
-				   width="230" height="210">
-
+					 xmlns:s="library://ns.adobe.com/flex/spark"
+					 xmlns:mx="library://ns.adobe.com/flex/mx"
+					 xmlns:editor="com.anywarefx.editor.*" 
+					 enabled="{_selectionManager.lastSelection != null}"
+					 width="230" height="210">
+	
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -43,11 +43,11 @@
 			
 			import mx.collections.ArrayCollection;
 			
-
+			
 			[Bindable] private var _strokeModel:XStrokeModel;
 			[Bindable] private var _selectionManager:XSelectionManager;
-
-
+			
+			
 			public function get selectionManager():XSelectionManager
 			{
 				return _selectionManager;
@@ -58,14 +58,14 @@
 				_selectionManager = value;
 			}
 			
-
+			
 			override public function set model(value:IModel):void
 			{
 				super.model = value;
 				_strokeModel = value as XStrokeModel;
 			}
-
-
+			
+			
 			override protected function setProperty(property:String, value:*):void
 			{
 				var textBoxes:ArrayCollection = new ArrayCollection();
@@ -89,7 +89,7 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-
+	
 	<s:Group>
 		<mx:Form>
 			<mx:FormItem label="Color:">
@@ -115,5 +115,5 @@
 			</mx:FormItem>
 		</mx:Form>
 	</s:Group>
-
+	
 </editor:XModelEditor>

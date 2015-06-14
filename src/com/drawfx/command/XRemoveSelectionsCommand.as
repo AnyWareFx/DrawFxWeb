@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -32,13 +32,13 @@ package com.drawfx.command
 	
 	import mx.collections.ArrayCollection;
 	import mx.core.UIComponent;
-
-
+	
+	
 	public class XRemoveSelectionsCommand extends XDrawingMacroCommand
 	{
 		private var _selections:ArrayCollection;
-
-
+		
+		
 		public function XRemoveSelectionsCommand(target:*, selections:ArrayCollection)
 		{
 			super(target);
@@ -52,12 +52,12 @@ package com.drawfx.command
 			for each (var selection:IView in _selections)
 			{
 				var container:XComposite = getContainer((selection as UIComponent).parent as UIComponent);
-                command = XDrawingCommandFactory.createRemoveCommand(container.model as XCompositeModel, selection.model as IBoundedModel);
+				command = XDrawingCommandFactory.createRemoveCommand(container.model as XCompositeModel, selection.model as IBoundedModel);
 				context.execute(command);
 			}
 		}
-
-
+		
+		
 		protected function getContainer(view:UIComponent):XComposite
 		{
 			while (!(view is XComposite) && view != null && view.parent != null)

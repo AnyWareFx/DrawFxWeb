@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,10 +25,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package assets
 {
-    public class Images
-    {
-        [Bindable]
-        [Embed(source="assets/images/image-thumbnail.png")]
-        public static var ImageThumbnail:Class; 
-    }
+	public class Images
+	{
+		[Bindable]
+		[Embed(source="assets/images/image-thumbnail.png")]
+		public static var ImageThumbnail:Class; 
+	}
 }

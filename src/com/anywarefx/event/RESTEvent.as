@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,15 +25,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.event
 {
-    public class RESTEvent extends XEvent
-    {
-        public static const COMPLETE:String = "complete";
-        public static const ERROR:String    = "error";
-
-        
-        public function RESTEvent(type:String, message:String="", bubbles:Boolean=false, cancelable:Boolean=false)
-        {
-            super(type, message, bubbles, cancelable);
-        }
-    }
+	public class RESTEvent extends XEvent
+	{
+		public static const COMPLETE:String = "complete";
+		public static const ERROR:String    = "error";
+		
+		
+		public function RESTEvent(type:String, message:String="", bubbles:Boolean=false, cancelable:Boolean=false)
+		{
+			super(type, message, bubbles, cancelable);
+		}
+	}
 }

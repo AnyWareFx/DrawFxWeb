@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <editor:XModelEditor xmlns:fx="http://ns.adobe.com/mxml/2009" 
-                     xmlns:s="library://ns.adobe.com/flex/spark" 
-                     xmlns:mx="library://ns.adobe.com/flex/mx" 
-                     xmlns:editor="com.anywarefx.editor.*" 
-                     xmlns:toolbar="com.drawfx.toolbar.*"
-                     x="{_workspaceBounds.x}"
-                     y="{_workspaceBounds.y}"
-                     width="{_workspaceBounds.width}"
-                     height="{_workspaceBounds.height}">
-    
-    <fx:Script>
-        <![CDATA[
+					 xmlns:s="library://ns.adobe.com/flex/spark" 
+					 xmlns:mx="library://ns.adobe.com/flex/mx" 
+					 xmlns:editor="com.anywarefx.editor.*" 
+					 xmlns:toolbar="com.drawfx.toolbar.*"
+					 x="{_workspaceBounds.x}"
+					 y="{_workspaceBounds.y}"
+					 width="{_workspaceBounds.width}"
+					 height="{_workspaceBounds.height}">
+	
+	<fx:Script>
+		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -36,259 +36,259 @@
 			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			*/		
 			
-            import com.anywarefx.model.IModel;
-            import com.anywarefx.view.XView;
-            import com.drawfx.XWorkspace;
-            import com.drawfx.model.IBorderedModel;
-            import com.drawfx.model.IBoundedModel;
-            import com.drawfx.model.IFilledModel;
-            import com.drawfx.model.IFormattedModel;
-            import com.drawfx.model.IStrokedModel;
-            import com.drawfx.model.XBoundsModel;
-            import com.drawfx.model.XImageModel;
-            
-            import mx.collections.ArrayCollection;
-            import mx.core.UIComponent;
-            import mx.events.PropertyChangeEvent;
-            
-            import assets.Icons;
-            
-            
-            [Bindable] private var _workspaceBounds:XBoundsModel = new XBoundsModel();
-            [Bindable] private var _snapshot:XSnapshot;
-            
-            private var _workspace:XWorkspace;
-            private var _view:XView;
-            private var _parentBounds:XBoundsModel;
-            private var _parentLocks:ArrayCollection;
-            
-            
-            public function get workspace():XWorkspace
-            {
-                return _workspace;
-            }
-            
-            public function set workspace(value:XWorkspace):void
-            {
-                _workspace = value;
-            }
-            
-            
-            public function get snapshot():XSnapshot
-            {
-                return _snapshot;
-            }
-            
-            public function set snapshot(value:XSnapshot):void
-            {
-                _snapshot = value;
-            }
-            
-            
-            public function get view():XView
-            {
-                return _view;
-            }
-            
-            public function set view(value:XView):void
-            {
-                _view = value;
-                model = _view.model;
-                if (_view is IConstrainedView)
-                {
-                    _parentLocks = (_view as IConstrainedView).locks;
-                }
-            }
-            
-            
-            override public function set model(value:IModel):void
-            {
-                super.model = value;
-                if (_parentBounds != null)
-                {
-                    _parentBounds.removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onBoundsChange);
-                }
-                if (model is IBoundedModel)
-                {
-                    _parentBounds = (model as IBoundedModel).bounds;
-                    _parentBounds.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onBoundsChange);
-                    _workspaceBounds.width = _parentBounds.width;
-                    _workspaceBounds.height = _parentBounds.height;
-                    syncPosition();
-                }
-            }
-            
-            
-            private function onBoundsChange(event:PropertyChangeEvent):void
-            {
-                switch (event.property)
-                {
-                    case "width":
-                        _workspaceBounds.width = event.newValue as Number;
-                        break;
-                    
-                    case "height":
-                        _workspaceBounds.height = event.newValue as Number;
-                        break;
-                    
-                    case "x":
-                    case "y":
-                        syncPosition();
-                        break;
-                }
-            }
-            
-            private function syncPosition():void
-            {
-                var parent:XComposite = XDrawing.getParent(_view.parent as UIComponent);
-                var position:Point = parent.contentToGlobal(_parentBounds.position);
-                _workspaceBounds.position = _workspace.globalToContent(position);
-            }
-            
-            
-            private function onStrokeStateChange():void
-            {
-                borderToolbar.currentState = strokeToolbar.currentState;
-            }
-            
-            
-            private function onTextIconClick():void
-            {
-                formatToolbar.currentState = (formatToolbar.currentState == "expanded") ? "iconic" : "expanded";
-            }
-
-
-            private function onConfigureClick():void
-            {
-                settings.visible = !settings.visible;
-            }
-            
-            
-            private function onSettingChange(event:MouseEvent):void
-            {
-                var button:Button = event.target as Button;
-                if (button != null)
-                {
-                    button.selected = !button.selected;
-                    if (button.id == "_locks" && _parentLocks != null)
-                    {
-                        for each (var lock:Image in _parentLocks)
-                        {
-                            lock.visible = button.selected;
-                        }
-                    }
-                }
-            }
-        ]]>
-    </fx:Script>
-    
-    <mx:Image 
-        id="_formatIcon"
-        top="0"
-        left="-34"
-        visible="{model is IFormattedModel &amp;&amp; _format.selected}"
-        source="{Icons.TextToolbar}" 
-        click="onTextIconClick();"/>
-    <toolbar:XFormatToolbar 
-        id="formatToolbar" 
-        currentState="iconic"
-        visible="{_formatIcon.visible}"
-        editable="{model is IFormattedModel}"
-        context="{context}" 
-        model="{model}" 
-        selectionManager="{null}" 
-        horizontalCenter="0" 
-        top="-60"/>
-    <toolbar:XStrokeToolbar 
-        id="strokeToolbar" 
-        visible="{model is IStrokedModel &amp;&amp; _stroke.selected}"
-        editable="{model is IStrokedModel}"
-        currentState="iconic"
-        currentStateChange="onStrokeStateChange();"
-        context="{context}" 
-        model="{model}" 
-        selectionManager="{null}" 
-        top="0"
-        right="-170"/>
-    <toolbar:XBorderToolbar 
-        id="borderToolbar" 
-        visible="{model is IBorderedModel &amp;&amp; _stroke.selected}"
-        editable="{model is IBorderedModel}"
-        currentState="iconic"
-        context="{context}" 
-        model="{model}" 
-        selectionManager="{null}" 
-        top="28" 
-        right="-170"/>
-    <toolbar:XFillToolbar 
-        id="fillToolbar" 
-        visible="{model is IFilledModel &amp;&amp; _fill.selected}"
-        editable="{model is IFilledModel}"
-        currentState="iconic"
-        context="{context}" 
-        model="{model}" 
-        selectionManager="{null}" 
-        top="60" 
-        right="-170"/>
-    <toolbar:XImageToolbar 
-        id="imageToolbar" 
-        visible="{model is XImageModel &amp;&amp; _image.selected}"
-        editable="{model is XImageModel}"
-        currentState="iconic"
-        context="{context}" 
-        model="{model}" 
-        selectionManager="{null}" 
-        snapshot="{_snapshot}"
-        left="0" 
-        bottom="-80"/>
-
-    
-    <mx:Image 
-        bottom="0"
-        left="-16"
-        source="{Icons.Configure}" 
-        click="onConfigureClick();"/>
-    <s:VGroup 
-        id="settings"
-        visible="false"
-        scaleX=".75"
-        scaleY=".75"
-        click="onSettingChange(event);"
-        top="{_workspaceBounds.height - 12}"
-        left="-70">
-        
-        <s:HGroup>
-            <mx:Button 
-                id="_format" 
-                enabled="{model is IFormattedModel}"
-                icon="{Icons.TextBold}" 
-                disabledIcon="{Icons.TextBoldDisabled}"
-                width="30"/>
-            <mx:Button 
-                id="_stroke" 
-                enabled="{model is IStrokedModel}"
-                icon="{Icons.Stroke}" 
-                disabledIcon="{Icons.StrokeDisabled}"
-                width="30"/>
-        </s:HGroup>
-        <s:HGroup>
-            <mx:Button 
-                id="_locks" 
-                icon="{Icons.Lock}" 
-                width="30"/>
-            <mx:Button 
-                id="_fill" 
-                enabled="{model is IFilledModel}"
-                icon="{Icons.Fill}" 
-                disabledIcon="{Icons.FillDisabled}"
-                width="30"/>
-        </s:HGroup>
-        <mx:Button 
-            id="_image" 
-            enabled="{model is XImageModel}"
-            icon="{Icons.Image}" 
-            disabledIcon="{Icons.ImageDisabled}"
-            width="30"/>
-    </s:VGroup>
-    
+			import com.anywarefx.model.IModel;
+			import com.anywarefx.view.XView;
+			import com.drawfx.XWorkspace;
+			import com.drawfx.model.IBorderedModel;
+			import com.drawfx.model.IBoundedModel;
+			import com.drawfx.model.IFilledModel;
+			import com.drawfx.model.IFormattedModel;
+			import com.drawfx.model.IStrokedModel;
+			import com.drawfx.model.XBoundsModel;
+			import com.drawfx.model.XImageModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.core.UIComponent;
+			import mx.events.PropertyChangeEvent;
+			
+			import assets.Icons;
+			
+			
+			[Bindable] private var _workspaceBounds:XBoundsModel = new XBoundsModel();
+			[Bindable] private var _snapshot:XSnapshot;
+			
+			private var _workspace:XWorkspace;
+			private var _view:XView;
+			private var _parentBounds:XBoundsModel;
+			private var _parentLocks:ArrayCollection;
+			
+			
+			public function get workspace():XWorkspace
+			{
+				return _workspace;
+			}
+			
+			public function set workspace(value:XWorkspace):void
+			{
+				_workspace = value;
+			}
+			
+			
+			public function get snapshot():XSnapshot
+			{
+				return _snapshot;
+			}
+			
+			public function set snapshot(value:XSnapshot):void
+			{
+				_snapshot = value;
+			}
+			
+			
+			public function get view():XView
+			{
+				return _view;
+			}
+			
+			public function set view(value:XView):void
+			{
+				_view = value;
+				model = _view.model;
+				if (_view is IConstrainedView)
+				{
+					_parentLocks = (_view as IConstrainedView).locks;
+				}
+			}
+			
+			
+			override public function set model(value:IModel):void
+			{
+				super.model = value;
+				if (_parentBounds != null)
+				{
+					_parentBounds.removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onBoundsChange);
+				}
+				if (model is IBoundedModel)
+				{
+					_parentBounds = (model as IBoundedModel).bounds;
+					_parentBounds.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onBoundsChange);
+					_workspaceBounds.width = _parentBounds.width;
+					_workspaceBounds.height = _parentBounds.height;
+					syncPosition();
+				}
+			}
+			
+			
+			private function onBoundsChange(event:PropertyChangeEvent):void
+			{
+				switch (event.property)
+				{
+					case "width":
+						_workspaceBounds.width = event.newValue as Number;
+						break;
+					
+					case "height":
+						_workspaceBounds.height = event.newValue as Number;
+						break;
+					
+					case "x":
+					case "y":
+						syncPosition();
+						break;
+				}
+			}
+			
+			private function syncPosition():void
+			{
+				var parent:XComposite = XDrawing.getParent(_view.parent as UIComponent);
+				var position:Point = parent.contentToGlobal(_parentBounds.position);
+				_workspaceBounds.position = _workspace.globalToContent(position);
+			}
+			
+			
+			private function onStrokeStateChange():void
+			{
+				borderToolbar.currentState = strokeToolbar.currentState;
+			}
+			
+			
+			private function onTextIconClick():void
+			{
+				formatToolbar.currentState = (formatToolbar.currentState == "expanded") ? "iconic" : "expanded";
+			}
+			
+			
+			private function onConfigureClick():void
+			{
+				settings.visible = !settings.visible;
+			}
+			
+			
+			private function onSettingChange(event:MouseEvent):void
+			{
+				var button:Button = event.target as Button;
+				if (button != null)
+				{
+					button.selected = !button.selected;
+					if (button.id == "_locks" && _parentLocks != null)
+					{
+						for each (var lock:Image in _parentLocks)
+						{
+							lock.visible = button.selected;
+						}
+					}
+				}
+			}
+		]]>
+	</fx:Script>
+	
+	<mx:Image 
+		id="_formatIcon"
+		top="0"
+		left="-34"
+		visible="{model is IFormattedModel &amp;&amp; _format.selected}"
+		source="{Icons.TextToolbar}" 
+		click="onTextIconClick();"/>
+	<toolbar:XFormatToolbar 
+		id="formatToolbar" 
+		currentState="iconic"
+		visible="{_formatIcon.visible}"
+		editable="{model is IFormattedModel}"
+		context="{context}" 
+		model="{model}" 
+		selectionManager="{null}" 
+		horizontalCenter="0" 
+		top="-60"/>
+	<toolbar:XStrokeToolbar 
+		id="strokeToolbar" 
+		visible="{model is IStrokedModel &amp;&amp; _stroke.selected}"
+		editable="{model is IStrokedModel}"
+		currentState="iconic"
+		currentStateChange="onStrokeStateChange();"
+		context="{context}" 
+		model="{model}" 
+		selectionManager="{null}" 
+		top="0"
+		right="-170"/>
+	<toolbar:XBorderToolbar 
+		id="borderToolbar" 
+		visible="{model is IBorderedModel &amp;&amp; _stroke.selected}"
+		editable="{model is IBorderedModel}"
+		currentState="iconic"
+		context="{context}" 
+		model="{model}" 
+		selectionManager="{null}" 
+		top="28" 
+		right="-170"/>
+	<toolbar:XFillToolbar 
+		id="fillToolbar" 
+		visible="{model is IFilledModel &amp;&amp; _fill.selected}"
+		editable="{model is IFilledModel}"
+		currentState="iconic"
+		context="{context}" 
+		model="{model}" 
+		selectionManager="{null}" 
+		top="60" 
+		right="-170"/>
+	<toolbar:XImageToolbar 
+		id="imageToolbar" 
+		visible="{model is XImageModel &amp;&amp; _image.selected}"
+		editable="{model is XImageModel}"
+		currentState="iconic"
+		context="{context}" 
+		model="{model}" 
+		selectionManager="{null}" 
+		snapshot="{_snapshot}"
+		left="0" 
+		bottom="-80"/>
+	
+	
+	<mx:Image 
+		bottom="0"
+		left="-16"
+		source="{Icons.Configure}" 
+		click="onConfigureClick();"/>
+	<s:VGroup 
+		id="settings"
+		visible="false"
+		scaleX=".75"
+		scaleY=".75"
+		click="onSettingChange(event);"
+		top="{_workspaceBounds.height - 12}"
+		left="-70">
+		
+		<s:HGroup>
+			<mx:Button 
+				id="_format" 
+				enabled="{model is IFormattedModel}"
+				icon="{Icons.TextBold}" 
+				disabledIcon="{Icons.TextBoldDisabled}"
+				width="30"/>
+			<mx:Button 
+				id="_stroke" 
+				enabled="{model is IStrokedModel}"
+				icon="{Icons.Stroke}" 
+				disabledIcon="{Icons.StrokeDisabled}"
+				width="30"/>
+		</s:HGroup>
+		<s:HGroup>
+			<mx:Button 
+				id="_locks" 
+				icon="{Icons.Lock}" 
+				width="30"/>
+			<mx:Button 
+				id="_fill" 
+				enabled="{model is IFilledModel}"
+				icon="{Icons.Fill}" 
+				disabledIcon="{Icons.FillDisabled}"
+				width="30"/>
+		</s:HGroup>
+		<mx:Button 
+			id="_image" 
+			enabled="{model is XImageModel}"
+			icon="{Icons.Image}" 
+			disabledIcon="{Icons.ImageDisabled}"
+			width="30"/>
+	</s:VGroup>
+	
 </editor:XModelEditor>

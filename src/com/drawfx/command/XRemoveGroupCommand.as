@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -26,32 +26,32 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package com.drawfx.command
 {
 	import com.drawfx.model.XGroupModel;
-
-
+	
+	
 	public class XRemoveGroupCommand extends XDrawingCommand
 	{
 		private var _group:XGroupModel;
-
-
+		
+		
 		public function XRemoveGroupCommand(target:*, group:XGroupModel)
 		{
 			super(target);
 			_group = group;
 		}
-
-
+		
+		
 		public function get group():XGroupModel
 		{
 			return _group;
 		}
-
-
+		
+		
 		override public function execute():void
 		{
 			parent.removeGroup(group);
 		}
-
-
+		
+		
 		override public function undo():void
 		{
 			parent.addGroup(group);

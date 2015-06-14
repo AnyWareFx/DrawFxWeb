@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -35,8 +35,8 @@ package com.drawfx.model
 	
 	use namespace flash_proxy;
 	use namespace object_proxy;
-
-
+	
+	
 	[Bindable]
 	public class XTextBoxModel extends XModel implements IBoundedModel, IConstrainedModel, IFormattedModel, IFxEnabledModel
 	{
@@ -45,10 +45,10 @@ package com.drawfx.model
 			super();
 			var model:* = {
 				bounds: null,
-                constraints: null,
+				constraints: null,
 				sizeToContent: false,
 				text: "",
-                format: null,
+				format: null,
 				fx: null
 			};
 			plugin(model);
@@ -64,17 +64,17 @@ package com.drawfx.model
 		{
 			setProperty("bounds", value);
 		}
-        
-        
-        public function get constraints():XConstraintsModel
-        {
-            return getProperty("constraints");
-        }
-        
-        public function set constraints(value:XConstraintsModel):void
-        {
-            setProperty("constraints", value);
-        }
+		
+		
+		public function get constraints():XConstraintsModel
+		{
+			return getProperty("constraints");
+		}
+		
+		public function set constraints(value:XConstraintsModel):void
+		{
+			setProperty("constraints", value);
+		}
 		
 		
 		public function get sizeToContent():Boolean
@@ -86,8 +86,8 @@ package com.drawfx.model
 		{
 			setProperty("sizeToContent", value);
 		}
-
-
+		
+		
 		public function get text():String
 		{
 			return getProperty("text");
@@ -97,17 +97,17 @@ package com.drawfx.model
 		{
 			setProperty("text", value);
 		}
-        
-        
-        public function get format():XTextFormatModel
-        {
-            return getProperty("format");
-        }
-        
-        public function set format(value:XTextFormatModel):void
-        {
-            setProperty("format", value);
-        }
+		
+		
+		public function get format():XTextFormatModel
+		{
+			return getProperty("format");
+		}
+		
+		public function set format(value:XTextFormatModel):void
+		{
+			setProperty("format", value);
+		}
 		
 		
 		public function get fx():FxModel

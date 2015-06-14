@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <afx:XModelEditor xmlns:fx="http://ns.adobe.com/mxml/2009"
-				   xmlns:s="library://ns.adobe.com/flex/spark"
-				   xmlns:mx="library://ns.adobe.com/flex/mx"
-				   xmlns:afx="com.anywarefx.editor.*"
-				   xmlns:editor="com.drawfx.editor.*"
-				   enabled="{_editable}"
-				   width="100%" height="100%">
-
+				  xmlns:s="library://ns.adobe.com/flex/spark"
+				  xmlns:mx="library://ns.adobe.com/flex/mx"
+				  xmlns:afx="com.anywarefx.editor.*"
+				  xmlns:editor="com.drawfx.editor.*"
+				  enabled="{_editable}"
+				  width="100%" height="100%">
+	
 	<afx:layout>
 		<s:TileLayout/>
 	</afx:layout>
@@ -14,7 +14,7 @@
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -48,28 +48,28 @@
 			import mx.collections.ArrayCollection;
 			import mx.events.PropertyChangeEvent;
 			
-
+			
 			[Bindable] private var _editable:Boolean;
 			[Bindable] private var _borderModel:XBorderModel;
 			[Bindable] private var _selectionManager:XSelectionManager;
-
-
+			
+			
 			public function get editable():Boolean
 			{
 				return _editable;
 			}
-
+			
 			public function set editable(value:Boolean):void
 			{
 				_editable = value;
 			}
-
-
+			
+			
 			public function get selectionManager():XSelectionManager
 			{
 				return _selectionManager;
 			}
-
+			
 			public function set selectionManager(value:XSelectionManager):void
 			{
 				_selectionManager = value;
@@ -86,8 +86,8 @@
 					_borderModel = super.model as XBorderModel;
 				}
 			}
-
-
+			
+			
 			private function onSelectionChange(event:PropertyChangeEvent):void
 			{
 				if (event.property == "lastSelection")
@@ -126,8 +126,8 @@
 				}
 				*/
 			}
-
-
+			
+			
 			override protected function setProperty(property:String, value:*):void
 			{
 				var items:ArrayCollection = new ArrayCollection();
@@ -143,11 +143,11 @@
 			}
 		]]>
 	</fx:Script>
-
+	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-
+	
 	<mx:Form x="10" y="218">
 		<mx:FormItem label="Corner Radius:">
 			<s:NumericStepper 

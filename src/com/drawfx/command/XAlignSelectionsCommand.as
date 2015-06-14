@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2105 Dave Jackson
 
 MIT License
 
@@ -34,8 +34,8 @@ package com.drawfx.command
 	import flash.geom.Point;
 	
 	import mx.collections.ArrayCollection;
-
-
+	
+	
 	public class XAlignSelectionsCommand extends XDrawingMacroCommand
 	{
 		public static var ALIGN_TOP:String = "alignTop";
@@ -44,7 +44,7 @@ package com.drawfx.command
 		public static var ALIGN_RIGHT:String = "alignRight";
 		public static var ALIGN_HORIZONTAL_CENTER:String = "alignHorizontalCenter";
 		public static var ALIGN_VERTICAL_CENTER:String = "alignVerticalCenter";
-
+		
 		private var _selections:ArrayCollection;
 		private var _lastSelection:IView;
 		private var _alignment:String;

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,25 +25,25 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.rest
 {
-    public class HTTPHeader
-    {
-        private var _name:String;
-        private var _value:String;
-
-        public function HTTPHeader(name:String, value:String)
-        {
-            _name = name;
-            _value = value;
-        }
-
-        public function get name():String
-        {
-            return _name;
-        }
-
-        public function get value():String
-        {
-            return _value;
-        }
-    }
+	public class HTTPHeader
+	{
+		private var _name:String;
+		private var _value:String;
+		
+		public function HTTPHeader(name:String, value:String)
+		{
+			_name = name;
+			_value = value;
+		}
+		
+		public function get name():String
+		{
+			return _name;
+		}
+		
+		public function get value():String
+		{
+			return _value;
+		}
+	}
 }

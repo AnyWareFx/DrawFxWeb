@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -28,8 +28,8 @@ package com.anywarefx.view
 	import com.anywarefx.model.IModel;
 	
 	import flash.events.IEventDispatcher;
-
-
+	
+	
 	public interface IView extends IEventDispatcher
 	{
 		function get model():IModel;

@@ -7,7 +7,7 @@
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -31,40 +31,40 @@
 			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			*/		
 			
-            import com.anywarefx.XFactory;
-            import com.anywarefx.command.XCommandContext;
-            import com.drawfx.XDrawingDocument;
-            import com.drawfx.model.XDrawingModel;
-            import com.drawfx.model.XStencilModel;
-            
-            import mx.managers.CursorManager;
-            
-            import assets.Icons;
-
-
-            [Bindable] private var _context:XCommandContext;
+			import com.anywarefx.XFactory;
+			import com.anywarefx.command.XCommandContext;
+			import com.drawfx.XDrawingDocument;
+			import com.drawfx.model.XDrawingModel;
+			import com.drawfx.model.XStencilModel;
+			
+			import mx.managers.CursorManager;
+			
+			import assets.Icons;
+			
+			
+			[Bindable] private var _context:XCommandContext;
 			private var _storage:SharedObject;
 			private var _model:XDrawingModel;
 			private var _timer:Timer;
 			private var _autoSave:Boolean;
-            
-            
-            public function get context():XCommandContext
-            {
-                return _context;
-            }
-            
-            public function set context(value:XCommandContext):void
-            {
-                _context = value;
-            }
-
-
+			
+			
+			public function get context():XCommandContext
+			{
+				return _context;
+			}
+			
+			public function set context(value:XCommandContext):void
+			{
+				_context = value;
+			}
+			
+			
 			public function get autoSave():Boolean
 			{
 				return _autoSave;
 			}
-
+			
 			public function set autoSave(value:Boolean):void
 			{
 				_autoSave = value;
@@ -84,12 +84,12 @@
 					_timer = null;
 				}
 			}
-
+			
 			private function onAutoSave(event:TimerEvent):void
 			{
 				onSaveDrawing();
 			}
-
+			
 			
 			public function get storage():SharedObject
 			{
@@ -101,18 +101,18 @@
 				_storage = value;
 			}
 			
-
+			
 			public function get model():XDrawingModel
 			{
 				return _model;
 			}
-
+			
 			public function set model(value:XDrawingModel):void
 			{
 				_model = value;
 			}
-
-
+			
+			
 			public function onNewDrawing():void
 			{
 				
@@ -120,7 +120,7 @@
 			
 			public function onOpenDrawing():void
 			{
-                openDrawing("current");
+				openDrawing("current");
 			}
 			
 			public function onSaveDrawing():void
@@ -128,7 +128,7 @@
 				CursorManager.setBusyCursor();
 				_saveDrawing.enabled = false;
 				var json:String = _model.toJSON();
-                var kind:String = (_model is XStencilModel) ? "stencils" : "drawings";
+				var kind:String = (_model is XStencilModel) ? "stencils" : "drawings";
 				_storage.data[kind] = _storage.data[kind] || {};
 				_storage.data[kind][_model.name] = json;
 				_storage.data[kind].current = json;
@@ -141,19 +141,19 @@
 			{
 				
 			}
-
-
-            private function openDrawing(name:String):XDrawingDocument
-            {
-                var document:XDrawingDocument = XFactory.instance.getComponent("XDrawingDocument");
-                if (_storage.data.drawings != null && _storage.data.drawings[name] != null)
-                {
-                    var json:String = _storage.data.drawings[name];
-                    document.model.fromJSON(json);
-                }
-                return document;
-            }
-        ]]>
+			
+			
+			private function openDrawing(name:String):XDrawingDocument
+			{
+				var document:XDrawingDocument = XFactory.instance.getComponent("XDrawingDocument");
+				if (_storage.data.drawings != null && _storage.data.drawings[name] != null)
+				{
+					var json:String = _storage.data.drawings[name];
+					document.model.fromJSON(json);
+				}
+				return document;
+			}
+		]]>
 	</fx:Script>
 	
 	<fx:Declarations>

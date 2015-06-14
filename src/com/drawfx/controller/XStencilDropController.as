@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,74 +25,74 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.drawfx.controller
 {
-    import com.anywarefx.controller.XDropController;
-    import com.anywarefx.view.IView;
-    import com.drawfx.command.XDrawingCommand;
-    import com.drawfx.command.XDrawingCommandFactory;
-    import com.drawfx.model.IBoundedModel;
-    import com.drawfx.model.XStencilModel;
-    import com.drawfx.view.XComposite;
-    import com.drawfx.view.XStencil;
-    
-    import mx.core.DragSource;
-    import mx.core.UIComponent;
-    import mx.events.DragEvent;
-    import mx.managers.DragManager;
-    
-    
-    public class XStencilDropController extends XDropController
-    {
-        override public function addUserEventListeners(view:IView):void
-        {
-            if (view is XStencil)
-            {
-                super.addUserEventListeners(view);
-            }
-        }
-        
-        override public function removeUserEventListeners(view:IView):void
-        {
-            if (view is XStencil)
-            {
-                super.removeUserEventListeners(view);
-            }
-        }
-        
-        
-        override protected function onDragEnter(event:DragEvent):void
-        {
-            var source:DragSource = event.dragSource;
-            if (source.hasFormat("parent") && source.hasFormat("model"))
-            {
-                DragManager.acceptDragDrop(event.currentTarget as UIComponent);
-            }
-        }
-        
-        
-        override protected function onDragDrop(event:DragEvent):void
-        {
-            var source:DragSource = event.dragSource;
-            var parent:XComposite = source.dataForFormat("parent") as XComposite;
-            var model:IBoundedModel = source.dataForFormat("model") as IBoundedModel;
-            if (model != null)
-            {
-                if (!(parent is XStencil))
-                {
-                    var stencil:XStencil = XStencil.getStencil(event.currentTarget as UIComponent);
-                    copyModel(stencil.model as XStencilModel, model);
-                }
-            }
-        }
-        
-        
-        protected function copyModel(stencil:XStencilModel, model:IBoundedModel):void
-        {
-            var copy:IBoundedModel = model.copy() as IBoundedModel;
-            if (copy != null)
-            {
-                var command:XDrawingCommand = XDrawingCommandFactory.createAddCommand(stencil, model);
-                context.execute(command);
-            }
-        }
-    }
+	import com.anywarefx.controller.XDropController;
+	import com.anywarefx.view.IView;
+	import com.drawfx.command.XDrawingCommand;
+	import com.drawfx.command.XDrawingCommandFactory;
+	import com.drawfx.model.IBoundedModel;
+	import com.drawfx.model.XStencilModel;
+	import com.drawfx.view.XComposite;
+	import com.drawfx.view.XStencil;
+	
+	import mx.core.DragSource;
+	import mx.core.UIComponent;
+	import mx.events.DragEvent;
+	import mx.managers.DragManager;
+	
+	
+	public class XStencilDropController extends XDropController
+	{
+		override public function addUserEventListeners(view:IView):void
+		{
+			if (view is XStencil)
+			{
+				super.addUserEventListeners(view);
+			}
+		}
+		
+		override public function removeUserEventListeners(view:IView):void
+		{
+			if (view is XStencil)
+			{
+				super.removeUserEventListeners(view);
+			}
+		}
+		
+		
+		override protected function onDragEnter(event:DragEvent):void
+		{
+			var source:DragSource = event.dragSource;
+			if (source.hasFormat("parent") && source.hasFormat("model"))
+			{
+				DragManager.acceptDragDrop(event.currentTarget as UIComponent);
+			}
+		}
+		
+		
+		override protected function onDragDrop(event:DragEvent):void
+		{
+			var source:DragSource = event.dragSource;
+			var parent:XComposite = source.dataForFormat("parent") as XComposite;
+			var model:IBoundedModel = source.dataForFormat("model") as IBoundedModel;
+			if (model != null)
+			{
+				if (!(parent is XStencil))
+				{
+					var stencil:XStencil = XStencil.getStencil(event.currentTarget as UIComponent);
+					copyModel(stencil.model as XStencilModel, model);
+				}
+			}
+		}
+		
+		
+		protected function copyModel(stencil:XStencilModel, model:IBoundedModel):void
+		{
+			var copy:IBoundedModel = model.copy() as IBoundedModel;
+			if (copy != null)
+			{
+				var command:XDrawingCommand = XDrawingCommandFactory.createAddCommand(stencil, model);
+				context.execute(command);
+			}
+		}
+	}
 }

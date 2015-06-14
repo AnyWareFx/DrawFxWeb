@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -53,7 +53,7 @@ package com.drawfx.controller
 				var input:TextInput = shape._textBox._input;
 				input.addEventListener(FlexEvent.ENTER, onEnter);
 				input.addEventListener(FocusEvent.FOCUS_OUT, onFocusOut);
-//                input.addEventListener(TextOperationEvent.CHANGE, onChange);
+				//                input.addEventListener(TextOperationEvent.CHANGE, onChange);
 			}
 		}
 		
@@ -66,7 +66,7 @@ package com.drawfx.controller
 				var input:TextInput = shape._textBox._input;
 				input.removeEventListener(FlexEvent.ENTER, onEnter);
 				input.removeEventListener(FocusEvent.FOCUS_OUT, onFocusOut);
-//                input.removeEventListener(TextOperationEvent.CHANGE, onChange);
+				//                input.removeEventListener(TextOperationEvent.CHANGE, onChange);
 			}
 		}
 		
@@ -74,63 +74,63 @@ package com.drawfx.controller
 		override protected function onKeyDown(event:KeyboardEvent):void
 		{
 			var textBox:XTextBox = XTextBox.getTextBox(event.target as UIComponent);
-            if (textBox != null)
-            {
-                if (textBox.currentState == "input")
-                {
-                    event.stopPropagation();
-                    if (event.keyCode == Keyboard.ESCAPE)
-                    {
-                        textBox._input.text = textBox.model["text"];
-                        textBox.selected = false;
-                        selectionManager.addSelection(XShape.getShape(textBox.parent as UIComponent));
-                    }
-                }
-                else if (event.charCode != 0 && 
-                    event.keyCode != Keyboard.ENTER &&
-                    event.keyCode != Keyboard.BACKSPACE && 
-                    event.keyCode != Keyboard.DELETE)
-                {
-                    textBox.currentState = "input";
-                    textBox._input.text = String.fromCharCode(event.charCode);
-                    textBox._input.selectRange(0, 1);
-                }
-            }
+			if (textBox != null)
+			{
+				if (textBox.currentState == "input")
+				{
+					event.stopPropagation();
+					if (event.keyCode == Keyboard.ESCAPE)
+					{
+						textBox._input.text = textBox.model["text"];
+						textBox.selected = false;
+						selectionManager.addSelection(XShape.getShape(textBox.parent as UIComponent));
+					}
+				}
+				else if (event.charCode != 0 && 
+					event.keyCode != Keyboard.ENTER &&
+					event.keyCode != Keyboard.BACKSPACE && 
+					event.keyCode != Keyboard.DELETE)
+				{
+					textBox.currentState = "input";
+					textBox._input.text = String.fromCharCode(event.charCode);
+					textBox._input.selectRange(0, 1);
+				}
+			}
 		}
 		
 		
 		protected virtual function onEnter(event:FlexEvent):void
 		{
 			var textBox:XTextBox = XTextBox.getTextBox(event.target as UIComponent);
-            if (textBox != null)
-            {
-                setProperty(textBox.model, "text", textBox._input.text);
-                textBox.selected = false;
-                selectionManager.addSelection(XShape.getShape(textBox.parent as UIComponent));
-            }
+			if (textBox != null)
+			{
+				setProperty(textBox.model, "text", textBox._input.text);
+				textBox.selected = false;
+				selectionManager.addSelection(XShape.getShape(textBox.parent as UIComponent));
+			}
 		}
 		
 		
 		protected virtual function onFocusOut(event:FocusEvent):void
 		{
 			var textBox:XTextBox = XTextBox.getTextBox(event.target as UIComponent);
-            if (textBox != null)
-            {
-                setProperty(textBox.model, "text", textBox._input.text);
-                textBox.selected = false;
-                selectionManager.removeSelection(XShape.getShape(textBox.parent as UIComponent));
-            }
+			if (textBox != null)
+			{
+				setProperty(textBox.model, "text", textBox._input.text);
+				textBox.selected = false;
+				selectionManager.removeSelection(XShape.getShape(textBox.parent as UIComponent));
+			}
 		}
-
-
-        protected virtual function onChange(event:TextOperationEvent):void
-        {
-            var shape:XShape = XShape.getShape(event.target as UIComponent);
-            var textBox:XTextBox = XTextBox.getTextBox(event.target as UIComponent);
-            var text:String = textBox._input.text;
-            var metrics:TextLineMetrics = textBox._input.measureText(text);
-            setProperty(shape.model["bounds"], "width", metrics.width);
-            setProperty(textBox.model["bounds"], "width", metrics.width);
-        }
+		
+		
+		protected virtual function onChange(event:TextOperationEvent):void
+		{
+			var shape:XShape = XShape.getShape(event.target as UIComponent);
+			var textBox:XTextBox = XTextBox.getTextBox(event.target as UIComponent);
+			var text:String = textBox._input.text;
+			var metrics:TextLineMetrics = textBox._input.measureText(text);
+			setProperty(shape.model["bounds"], "width", metrics.width);
+			setProperty(textBox.model["bounds"], "width", metrics.width);
+		}
 	}
 }

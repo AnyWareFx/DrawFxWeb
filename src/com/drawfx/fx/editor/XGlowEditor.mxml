@@ -8,7 +8,7 @@
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -38,14 +38,14 @@
 			import com.anywarefx.view.IView;
 			import com.drawfx.fx.model.IFxEnabledModel;
 			import com.drawfx.fx.model.XGlowModel;
-
+			
 			import mx.collections.ArrayCollection;
-
+			
 			
 			[Bindable] private var _effect:XGlowModel;
 			[Bindable] private var _selectionManager:XSelectionManager;
-
-
+			
+			
 			public function get selectionManager():XSelectionManager
 			{
 				return _selectionManager;
@@ -62,8 +62,8 @@
 				super.model = value;
 				_effect = value as XGlowModel;
 			}
-
-
+			
+			
 			override protected function setProperty(property:String, value:*):void
 			{
 				var models:ArrayCollection = new ArrayCollection();
@@ -86,15 +86,15 @@
 	
 	<s:VGroup top="10" left="10" bottom="10" right="10" clipAndEnableScrolling="true">
 		<mx:Form width="100%" height="100%">
-<!--
+			<!--
 			<mx:FormItem>
-				<s:CheckBox 
-					id="_active"
-					label="Visible?"
-					selected="{_effect.active}" 
-					change="onCheckBoxChange(event);"/>
+			<s:CheckBox 
+			id="_active"
+			label="Visible?"
+			selected="{_effect.active}" 
+			change="onCheckBoxChange(event);"/>
 			</mx:FormItem>
--->
+			-->
 			<mx:FormItem label="Color">
 				<mx:ColorPicker 
 					id="_color" 

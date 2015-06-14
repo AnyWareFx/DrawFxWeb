@@ -3,11 +3,11 @@
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
 		  gap="3">
-
+	
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -41,13 +41,13 @@
 			import com.drawfx.model.XShapeModel;
 			
 			import assets.Icons;
-
+			
 			
 			[Bindable] private var _clipboard:XClipboardManager = new XClipboardManager();
 			[Bindable] private var _selectionManager:XSelectionManager;
 			private var _context:XCommandContext;
 			private var _model:IModel;
-
+			
 			
 			public function get selectionManager():XSelectionManager
 			{
@@ -81,7 +81,7 @@
 				_model = value;
 			}
 			
-
+			
 			public function onCut():void
 			{
 				var command:XCutSelectionsCommand = new XCutSelectionsCommand(model, _clipboard, selectionManager.selections);
@@ -105,11 +105,11 @@
 			}
 		]]>
 	</fx:Script>
-
+	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-
+	
 	<mx:Button id="cutSelection" width="30" click="onCut();" toolTip="Cut"
 			   disabledIcon="{Icons.CutDisabled}"
 			   enabled="{_selectionManager.lastSelection != null}"

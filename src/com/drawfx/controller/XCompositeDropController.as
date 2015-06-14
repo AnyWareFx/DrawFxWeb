@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -46,7 +46,7 @@ package com.drawfx.controller
 	import mx.events.DragEvent;
 	import mx.managers.DragManager;
 	
-
+	
 	public class XCompositeDropController extends XDropController
 	{
 		override public function addUserEventListeners(view:IView):void
@@ -56,7 +56,7 @@ package com.drawfx.controller
 				super.addUserEventListeners(view);
 			}
 		}
-
+		
 		override public function removeUserEventListeners(view:IView):void
 		{
 			if (view is XComposite)
@@ -64,8 +64,8 @@ package com.drawfx.controller
 				super.removeUserEventListeners(view);
 			}
 		}
-
-
+		
+		
 		override protected function onDragEnter(event:DragEvent):void
 		{
 			var source:DragSource = event.dragSource;
@@ -73,10 +73,10 @@ package com.drawfx.controller
 				source.hasFormat("parent") && source.hasFormat("model") && source.hasFormat("offset"))
 			{
 				DragManager.acceptDragDrop(event.currentTarget as UIComponent);
-            }
+			}
 		}
-
-
+		
+		
 		override protected function onDragOver(event:DragEvent):void
 		{
 			if (event.altKey)
@@ -88,11 +88,11 @@ package com.drawfx.controller
 				DragManager.showFeedback(DragManager.MOVE);
 			}
 		}
-        
-	
+		
+		
 		override protected function onDragDrop(event:DragEvent):void
 		{
-            var source:DragSource = event.dragSource;
+			var source:DragSource = event.dragSource;
 			var parent:XComposite = source.dataForFormat("parent") as XComposite;
 			var model:IBoundedModel = source.dataForFormat("model") as IBoundedModel;
 			var offset:Point = source.dataForFormat("offset") as Point;
@@ -100,55 +100,55 @@ package com.drawfx.controller
 			{
 				var view:XSelectableView = source.dataForFormat("view") as XSelectableView;
 				var position:Point = new Point();
-                if (parent is XStencil)
-                {
-                    parent = getDropTarget(view, event.currentTarget as UIComponent);
-                    position.x = event.localX - offset.x;
-                    position.y = event.localY - offset.y;
-                    copyModel(parent.model as XCompositeModel, model, position);
-                }
-                else
+				if (parent is XStencil)
 				{
-                    var target:XComposite = getDropTarget(view, event.currentTarget as UIComponent);
+					parent = getDropTarget(view, event.currentTarget as UIComponent);
+					position.x = event.localX - offset.x;
+					position.y = event.localY - offset.y;
+					copyModel(parent.model as XCompositeModel, model, position);
+				}
+				else
+				{
+					var target:XComposite = getDropTarget(view, event.currentTarget as UIComponent);
 					if (target === parent || target.model === model)
-                    {
-                        position.x = parent.mouseX - offset.x;
-                        position.y = parent.mouseY - offset.y;
-                        
-                        if (event.action == DragManager.COPY)
-                        {
-                            copyModel(parent.model as XCompositeModel, model, position);
-                        }
-                        else if (event.action == DragManager.MOVE)
-                        {
-                            moveModel(model, position);
-                            if (view != null && !view.selected)
-                            {
-                                selectionManager.clearSelections();
-                                selectionManager.addSelection(view);
-                            }
-                        }
-                    }
-                    else
-                    {
+					{
+						position.x = parent.mouseX - offset.x;
+						position.y = parent.mouseY - offset.y;
+						
+						if (event.action == DragManager.COPY)
+						{
+							copyModel(parent.model as XCompositeModel, model, position);
+						}
+						else if (event.action == DragManager.MOVE)
+						{
+							moveModel(model, position);
+							if (view != null && !view.selected)
+							{
+								selectionManager.clearSelections();
+								selectionManager.addSelection(view);
+							}
+						}
+					}
+					else
+					{
 						position.x = event.localX - offset.x;
-                        position.y = event.localY - offset.y;
-
-                        if (event.action == DragManager.COPY)
-                        {
-                            copyModel(target.model as XCompositeModel, model, position);
-                        }
-                        else if (event.action == DragManager.MOVE)
-                        {
-                            model.bounds.position = position;
-
-                            var removeCommand:XDrawingCommand = XDrawingCommandFactory.createRemoveCommand(parent.model as XCompositeModel, model);
-                            context.execute(removeCommand);
-
-                            var addCommand:XDrawingCommand = XDrawingCommandFactory.createAddCommand(target.model as XCompositeModel, model);
-                            context.execute(addCommand);
-                        }
-                    }
+						position.y = event.localY - offset.y;
+						
+						if (event.action == DragManager.COPY)
+						{
+							copyModel(target.model as XCompositeModel, model, position);
+						}
+						else if (event.action == DragManager.MOVE)
+						{
+							model.bounds.position = position;
+							
+							var removeCommand:XDrawingCommand = XDrawingCommandFactory.createRemoveCommand(parent.model as XCompositeModel, model);
+							context.execute(removeCommand);
+							
+							var addCommand:XDrawingCommand = XDrawingCommandFactory.createAddCommand(target.model as XCompositeModel, model);
+							context.execute(addCommand);
+						}
+					}
 				}
 			}
 		}
@@ -164,7 +164,7 @@ package com.drawfx.controller
 				context.execute(command);
 			}
 		}
-
+		
 		
 		protected function moveModel(model:IBoundedModel, position:Point):void
 		{
@@ -175,25 +175,25 @@ package com.drawfx.controller
 				context.execute(command);
 			}
 		}
-
-
+		
+		
 		private function getDropTarget(view:XView, target:UIComponent):XComposite
 		{
-            if (isAncestor(view, target))
-            {
-                target = view.parent as UIComponent;
-            }
-            return XDrawing.getParent(target);
+			if (isAncestor(view, target))
+			{
+				target = view.parent as UIComponent;
+			}
+			return XDrawing.getParent(target);
 		}
-
-
-        private function isAncestor(view:XView, target:UIComponent):Boolean
-        {
-            while (target !== view && target != null && target.parent != null)
-            {
-                target = target.parent as UIComponent;
-            }
-            return (target == view);
-        }
-    }
+		
+		
+		private function isAncestor(view:XView, target:UIComponent):Boolean
+		{
+			while (target !== view && target != null && target.parent != null)
+			{
+				target = target.parent as UIComponent;
+			}
+			return (target == view);
+		}
+	}
 }

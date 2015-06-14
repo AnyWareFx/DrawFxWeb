@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,40 +25,40 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.collection
 {
-    import mx.collections.ArrayCollection;
-
-    [Bindable]
-    public class XStack extends ArrayCollection
-    {
-        public function XStack(source:Array=null)
-        {
-            super(source);
-        }
-
-
-        public function push(value:*):void
-        {
-            addItemAt(value, length);
-        }
-
-        public function pop():*
-        {
-            var value:* = null;
-            if (length > 0)
-            {
-                value = removeItemAt(length - 1);
-            }
-            return value;
-        }
-        
-        public function get top():*
-        {
-            var value:* = null;
-            if (length > 0)
-            {
-                value = getItemAt(length - 1);
-            }
-            return value;
-        }
-    }
+	import mx.collections.ArrayCollection;
+	
+	[Bindable]
+	public class XStack extends ArrayCollection
+	{
+		public function XStack(source:Array=null)
+		{
+			super(source);
+		}
+		
+		
+		public function push(value:*):void
+		{
+			addItemAt(value, length);
+		}
+		
+		public function pop():*
+		{
+			var value:* = null;
+			if (length > 0)
+			{
+				value = removeItemAt(length - 1);
+			}
+			return value;
+		}
+		
+		public function get top():*
+		{
+			var value:* = null;
+			if (length > 0)
+			{
+				value = getItemAt(length - 1);
+			}
+			return value;
+		}
+	}
 }

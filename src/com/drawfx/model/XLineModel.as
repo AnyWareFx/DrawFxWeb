@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -46,10 +46,10 @@ package com.drawfx.model
 		{
 			super();
 			var model:* = {
-                bounds: null,
-                constraints: null,
-                fx: null,
-                stroke: null,
+				bounds: null,
+				constraints: null,
+				fx: null,
+				stroke: null,
 				start: null,
 				length: 0,
 				rotation: 0,
@@ -57,77 +57,77 @@ package com.drawfx.model
 			};
 			plugin(model);
 		}
-        
-        
-        public function get bounds():XBoundsModel
-        {
-            return getProperty("bounds");
-        }
-        
-        public function set bounds(value:XBoundsModel):void
-        {
-            setProperty("bounds", value);
-            value.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onBoundsChange);
-        }
-        
-        private function onBoundsChange(event:PropertyChangeEvent):void
-        {
-            if (event.property == "height")
-            {
-                var bounds:XBoundsModel = event.source as XBoundsModel;
-                if (bounds != null)
-                {
-                    bounds.height = stroke.weight + affordance * 2;
-                }
-            }
-        }
-        
-        
-        public function get constraints():XConstraintsModel
-        {
-            return getProperty("constraints");
-        }
-        
-        public function set constraints(value:XConstraintsModel):void
-        {
-            setProperty("constraints", value);
-        }
-        
-        
-        public function get fx():FxModel
-        {
-            return getProperty("fx");
-        }
-        
-        public function set fx(value:FxModel):void
-        {
-            setProperty("fx", value);
-        }
-        
-        
-        public function get stroke():XStrokeModel
-        {
-            return getProperty("stroke");
-        }
-        
-        public function set stroke(value:XStrokeModel):void
-        {
-            setProperty("stroke", value);
-            value.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onStrokeChange);
-        }
-        
-        private function onStrokeChange(event:PropertyChangeEvent):void
-        {
-            if (event.property == "weight")
-            {
-                var stroke:XStrokeModel = event.source as XStrokeModel;
-                if (stroke != null)
-                {
-                    bounds.height = stroke.weight + affordance * 2;
-                }
-            }
-        }
-        
+		
+		
+		public function get bounds():XBoundsModel
+		{
+			return getProperty("bounds");
+		}
+		
+		public function set bounds(value:XBoundsModel):void
+		{
+			setProperty("bounds", value);
+			value.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onBoundsChange);
+		}
+		
+		private function onBoundsChange(event:PropertyChangeEvent):void
+		{
+			if (event.property == "height")
+			{
+				var bounds:XBoundsModel = event.source as XBoundsModel;
+				if (bounds != null)
+				{
+					bounds.height = stroke.weight + affordance * 2;
+				}
+			}
+		}
+		
+		
+		public function get constraints():XConstraintsModel
+		{
+			return getProperty("constraints");
+		}
+		
+		public function set constraints(value:XConstraintsModel):void
+		{
+			setProperty("constraints", value);
+		}
+		
+		
+		public function get fx():FxModel
+		{
+			return getProperty("fx");
+		}
+		
+		public function set fx(value:FxModel):void
+		{
+			setProperty("fx", value);
+		}
+		
+		
+		public function get stroke():XStrokeModel
+		{
+			return getProperty("stroke");
+		}
+		
+		public function set stroke(value:XStrokeModel):void
+		{
+			setProperty("stroke", value);
+			value.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onStrokeChange);
+		}
+		
+		private function onStrokeChange(event:PropertyChangeEvent):void
+		{
+			if (event.property == "weight")
+			{
+				var stroke:XStrokeModel = event.source as XStrokeModel;
+				if (stroke != null)
+				{
+					bounds.height = stroke.weight + affordance * 2;
+				}
+			}
+		}
+		
 		
 		public function get length():Number
 		{

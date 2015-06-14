@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -28,7 +28,7 @@ package com.drawfx.command
 	import com.anywarefx.command.XMacroCommand;
 	import com.drawfx.model.XCompositeModel;
 	
-
+	
 	public class XDrawingMacroCommand extends XMacroCommand
 	{
 		private var _parent:XCompositeModel;

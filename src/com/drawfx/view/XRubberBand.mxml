@@ -7,11 +7,11 @@
 				   backgroundAlpha="0.5"
 				   x="0" y="0" width="0" height="0" 
 				   visible="false">
-
+	
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -37,29 +37,29 @@
 			
 			private var _startPoint:Point = new Point(-1, -1);
 			private var _currentPoint:Point = new Point(-1, -1);
-
-
+			
+			
 			public function get startPoint():Point
 			{
 				return _startPoint;
 			}
-
+			
 			public function set startPoint(value:Point):void
 			{
 				_startPoint = value;
 			}
-
-
+			
+			
 			public function get currentPoint():Point
 			{
 				return _currentPoint;
 			}
-
+			
 			public function set currentPoint(value:Point):void
 			{
 				_currentPoint = value;
 			}
 		]]>
 	</fx:Script>
-
+	
 </s:BorderContainer>

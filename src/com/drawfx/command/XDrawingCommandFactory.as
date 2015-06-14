@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,68 +25,68 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.drawfx.command
 {
-    import com.drawfx.model.IBoundedModel;
-    import com.drawfx.model.XCompositeModel;
-    import com.drawfx.model.XGroupModel;
-    import com.drawfx.model.XImageModel;
-    import com.drawfx.model.XLineModel;
-    import com.drawfx.model.XShapeModel;
-    import com.drawfx.model.XTextBoxModel;
-
-
-    public class XDrawingCommandFactory
-    {
-        public static function createAddCommand(parent:XCompositeModel, model:IBoundedModel):XDrawingCommand
-        {
-            var command:XDrawingCommand;
-            if (model is XLineModel)
-            {
-                command = new XAddLineCommand(parent, model as XLineModel);
-            }
-            else if (model is XGroupModel)
-            {
-                command = new XAddGroupCommand(parent, model as XGroupModel);
-            }
-            else if (model is XImageModel)
-            {
-                command = new XAddImageCommand(parent, model as XImageModel);
-            }
-            else if (model is XShapeModel)
-            {
-                command = new XAddShapeCommand(parent, model as XShapeModel);
-            }
-            else if (model is XTextBoxModel)
-            {
-                command = new XAddTextBoxCommand(parent, model as XTextBoxModel);
-            }
-            return command;
-        }
-
-
-        public static function createRemoveCommand(parent:XCompositeModel, model:IBoundedModel):XDrawingCommand
-        {
-            var command:XDrawingCommand;
-            if (model is XLineModel)
-            {
-                command = new XRemoveLineCommand(parent, model as XLineModel);
-            }
-            else if (model is XGroupModel)
-            {
-                command = new XRemoveGroupCommand(parent, model as XGroupModel);
-            }
-            else if (model is XImageModel)
-            {
-                command = new XRemoveImageCommand(parent, model as XImageModel);
-            }
-            else if (model is XShapeModel)
-            {
-                command = new XRemoveShapeCommand(parent, model as XShapeModel);
-            }
-            else if (model is XTextBoxModel)
-            {
-                command = new XRemoveTextBoxCommand(parent, model as XTextBoxModel);
-            }
-            return command;
-        }
-    }
+	import com.drawfx.model.IBoundedModel;
+	import com.drawfx.model.XCompositeModel;
+	import com.drawfx.model.XGroupModel;
+	import com.drawfx.model.XImageModel;
+	import com.drawfx.model.XLineModel;
+	import com.drawfx.model.XShapeModel;
+	import com.drawfx.model.XTextBoxModel;
+	
+	
+	public class XDrawingCommandFactory
+	{
+		public static function createAddCommand(parent:XCompositeModel, model:IBoundedModel):XDrawingCommand
+		{
+			var command:XDrawingCommand;
+			if (model is XLineModel)
+			{
+				command = new XAddLineCommand(parent, model as XLineModel);
+			}
+			else if (model is XGroupModel)
+			{
+				command = new XAddGroupCommand(parent, model as XGroupModel);
+			}
+			else if (model is XImageModel)
+			{
+				command = new XAddImageCommand(parent, model as XImageModel);
+			}
+			else if (model is XShapeModel)
+			{
+				command = new XAddShapeCommand(parent, model as XShapeModel);
+			}
+			else if (model is XTextBoxModel)
+			{
+				command = new XAddTextBoxCommand(parent, model as XTextBoxModel);
+			}
+			return command;
+		}
+		
+		
+		public static function createRemoveCommand(parent:XCompositeModel, model:IBoundedModel):XDrawingCommand
+		{
+			var command:XDrawingCommand;
+			if (model is XLineModel)
+			{
+				command = new XRemoveLineCommand(parent, model as XLineModel);
+			}
+			else if (model is XGroupModel)
+			{
+				command = new XRemoveGroupCommand(parent, model as XGroupModel);
+			}
+			else if (model is XImageModel)
+			{
+				command = new XRemoveImageCommand(parent, model as XImageModel);
+			}
+			else if (model is XShapeModel)
+			{
+				command = new XRemoveShapeCommand(parent, model as XShapeModel);
+			}
+			else if (model is XTextBoxModel)
+			{
+				command = new XRemoveTextBoxCommand(parent, model as XTextBoxModel);
+			}
+			return command;
+		}
+	}
 }

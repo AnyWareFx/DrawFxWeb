@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <editor:XModelEditor xmlns:fx="http://ns.adobe.com/mxml/2009"
-	xmlns:s="library://ns.adobe.com/flex/spark"
-	xmlns:mx="library://ns.adobe.com/flex/mx"
-	xmlns:editor="com.anywarefx.editor.*"
-	enabled="{_editable}"
-	width="100%" height="100%">
-
+					 xmlns:s="library://ns.adobe.com/flex/spark"
+					 xmlns:mx="library://ns.adobe.com/flex/mx"
+					 xmlns:editor="com.anywarefx.editor.*"
+					 enabled="{_editable}"
+					 width="100%" height="100%">
+	
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -42,31 +42,31 @@
 			
 			import mx.collections.ArrayCollection;
 			import mx.events.PropertyChangeEvent;
-
+			
 			
 			[Bindable] private var _editable:Boolean;
 			[Bindable] private var _boundsModel:XBoundsModel
 			[Bindable] private var _selectionManager:XSelectionManager;
-
+			
 			private var _defaults:*; // TODO
-
-
+			
+			
 			public function get editable():Boolean
 			{
 				return _editable;
 			}
-
+			
 			public function set editable(value:Boolean):void
 			{
 				_editable = value;
 			}
-
-
+			
+			
 			public function get selectionManager():XSelectionManager
 			{
 				return _selectionManager;
 			}
-
+			
 			public function set selectionManager(value:XSelectionManager):void
 			{
 				_selectionManager = value;
@@ -83,8 +83,8 @@
 					_boundsModel = super.model as XBoundsModel;
 				}
 			}
-
-
+			
+			
 			private function onSelectionChange(event:PropertyChangeEvent):void
 			{
 				if (event.property == "lastSelection")
@@ -96,7 +96,7 @@
 					updateModel(_selectionManager.lastSelection);
 				}
 			}
-
+			
 			private function updateModel(view:IView):void
 			{
 				editable = (view != null && view.model is IBoundedModel);
@@ -116,15 +116,15 @@
 						}
 					}
 				}
-/*				TODO
+				/*				TODO
 				if (!editable)
 				{
-					model = _defaults;
+				model = _defaults;
 				}
-*/
+				*/
 			}
-
-
+			
+			
 			override protected function setProperty(property:String, value:*):void
 			{
 				var items:ArrayCollection = new ArrayCollection();
@@ -144,11 +144,11 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-
+	
 	<editor:layout>
 		<s:HorizontalLayout/>
 	</editor:layout>
-
+	
 	<s:Group left="10" top="10" bottom="10" width="28">
 		<s:layout>
 			<s:VerticalLayout/>
@@ -197,5 +197,5 @@
 		<s:NumericStepper id="__depth" width="60" change="onStepperChange(event);"
 						  maximum="1000" minimum="0" value="{_boundsModel.depth}"/>
 	</s:TileGroup>
-
+	
 </editor:XModelEditor>

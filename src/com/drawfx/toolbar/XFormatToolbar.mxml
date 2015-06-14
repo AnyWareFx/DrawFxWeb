@@ -3,13 +3,13 @@
 					 xmlns:s="library://ns.adobe.com/flex/spark"
 					 xmlns:mx="library://ns.adobe.com/flex/mx"
 					 xmlns:editor="com.anywarefx.editor.*"
-                     currentState="expanded"
-                     enabled="{_editable}">
+					 currentState="expanded"
+					 enabled="{_editable}">
 	
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -33,33 +33,33 @@
 			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			*/		
 			
-            import com.anywarefx.command.XUpdateCollectionCommand;
-            import com.anywarefx.manager.XSelectionManager;
-            import com.anywarefx.model.IModel;
-            import com.anywarefx.view.IView;
-            import com.drawfx.model.IFormattedModel;
-            import com.drawfx.model.XTextFormatModel;
-            
-            import mx.collections.ArrayCollection;
-            import mx.events.PropertyChangeEvent;
-            
-            import assets.Icons;
+			import com.anywarefx.command.XUpdateCollectionCommand;
+			import com.anywarefx.manager.XSelectionManager;
+			import com.anywarefx.model.IModel;
+			import com.anywarefx.view.IView;
+			import com.drawfx.model.IFormattedModel;
+			import com.drawfx.model.XTextFormatModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.PropertyChangeEvent;
+			
+			import assets.Icons;
 			
 			
-            [Bindable] private var _editable:Boolean;
+			[Bindable] private var _editable:Boolean;
 			[Bindable] private var _format:XTextFormatModel;
 			[Bindable] private var _selectionManager:XSelectionManager;
-            
-            
-            public function get editable():Boolean
-            {
-                return _editable;
-            }
-            
-            public function set editable(value:Boolean):void
-            {
-                _editable = value;
-            }
+			
+			
+			public function get editable():Boolean
+			{
+				return _editable;
+			}
+			
+			public function set editable(value:Boolean):void
+			{
+				_editable = value;
+			}
 			
 			
 			public function get selectionManager():XSelectionManager
@@ -70,64 +70,64 @@
 			public function set selectionManager(value:XSelectionManager):void
 			{
 				_selectionManager = value;
-                if (_selectionManager != null)
-                {
-                    _selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
-                    updateModel(_selectionManager.lastSelection);
-                }
+				if (_selectionManager != null)
+				{
+					_selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
+					updateModel(_selectionManager.lastSelection);
+				}
 			}
 			
 			
 			override public function set model(value:IModel):void
 			{
-                if (value is IFormattedModel)
-                {
-                    super.model = value["format"];
-                    _format = super.model as XTextFormatModel;
-                }
+				if (value is IFormattedModel)
+				{
+					super.model = value["format"];
+					_format = super.model as XTextFormatModel;
+				}
 			}
-            
-            
-            private function onSelectionChange(event:PropertyChangeEvent):void
-            {
-                if (event.property == "lastSelection")
-                {
-                    updateModel(event.newValue as IView);
-                }
-                else if (event.property == "count")
-                {
-                    updateModel(_selectionManager.lastSelection);
-                }
-            }
-            
-            private function updateModel(view:IView):void
-            {
-                editable = (view != null && view.model is IFormattedModel);
-                if (editable)
-                {
-                    model = view.model;
-                }
-                else
-                {
-                    for each (var selection:IView in selectionManager.selections)
-                    {
-                        editable = (selection != null && selection.model is IFormattedModel);
-                        if (editable)
-                        {
-                            model = selection.model;
-                            break;
-                        }
-                    }
-                }
-                /* TODO
-                if (!editable)
-                {
-                model = _defaults;
-                }
-                */
-            }
-
-
+			
+			
+			private function onSelectionChange(event:PropertyChangeEvent):void
+			{
+				if (event.property == "lastSelection")
+				{
+					updateModel(event.newValue as IView);
+				}
+				else if (event.property == "count")
+				{
+					updateModel(_selectionManager.lastSelection);
+				}
+			}
+			
+			private function updateModel(view:IView):void
+			{
+				editable = (view != null && view.model is IFormattedModel);
+				if (editable)
+				{
+					model = view.model;
+				}
+				else
+				{
+					for each (var selection:IView in selectionManager.selections)
+					{
+						editable = (selection != null && selection.model is IFormattedModel);
+						if (editable)
+						{
+							model = selection.model;
+							break;
+						}
+					}
+				}
+				/* TODO
+				if (!editable)
+				{
+				model = _defaults;
+				}
+				*/
+			}
+			
+			
 			private function onToggleClick(event:MouseEvent):void
 			{
 				var button:Button = event.target as Button;
@@ -141,7 +141,7 @@
 						case "fontWeight":
 							value = selected ? "bold" : "normal";
 							break;
-
+						
 						case "fontStyle":
 							value = selected ? "italic" : "normal";
 							break;
@@ -153,22 +153,22 @@
 						case "lineThrough":
 							value = selected;
 							break;
-
+						
 						case "alignLeft":
 							property = "textAlign";
 							value = "left";
 							break;
-
+						
 						case "alignCenter":
 							property = "textAlign";
 							value = "center";
 							break;
-
+						
 						case "alignRight":
 							property = "textAlign";
 							value = "right";
 							break;
-
+						
 						case "alignJustify":
 							property = "textAlign";
 							value = "justify";
@@ -177,36 +177,36 @@
 					setProperty(property, value);
 				}
 			}
-
-
+			
+			
 			override protected function setProperty(property:String, value:*):void
 			{
-                if (_selectionManager == null)
-                {
-                    super.setProperty(property, value);
-                }
-                else
-                {
-    				var formatModels:ArrayCollection = new ArrayCollection();
-    				for each (var selection:IView in selectionManager.selections)
-    				{
-    					if (selection.model is IFormattedModel)
-    					{
-    						formatModels.addItem((selection.model as IFormattedModel).format);
-    					}
-    				}
-    				var command:XUpdateCollectionCommand = new XUpdateCollectionCommand(model, formatModels, property, value);
-    				context.execute(command);
-                }
+				if (_selectionManager == null)
+				{
+					super.setProperty(property, value);
+				}
+				else
+				{
+					var formatModels:ArrayCollection = new ArrayCollection();
+					for each (var selection:IView in selectionManager.selections)
+					{
+						if (selection.model is IFormattedModel)
+						{
+							formatModels.addItem((selection.model as IFormattedModel).format);
+						}
+					}
+					var command:XUpdateCollectionCommand = new XUpdateCollectionCommand(model, formatModels, property, value);
+					context.execute(command);
+				}
 			}
 		]]>
 	</fx:Script>
-
-    <editor:states>
-        <s:State name="iconic"/>
-        <s:State name="expanded"/>
-    </editor:states>
-    
+	
+	<editor:states>
+		<s:State name="iconic"/>
+		<s:State name="expanded"/>
+	</editor:states>
+	
 	<s:HGroup visible="true" visible.iconic="false">
 		<s:VGroup>
 			<s:HGroup gap="3">
@@ -231,12 +231,12 @@
 				<mx:Button width="30" id="_alignLeft" toolTip="Align Left"
 						   selected="{_format.textAlign == 'left'}"
 						   disabledIcon="{Icons.TextAlignLeftDisabled}"
-                           click="onToggleClick(event);"
+						   click="onToggleClick(event);"
 						   icon="{Icons.TextAlignLeft}"/>
 				<mx:Button width="30" id="_alignCenter" toolTip="Align Center"
 						   selected="{_format.textAlign == 'center'}"
 						   disabledIcon="{Icons.TextAlignCenterDisabled}"
-                           click="onToggleClick(event);"
+						   click="onToggleClick(event);"
 						   icon="{Icons.TextAlignCenter}"/>
 				<mx:Button width="30" id="_alignRight" toolTip="Align Right"
 						   selected="{_format.textAlign == 'right'}"
@@ -254,7 +254,7 @@
 				<s:dataProvider>
 					<s:ArrayList>
 						<fx:String>Arial</fx:String>
-                        <fx:String>Comic Sans MS</fx:String>
+						<fx:String>Comic Sans MS</fx:String>
 						<fx:String>Courier New</fx:String>
 						<fx:String>Times New Roman</fx:String>
 						<fx:String>Georgia</fx:String>

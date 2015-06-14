@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -35,14 +35,14 @@ package com.drawfx.command
 	import flash.geom.Point;
 	
 	import mx.collections.ArrayCollection;
-
-
+	
+	
 	public class XResizeSelectionsCommand extends XDrawingMacroCommand
 	{
 		public static var MATCH_SIZE:String = "matchSize";
 		public static var MATCH_WIDTH:String = "matchWidth";
 		public static var MATCH_HEIGHT:String = "matchHeight";
-
+		
 		private var _selections:ArrayCollection;
 		private var _lastSelection:IView;
 		private var _match:String;

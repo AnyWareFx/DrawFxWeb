@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,30 +25,30 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.data
 {
-    import com.anywarefx.model.IModel;
-    
-    import mx.collections.ArrayCollection;
-
-
-    public interface IDataAccessObject
-    {
-        function get dataSource():IDataSource;
-        function set dataSource(value:IDataSource):void;
-
+	import com.anywarefx.model.IModel;
+	
+	import mx.collections.ArrayCollection;
+	
+	
+	public interface IDataAccessObject
+	{
+		function get dataSource():IDataSource;
+		function set dataSource(value:IDataSource):void;
+		
 		function get modelType():String;
 		function set modelType(value:String):void;
-
-        [ArrayElementType("com.anywarefx.model.IModel")]
-        function list(query:String):ArrayCollection;
-        function lookup(uid:String):IModel;
-        
-        function add():IModel;
-        function insert(model:IModel):void;
-        
-        function edit(uid:String):IModel;
-        function update(model:IModel):void;
-        
-        function remove(uid:String):IModel;
-        function purge(model:IModel):void;
-    }
+		
+		[ArrayElementType("com.anywarefx.model.IModel")]
+		function list(query:String):ArrayCollection;
+		function lookup(uid:String):IModel;
+		
+		function add():IModel;
+		function insert(model:IModel):void;
+		
+		function edit(uid:String):IModel;
+		function update(model:IModel):void;
+		
+		function remove(uid:String):IModel;
+		function purge(model:IModel):void;
+	}
 }

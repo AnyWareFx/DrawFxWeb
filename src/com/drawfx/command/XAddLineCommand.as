@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,36 +25,36 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.drawfx.command
 {
-    import com.drawfx.model.XLineModel;
-    
-    
-    public class XAddLineCommand extends XDrawingCommand
-    {
-        private var _line:XLineModel;
-        
-        
-        public function XAddLineCommand(target:*, line:XLineModel)
-        {
-            super(target);
-            _line = line;
-        }
-        
-        
-        public function get line():XLineModel
-        {
-            return _line;
-        }
-        
-        
-        override public function execute():void
-        {
-            parent.addLine(line);
-        }
-        
-        
-        override public function undo():void
-        {
-            parent.removeLine(line);
-        }
-    }
+	import com.drawfx.model.XLineModel;
+	
+	
+	public class XAddLineCommand extends XDrawingCommand
+	{
+		private var _line:XLineModel;
+		
+		
+		public function XAddLineCommand(target:*, line:XLineModel)
+		{
+			super(target);
+			_line = line;
+		}
+		
+		
+		public function get line():XLineModel
+		{
+			return _line;
+		}
+		
+		
+		override public function execute():void
+		{
+			parent.addLine(line);
+		}
+		
+		
+		override public function undo():void
+		{
+			parent.removeLine(line);
+		}
+	}
 }

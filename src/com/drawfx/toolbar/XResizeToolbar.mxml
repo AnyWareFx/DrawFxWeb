@@ -2,13 +2,13 @@
 <s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
 		  xmlns:mx="library://ns.adobe.com/flex/mx" 
-          enabled="{_selectionManager.selections.length > 1}"
+		  enabled="{_selectionManager.selections.length > 1}"
 		  gap="3">
-
+	
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -38,7 +38,7 @@
 			import com.drawfx.command.XResizeSelectionsCommand;
 			
 			import assets.Icons;
-
+			
 			
 			[Bindable] private var _selectionManager:XSelectionManager;
 			private var _context:XCommandContext;
@@ -94,20 +94,20 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-
+	
 	<mx:Button id="_resizeWidth" width="30" 
 			   click="onResizeSelections(XResizeSelectionsCommand.MATCH_WIDTH);"
 			   disabledIcon="{Icons.MatchWidthDisabled}"
-               enabled="{_selectionManager.selections.length > 1}"
+			   enabled="{_selectionManager.selections.length > 1}"
 			   icon="{Icons.MatchWidth}"/>
 	<mx:Button id="_resizeHeight" width="30" 
 			   click="onResizeSelections(XResizeSelectionsCommand.MATCH_HEIGHT);"
 			   disabledIcon="{Icons.MatchHeightDisabled}"
-               enabled="{_selectionManager.selections.length > 1}"
+			   enabled="{_selectionManager.selections.length > 1}"
 			   icon="{Icons.MatchHeight}"/>
 	<mx:Button id="_resizeDimensions" width="30" 
 			   click="onResizeSelections(XResizeSelectionsCommand.MATCH_SIZE);"
 			   disabledIcon="{Icons.MatchSizeDisabled}"
-               enabled="{_selectionManager.selections.length > 1}"
+			   enabled="{_selectionManager.selections.length > 1}"
 			   icon="{Icons.MatchSize}"/>
 </s:HGroup>

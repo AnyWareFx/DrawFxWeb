@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,31 +25,31 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.event
 {
-    import com.anywarefx.view.IView;
-
-
-    public class XViewUpdateEvent extends XEvent
-    {
-        public static const VIEW_ADDED:String = "viewAdded";
-        public static const VIEW_REMOVED:String = "viewRemoved";
-
-        private var _view:IView;
-
-
-        public function XViewUpdateEvent(type:String, message:String="", bubbles:Boolean=true, cancelable:Boolean=false)
-        {
-            super(type, message, bubbles, cancelable);
-        }
-
-
-        public function get view():IView
-        {
-            return _view;
-        }
-
-        public function set view(value:IView):void
-        {
-            _view = value;
-        }
-    }
+	import com.anywarefx.view.IView;
+	
+	
+	public class XViewUpdateEvent extends XEvent
+	{
+		public static const VIEW_ADDED:String = "viewAdded";
+		public static const VIEW_REMOVED:String = "viewRemoved";
+		
+		private var _view:IView;
+		
+		
+		public function XViewUpdateEvent(type:String, message:String="", bubbles:Boolean=true, cancelable:Boolean=false)
+		{
+			super(type, message, bubbles, cancelable);
+		}
+		
+		
+		public function get view():IView
+		{
+			return _view;
+		}
+		
+		public function set view(value:IView):void
+		{
+			_view = value;
+		}
+	}
 }

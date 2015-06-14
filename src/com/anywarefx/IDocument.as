@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,36 +25,36 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx
 {
-    import com.anywarefx.command.XCommandContext;
-    import com.anywarefx.manager.XSelectionManager;
-    import com.anywarefx.model.IModel;
-    import com.anywarefx.view.IView;
-    
-    import mx.collections.ArrayCollection;
-
-
-    public interface IDocument extends IComponent
-    {
-        function get model():IModel;
-        function set model(value:IModel):void;
-        
-        function get views():*;
-        function set views(value:*):void;
-        
-        function get defaultView():String;
-        function set defaultView(value:String):void;
-
-        function openView(name:String):IView;
-        function closeView(name:String):IView;
-        
-        [ArrayElementType("com.anywarefx.controller.XUIController")]
-        function get controllers():ArrayCollection;
-        function set controllers(value:ArrayCollection):void;
-        
-        function get context():XCommandContext;
-        function set context(value:XCommandContext):void;
-        
-        function get selectionManager():XSelectionManager;
-        function set selectionManager(value:XSelectionManager):void;
-    }
+	import com.anywarefx.command.XCommandContext;
+	import com.anywarefx.manager.XSelectionManager;
+	import com.anywarefx.model.IModel;
+	import com.anywarefx.view.IView;
+	
+	import mx.collections.ArrayCollection;
+	
+	
+	public interface IDocument extends IComponent
+	{
+		function get model():IModel;
+		function set model(value:IModel):void;
+		
+		function get views():*;
+		function set views(value:*):void;
+		
+		function get defaultView():String;
+		function set defaultView(value:String):void;
+		
+		function openView(name:String):IView;
+		function closeView(name:String):IView;
+		
+		[ArrayElementType("com.anywarefx.controller.XUIController")]
+		function get controllers():ArrayCollection;
+		function set controllers(value:ArrayCollection):void;
+		
+		function get context():XCommandContext;
+		function set context(value:XCommandContext):void;
+		
+		function get selectionManager():XSelectionManager;
+		function set selectionManager(value:XSelectionManager):void;
+	}
 }

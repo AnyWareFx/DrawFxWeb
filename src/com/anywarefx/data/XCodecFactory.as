@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,23 +25,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.data
 {
-    public class XCodecFactory
-    {
-        public static function createCodec(mimeType:String):ICodec
-        {
-            var codec:ICodec = null;
-            switch (mimeType)
-            {
-                case "application/json":
-                case "application/javascript":
-                    codec = new JSONCodec();
-                    break;
-                
-                case "text/xml":
-                    codec = new XMLCodec();
-                    break;
-            }
-            return codec;
-        }
-    }
+	public class XCodecFactory
+	{
+		public static function createCodec(mimeType:String):ICodec
+		{
+			var codec:ICodec = null;
+			switch (mimeType)
+			{
+				case "application/json":
+				case "application/javascript":
+					codec = new JSONCodec();
+					break;
+				
+				case "text/xml":
+					codec = new XMLCodec();
+					break;
+			}
+			return codec;
+		}
+	}
 }

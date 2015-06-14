@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,11 +25,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.drawfx.model
 {
-    import com.anywarefx.model.IModel;
-    
-    public interface IStrokedModel extends IModel
-    {
-        function get stroke():XStrokeModel;
-        function set stroke(value:XStrokeModel):void;
-    }
+	import com.anywarefx.model.IModel;
+	
+	public interface IStrokedModel extends IModel
+	{
+		function get stroke():XStrokeModel;
+		function set stroke(value:XStrokeModel):void;
+	}
 }

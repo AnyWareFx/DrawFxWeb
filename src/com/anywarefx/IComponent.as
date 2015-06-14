@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,22 +25,22 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx
 {
-    import mx.core.IPropertyChangeNotifier;
-    
-    
-    public interface IComponent extends IPropertyChangeNotifier
-    {
-        // XFactory <component name="..."
-        function get name():String;
-        function set name(value:String):void;
-
-        // XFactory injection
-        function get plugins():Array;
-        function set plugins(values:Array):void;
-        
-        // Run-time management
-        function plugin(plugin:*, batch:Boolean=false):void;
-        function unplug(plugin:*, batch:Boolean=false):void;
-        function unplugAll():void;
-    }
+	import mx.core.IPropertyChangeNotifier;
+	
+	
+	public interface IComponent extends IPropertyChangeNotifier
+	{
+		// XFactory <component name="..."
+		function get name():String;
+		function set name(value:String):void;
+		
+		// XFactory injection
+		function get plugins():Array;
+		function set plugins(values:Array):void;
+		
+		// Run-time management
+		function plugin(plugin:*, batch:Boolean=false):void;
+		function unplug(plugin:*, batch:Boolean=false):void;
+		function unplugAll():void;
+	}
 }

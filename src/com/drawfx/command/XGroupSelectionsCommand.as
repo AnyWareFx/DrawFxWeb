@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -58,7 +58,7 @@ package com.drawfx.command
 			context.execute(cutCommand);
 			var pasteCommand:XPasteCommand = new XPasteCommand(group, _clipboard);
 			context.execute(pasteCommand);
-
+			
 			var parentOrigin:Point = new Point();
 			if (parent is IBoundedModel)
 			{
@@ -66,7 +66,7 @@ package com.drawfx.command
 				parentOrigin.y = (parent as IBoundedModel).bounds.y;
 			}
 			var delta:Point = new Point(parentOrigin.x - group.bounds.x, parentOrigin.y - group.bounds.y);
-
+			
 			var child:IBoundedModel;
 			var position:Point;
 			var translateCommand:XSetPropertyCommand;
@@ -76,18 +76,18 @@ package com.drawfx.command
 				translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
 				context.execute(translateCommand);
 			}
-            for each (child in group.lines)
-            {
-                position = new Point(child.bounds.x + delta.x, child.bounds.y + delta.y);
-                translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
-                context.execute(translateCommand);
-            }
-            for each (child in group.images)
-            {
-                position = new Point(child.bounds.x + delta.x, child.bounds.y + delta.y);
-                translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
-                context.execute(translateCommand);
-            }
+			for each (child in group.lines)
+			{
+				position = new Point(child.bounds.x + delta.x, child.bounds.y + delta.y);
+				translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
+				context.execute(translateCommand);
+			}
+			for each (child in group.images)
+			{
+				position = new Point(child.bounds.x + delta.x, child.bounds.y + delta.y);
+				translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
+				context.execute(translateCommand);
+			}
 			for each (child in group.shapes)
 			{
 				position = new Point(child.bounds.x + delta.x, child.bounds.y + delta.y);
@@ -100,7 +100,7 @@ package com.drawfx.command
 				translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
 				context.execute(translateCommand);
 			}
-
+			
 			var addGroupCommand:XAddGroupCommand = new XAddGroupCommand(parent, group);
 			context.execute(addGroupCommand);
 		}

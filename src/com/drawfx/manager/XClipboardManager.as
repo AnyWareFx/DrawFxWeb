@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -35,7 +35,7 @@ package com.drawfx.manager
 	use namespace flash_proxy;
 	use namespace object_proxy;
 	
-
+	
 	[Bindable]
 	public class XClipboardManager extends XComponent
 	{
@@ -44,8 +44,8 @@ package com.drawfx.manager
 			super();
 			var model:* = {
 				groups: new ArrayCollection(),
-                lines: new ArrayCollection(),
-                images: new ArrayCollection(),
+				lines: new ArrayCollection(),
+				images: new ArrayCollection(),
 				shapes: new ArrayCollection(),
 				textBoxes: new ArrayCollection(),
 				hasContent: false
@@ -57,19 +57,19 @@ package com.drawfx.manager
 		public function clear():void
 		{
 			groups.removeAll();
-            lines.removeAll();
-            images.removeAll();
+			lines.removeAll();
+			images.removeAll();
 			shapes.removeAll();
 			textBoxes.removeAll();
 			hasContent = false;
 		}
-
-
+		
+		
 		public function get hasContent():Boolean
 		{
 			return getProperty("hasContent");
 		}
-
+		
 		private function set hasContent(value:Boolean):void
 		{
 			setProperty("hasContent", value);
@@ -91,40 +91,40 @@ package com.drawfx.manager
 			groups.addItem(group);
 			hasContent = true;
 		}
-        
-        
-        public function get lines():ArrayCollection
-        {
-            return getProperty("lines");
-        }
-        
-        public virtual function set lines(value:ArrayCollection):void
-        {
-            setProperty("lines", value);
-        }
-        
-        public function addLine(line:String):void
-        {
-            lines.addItem(line);
-            hasContent = true;
-        }
-        
-        
-        public function get images():ArrayCollection
-        {
-            return getProperty("images");
-        }
-        
-        public virtual function set images(value:ArrayCollection):void
-        {
-            setProperty("images", value);
-        }
-        
-        public function addImage(image:String):void
-        {
-            images.addItem(image);
-            hasContent = true;
-        }
+		
+		
+		public function get lines():ArrayCollection
+		{
+			return getProperty("lines");
+		}
+		
+		public virtual function set lines(value:ArrayCollection):void
+		{
+			setProperty("lines", value);
+		}
+		
+		public function addLine(line:String):void
+		{
+			lines.addItem(line);
+			hasContent = true;
+		}
+		
+		
+		public function get images():ArrayCollection
+		{
+			return getProperty("images");
+		}
+		
+		public virtual function set images(value:ArrayCollection):void
+		{
+			setProperty("images", value);
+		}
+		
+		public function addImage(image:String):void
+		{
+			images.addItem(image);
+			hasContent = true;
+		}
 		
 		
 		public function get shapes():ArrayCollection
@@ -142,8 +142,8 @@ package com.drawfx.manager
 			shapes.addItem(shape);
 			hasContent = true;
 		}
-
-
+		
+		
 		public function get textBoxes():ArrayCollection
 		{
 			return getProperty("textBoxes");

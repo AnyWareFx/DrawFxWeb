@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -41,79 +41,79 @@ package com.drawfx.command
 	
 	public class XUnGroupCommand extends XDrawingMacroCommand
 	{
-        private var _clipboard:XClipboardManager;
-        private var _selections:ArrayCollection;
-        
-        
-        public function XUnGroupCommand(target:*, selections:ArrayCollection)
-        {
-            super(target);
-            _clipboard = new XClipboardManager();
-            _selections = new ArrayCollection(selections.toArray());
-        }
+		private var _clipboard:XClipboardManager;
+		private var _selections:ArrayCollection;
+		
+		
+		public function XUnGroupCommand(target:*, selections:ArrayCollection)
+		{
+			super(target);
+			_clipboard = new XClipboardManager();
+			_selections = new ArrayCollection(selections.toArray());
+		}
 		
 		
 		override public function execute():void
 		{
-            for each (var selection:IView in _selections)
-            {
-                if (selection.model is XGroupModel)
-                {
-                    var group:XGroupModel = selection.model as XGroupModel;
-                    var parentOrigin:Point = new Point();
-                    if (parent is IBoundedModel)
-                    {
-                        parentOrigin.x = (parent as IBoundedModel).bounds.x;
-                        parentOrigin.y = (parent as IBoundedModel).bounds.y;
-                    }
-                    var delta:Point = new Point(parentOrigin.x + group.bounds.x, parentOrigin.y + group.bounds.y);
-                    
-                    var child:IBoundedModel;
-                    var position:Point;
-                    var translateCommand:XSetPropertyCommand;
-                    for each (child in group.groups)
-                    {
-                        position = new Point(child.bounds.x + delta.x, child.bounds.y + delta.y);
-                        translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
-                        context.execute(translateCommand);
-                        _clipboard.addGroup(child.toJSON());
-                    }
-                    for each (child in group.lines)
-                    {
-                        position = new Point(child.bounds.x + delta.x, child.bounds.y + delta.y);
-                        translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
-                        context.execute(translateCommand);
-                        _clipboard.addLine(child.toJSON());
-                    }
-                    for each (child in group.images)
-                    {
-                        position = new Point(child.bounds.x + delta.x, child.bounds.y + delta.y);
-                        translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
-                        context.execute(translateCommand);
-                        _clipboard.addImage(child.toJSON());
-                    }
-                    for each (child in group.shapes)
-                    {
-                        position = new Point(child.bounds.x + delta.x, child.bounds.y + delta.y);
-                        translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
-                        context.execute(translateCommand);
-                        _clipboard.addShape(child.toJSON());
-                    }
-                    for each (child in group.textBoxes)
-                    {
-                        position = new Point(child.bounds.x + delta.x, child.bounds.y + delta.y);
-                        translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
-                        context.execute(translateCommand);
-                        _clipboard.addTextBox(child.toJSON());
-                    }
-                    
-                    var removeGroupCommand:XRemoveGroupCommand = new XRemoveGroupCommand(parent, group);
-                    context.execute(removeGroupCommand);
-                    
-                    var pasteCommand:XPasteCommand = new XPasteCommand(parent, _clipboard);
-                    context.execute(pasteCommand);
-                }
-            }
+			for each (var selection:IView in _selections)
+			{
+				if (selection.model is XGroupModel)
+				{
+					var group:XGroupModel = selection.model as XGroupModel;
+					var parentOrigin:Point = new Point();
+					if (parent is IBoundedModel)
+					{
+						parentOrigin.x = (parent as IBoundedModel).bounds.x;
+						parentOrigin.y = (parent as IBoundedModel).bounds.y;
+					}
+					var delta:Point = new Point(parentOrigin.x + group.bounds.x, parentOrigin.y + group.bounds.y);
+					
+					var child:IBoundedModel;
+					var position:Point;
+					var translateCommand:XSetPropertyCommand;
+					for each (child in group.groups)
+					{
+						position = new Point(child.bounds.x + delta.x, child.bounds.y + delta.y);
+						translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
+						context.execute(translateCommand);
+						_clipboard.addGroup(child.toJSON());
+					}
+					for each (child in group.lines)
+					{
+						position = new Point(child.bounds.x + delta.x, child.bounds.y + delta.y);
+						translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
+						context.execute(translateCommand);
+						_clipboard.addLine(child.toJSON());
+					}
+					for each (child in group.images)
+					{
+						position = new Point(child.bounds.x + delta.x, child.bounds.y + delta.y);
+						translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
+						context.execute(translateCommand);
+						_clipboard.addImage(child.toJSON());
+					}
+					for each (child in group.shapes)
+					{
+						position = new Point(child.bounds.x + delta.x, child.bounds.y + delta.y);
+						translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
+						context.execute(translateCommand);
+						_clipboard.addShape(child.toJSON());
+					}
+					for each (child in group.textBoxes)
+					{
+						position = new Point(child.bounds.x + delta.x, child.bounds.y + delta.y);
+						translateCommand = new XSetPropertyCommand(child.bounds, "position", position);
+						context.execute(translateCommand);
+						_clipboard.addTextBox(child.toJSON());
+					}
+					
+					var removeGroupCommand:XRemoveGroupCommand = new XRemoveGroupCommand(parent, group);
+					context.execute(removeGroupCommand);
+					
+					var pasteCommand:XPasteCommand = new XPasteCommand(parent, _clipboard);
+					context.execute(pasteCommand);
+				}
+			}
 		}
 	}
 }

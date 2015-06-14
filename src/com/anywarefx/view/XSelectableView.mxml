@@ -3,12 +3,12 @@
 			xmlns:s="library://ns.adobe.com/flex/spark" 
 			xmlns:mx="library://ns.adobe.com/flex/mx" 
 			xmlns:view="com.anywarefx.view.*"
-         	implements="com.anywarefx.view.ISelectableView">
-
-    <fx:Script>
-        <![CDATA[
+			implements="com.anywarefx.view.ISelectableView">
+	
+	<fx:Script>
+		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -32,41 +32,41 @@
 			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			*/		
 			
-            private var _selectable:Boolean;
-            private var _selected:Boolean;
-            
-            
-            public function get selectable():Boolean
-            {
-                return _selectable;
-            }
-            
-            public function set selectable(value:Boolean):void
-            {
-                _selectable = value;
-            }
-            
-            
-            public function get selected():Boolean
-            {
-                return _selected;
-            }
-            
-            public function set selected(value:Boolean):void
-            {
-                _selected = value;
-                currentState = _selected ? "selected" : "unselected";
-            }
-        ]]>
-    </fx:Script>
-    
-    <fx:Declarations>
-        <!-- Place non-visual elements (e.g., services, value objects) here -->
-    </fx:Declarations>
-
-    <view:states>
-        <s:State name="unselected"/>
-        <s:State name="selected"/>
-    </view:states>
-
+			private var _selectable:Boolean;
+			private var _selected:Boolean;
+			
+			
+			public function get selectable():Boolean
+			{
+				return _selectable;
+			}
+			
+			public function set selectable(value:Boolean):void
+			{
+				_selectable = value;
+			}
+			
+			
+			public function get selected():Boolean
+			{
+				return _selected;
+			}
+			
+			public function set selected(value:Boolean):void
+			{
+				_selected = value;
+				currentState = _selected ? "selected" : "unselected";
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<view:states>
+		<s:State name="unselected"/>
+		<s:State name="selected"/>
+	</view:states>
+	
 </view:XView>

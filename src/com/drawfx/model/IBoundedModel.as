@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -27,7 +27,7 @@ package com.drawfx.model
 {
 	import com.anywarefx.model.IModel;
 	
-
+	
 	public interface IBoundedModel extends IModel
 	{
 		function get bounds():XBoundsModel;

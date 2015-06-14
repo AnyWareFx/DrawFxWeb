@@ -2,12 +2,12 @@
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
-          enabled="{_selectionManager.selections.length > 1}">
-
+		  enabled="{_selectionManager.selections.length > 1}">
+	
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -38,13 +38,13 @@
 			import com.drawfx.model.XDrawingModel;
 			
 			import assets.Icons;
-
-
+			
+			
 			[Bindable] private var _selectionManager:XSelectionManager;
 			private var _context:XCommandContext;
 			private var _model:XDrawingModel;
 			
-
+			
 			public function get selectionManager():XSelectionManager
 			{
 				return _selectionManager;
@@ -100,19 +100,19 @@
 				);
 				_context.execute(command);
 			}
-
+			
 		]]>
 	</fx:Script>
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-
+	
 	<s:HGroup gap="3">
 		<mx:Button id="alignTop" width="30" toolTip="Align to top"
 				   click="onAlignSelections(XAlignSelectionsCommand.ALIGN_TOP);" 
 				   disabledIcon="{Icons.AlignTopDisabled}"
-                   enabled="{_selectionManager.selections.length > 1}"
+				   enabled="{_selectionManager.selections.length > 1}"
 				   icon="{Icons.AlignTop}"/>
 		<mx:Button id="alignLeft" width="30" toolTip="Align to left"
 				   click="onAlignSelections(XAlignSelectionsCommand.ALIGN_LEFT);"

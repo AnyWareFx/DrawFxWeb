@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -49,13 +49,13 @@ package com.drawfx.fx.model
 			};
 			plugin(model);
 		}
-
-
+		
+		
 		public function get bevel():XBevelModel
 		{
 			return getProperty("bevel");
 		}
-
+		
 		public function set bevel(value:XBevelModel):void
 		{
 			setProperty("bevel", value);

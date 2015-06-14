@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,13 +25,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.view
 {
-
-    public interface ISelectableView extends IView
-    {
-        function get selectable():Boolean;
-        function set selectable(value:Boolean):void;
-
-        function get selected():Boolean;
-        function set selected(value:Boolean):void;
-    }
+	
+	public interface ISelectableView extends IView
+	{
+		function get selectable():Boolean;
+		function set selectable(value:Boolean):void;
+		
+		function get selected():Boolean;
+		function set selected(value:Boolean):void;
+	}
 }

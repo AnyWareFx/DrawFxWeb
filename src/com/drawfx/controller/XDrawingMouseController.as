@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -36,13 +36,13 @@ package com.drawfx.controller
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-
+	
 	public class XDrawingMouseController extends XMouseController
 	{
 		private var _targeted:Boolean = false;
 		private var _selecting:Boolean = false;
-
-
+		
+		
 		override public function addUserEventListeners(view:IView):void
 		{
 			if (view is XDrawing)
@@ -58,8 +58,8 @@ package com.drawfx.controller
 				super.removeUserEventListeners(view);
 			}
 		}
-
-
+		
+		
 		override protected function onMouseDown(event:MouseEvent):void
 		{
 			if (event.target is XDrawing)
@@ -67,7 +67,7 @@ package com.drawfx.controller
 				_targeted = true;
 			}
 		}
-
+		
 		override protected function onMouseClick(event:MouseEvent):void
 		{
 			if (!_selecting)
@@ -77,8 +77,8 @@ package com.drawfx.controller
 			_targeted = false;
 			_selecting = false;
 		}
-
-
+		
+		
 		override protected function onMouseMove(event:MouseEvent):void
 		{
 			if (_targeted && event.buttonDown)
@@ -106,8 +106,8 @@ package com.drawfx.controller
 				}
 			}
 		}
-
-
+		
+		
 		private function onResizeRubberBand(event:MouseEvent):void
 		{
 			event.stopImmediatePropagation();		
@@ -117,19 +117,19 @@ package com.drawfx.controller
 			{
 				var rubberBand:XRubberBand = drawing.rubberBand;
 				rubberBand.currentPoint = new Point(event.localX, event.localY);
-
+				
 				rubberBand.width = rubberBand.width + rubberBand.currentPoint.x - rubberBand.startPoint.x;
 				rubberBand.height = rubberBand.height + rubberBand.currentPoint.y - rubberBand.startPoint.y;  
-
+				
 				rubberBand.startPoint.x = rubberBand.currentPoint.x;
 				rubberBand.startPoint.y = rubberBand.currentPoint.y;
 			}
 		}
-
+		
 		private function onSelectionComplete(event:MouseEvent):void
 		{
 			event.stopImmediatePropagation();		
-
+			
 			var drawing:XDrawing = event.target as XDrawing;
 			if (drawing != null)
 			{
@@ -153,7 +153,7 @@ package com.drawfx.controller
 				rubberBand.height = 0;
 				rubberBand.visible = false;
 				rubberBand.startPoint = new Point(-1, -1);
-
+				
 				drawing.systemManager.removeEventListener(MouseEvent.MOUSE_MOVE, onResizeRubberBand, true);
 				drawing.systemManager.removeEventListener(MouseEvent.MOUSE_UP, onSelectionComplete, true);
 			}

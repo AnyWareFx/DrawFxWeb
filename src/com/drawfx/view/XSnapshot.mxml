@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
-         xmlns:s="library://ns.adobe.com/flex/spark" 
-         xmlns:mx="library://ns.adobe.com/flex/mx"
-         x="{_drawingBounds.x}"
-         y="{_drawingBounds.y}"
-         width="{_drawingBounds.width}"
-         height="{_drawingBounds.height}">
-    
-    <fx:Script>
-        <![CDATA[
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 x="{_drawingBounds.x}"
+		 y="{_drawingBounds.y}"
+		 width="{_drawingBounds.width}"
+		 height="{_drawingBounds.height}">
+	
+	<fx:Script>
+		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -34,170 +34,170 @@
 			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			*/		
 			
-            import com.anywarefx.command.XCommandContext;
-            import com.anywarefx.command.XSetPropertyCommand;
-            import com.anywarefx.view.XView;
-            import com.drawfx.model.IBoundedModel;
-            import com.drawfx.model.XBoundsModel;
-            import com.drawfx.model.XImageModel;
-            
-            import mx.core.UIComponent;
-            import mx.events.PropertyChangeEvent;
-            import mx.graphics.codec.PNGEncoder;
-
-
-            private var _camera:Camera;
-            private var _context:XCommandContext;
-            private var _imageModel:XImageModel;
-
-            [Bindable] private var _parentBounds:XBoundsModel;
-            [Bindable] private var _drawingBounds:XBoundsModel = new XBoundsModel();
-            
-            private var _drawing:XDrawing;
-            private var _view:XView;
-
-
-            public function get drawing():XDrawing
-            {
-                return _drawing;
-            }
-            
-            public function set drawing(value:XDrawing):void
-            {
-                _drawing = value;
-            }
-            
-            
-            public function get imageModel():XImageModel
-            {
-                return _imageModel;
-            }
-            
-            public function set imageModel(value:XImageModel):void
-            {
-                _imageModel = value;
-            }
-            
-            
-            public function get view():XView
-            {
-                return _view;
-            }
-            
-            public function set view(value:XView):void
-            {
-                _view = value;
-                if (_parentBounds != null)
-                {
-                    _parentBounds.removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onBoundsChange);
-                }
-                if (_view is IBoundedView)
-                {
-                    _parentBounds = (_view.model as IBoundedModel).bounds;
-                    _parentBounds.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onBoundsChange);
-                    _drawingBounds.width = _parentBounds.width;
-                    _drawingBounds.height = _parentBounds.height;
-                    syncPosition();
-                }
-            }
-            
-            
-            private function onBoundsChange(event:PropertyChangeEvent):void
-            {
-                switch (event.property)
-                {
-                    case "width":
-                        _drawingBounds.width = event.newValue as Number;
-                        break;
-                    
-                    case "height":
-                        _drawingBounds.height = event.newValue as Number;
-                        break;
-                    
-                    case "x":
-                    case "y":
-                        syncPosition();
-                        break;
-                }
-            }
-            
-            private function syncPosition():void
-            {
-                var parent:XComposite = XDrawing.getParent(_view.parent as UIComponent);
-                var position:Point = parent.contentToGlobal(_parentBounds.position);
-                _drawingBounds.position = _drawing.globalToContent(position);
-            }
-
-            
-            public function get context():XCommandContext
-            {
-                return _context;
-            }
-
-            public function set context(value:XCommandContext):void
-            {
-                _context = value;
-            }
-            
-            
-            public function startCapture():void
-            {
-                if (!_videoGroup.visible)
-                {
-                    currentState = "capture";
-                    depth = parent.numChildren;
-                    _videoGroup.visible = true;
-                    _camera = Camera.getCamera();
-                    _videoDisplay.attachCamera(_camera);
-                }
-            }
-            
-            public function stopCapture():void
-            {
-                if (_videoGroup.visible)
-                {
-                    currentState = "hidden";
-                    _camera = null;
-                    _videoGroup.visible = false;
-                    _parentBounds = new XBoundsModel();
-                }
-            }
-            
-            
-            private function onSnapshot():void
-            {
-                var bitmapData:BitmapData = new BitmapData(_videoDisplay.width, _videoDisplay.height);
-                bitmapData.draw(_videoDisplay);
-                
-                var encoder:PNGEncoder = new PNGEncoder();
-                var byteArray:ByteArray = encoder.encode(bitmapData);
-                var command:XSetPropertyCommand = new XSetPropertyCommand(_imageModel, "sourceData", byteArray);
-                _context.execute(command);
-                
-                stopCapture();
-            }
-        ]]>
-    </fx:Script>
-
-    <s:states>
-        <s:State name="hidden"/>
-        <s:State name="capture"/>
-    </s:states>
-    
-    <s:Group id="_videoGroup" visible="false">
-        <mx:VideoDisplay
-            id="_videoDisplay"
-            width="{_drawingBounds.width}"
-            height="{_drawingBounds.height}"/>
-        
-        <mx:Button
-            click="stopCapture();"
-            label="Cancel" 
-            left="10" bottom="10"/>              
-        <mx:Button 
-            click="onSnapshot();"
-            label="Take a Snapshot" 
-            right="10" bottom="10"/>              
-    </s:Group>
-    
+			import com.anywarefx.command.XCommandContext;
+			import com.anywarefx.command.XSetPropertyCommand;
+			import com.anywarefx.view.XView;
+			import com.drawfx.model.IBoundedModel;
+			import com.drawfx.model.XBoundsModel;
+			import com.drawfx.model.XImageModel;
+			
+			import mx.core.UIComponent;
+			import mx.events.PropertyChangeEvent;
+			import mx.graphics.codec.PNGEncoder;
+			
+			
+			private var _camera:Camera;
+			private var _context:XCommandContext;
+			private var _imageModel:XImageModel;
+			
+			[Bindable] private var _parentBounds:XBoundsModel;
+			[Bindable] private var _drawingBounds:XBoundsModel = new XBoundsModel();
+			
+			private var _drawing:XDrawing;
+			private var _view:XView;
+			
+			
+			public function get drawing():XDrawing
+			{
+				return _drawing;
+			}
+			
+			public function set drawing(value:XDrawing):void
+			{
+				_drawing = value;
+			}
+			
+			
+			public function get imageModel():XImageModel
+			{
+				return _imageModel;
+			}
+			
+			public function set imageModel(value:XImageModel):void
+			{
+				_imageModel = value;
+			}
+			
+			
+			public function get view():XView
+			{
+				return _view;
+			}
+			
+			public function set view(value:XView):void
+			{
+				_view = value;
+				if (_parentBounds != null)
+				{
+					_parentBounds.removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onBoundsChange);
+				}
+				if (_view is IBoundedView)
+				{
+					_parentBounds = (_view.model as IBoundedModel).bounds;
+					_parentBounds.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onBoundsChange);
+					_drawingBounds.width = _parentBounds.width;
+					_drawingBounds.height = _parentBounds.height;
+					syncPosition();
+				}
+			}
+			
+			
+			private function onBoundsChange(event:PropertyChangeEvent):void
+			{
+				switch (event.property)
+				{
+					case "width":
+						_drawingBounds.width = event.newValue as Number;
+						break;
+					
+					case "height":
+						_drawingBounds.height = event.newValue as Number;
+						break;
+					
+					case "x":
+					case "y":
+						syncPosition();
+						break;
+				}
+			}
+			
+			private function syncPosition():void
+			{
+				var parent:XComposite = XDrawing.getParent(_view.parent as UIComponent);
+				var position:Point = parent.contentToGlobal(_parentBounds.position);
+				_drawingBounds.position = _drawing.globalToContent(position);
+			}
+			
+			
+			public function get context():XCommandContext
+			{
+				return _context;
+			}
+			
+			public function set context(value:XCommandContext):void
+			{
+				_context = value;
+			}
+			
+			
+			public function startCapture():void
+			{
+				if (!_videoGroup.visible)
+				{
+					currentState = "capture";
+					depth = parent.numChildren;
+					_videoGroup.visible = true;
+					_camera = Camera.getCamera();
+					_videoDisplay.attachCamera(_camera);
+				}
+			}
+			
+			public function stopCapture():void
+			{
+				if (_videoGroup.visible)
+				{
+					currentState = "hidden";
+					_camera = null;
+					_videoGroup.visible = false;
+					_parentBounds = new XBoundsModel();
+				}
+			}
+			
+			
+			private function onSnapshot():void
+			{
+				var bitmapData:BitmapData = new BitmapData(_videoDisplay.width, _videoDisplay.height);
+				bitmapData.draw(_videoDisplay);
+				
+				var encoder:PNGEncoder = new PNGEncoder();
+				var byteArray:ByteArray = encoder.encode(bitmapData);
+				var command:XSetPropertyCommand = new XSetPropertyCommand(_imageModel, "sourceData", byteArray);
+				_context.execute(command);
+				
+				stopCapture();
+			}
+		]]>
+	</fx:Script>
+	
+	<s:states>
+		<s:State name="hidden"/>
+		<s:State name="capture"/>
+	</s:states>
+	
+	<s:Group id="_videoGroup" visible="false">
+		<mx:VideoDisplay
+			id="_videoDisplay"
+			width="{_drawingBounds.width}"
+			height="{_drawingBounds.height}"/>
+		
+		<mx:Button
+			click="stopCapture();"
+			label="Cancel" 
+			left="10" bottom="10"/>              
+		<mx:Button 
+			click="onSnapshot();"
+			label="Take a Snapshot" 
+			right="10" bottom="10"/>              
+	</s:Group>
+	
 </s:Group>

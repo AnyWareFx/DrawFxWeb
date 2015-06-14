@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -35,7 +35,7 @@ package com.drawfx.controller
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
 	
-
+	
 	public class XDrawingKeyboardController extends XKeyboardController
 	{
 		override public function addUserEventListeners(view:IView):void
@@ -45,7 +45,7 @@ package com.drawfx.controller
 				super.addUserEventListeners(view);
 			}
 		}
-
+		
 		override public function removeUserEventListeners(view:IView):void
 		{
 			if (view is XDrawing)

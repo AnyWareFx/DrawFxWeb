@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,36 +25,36 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.drawfx.command
 {
-    import com.drawfx.model.XImageModel;
-    
-    
-    public class XAddImageCommand extends XDrawingCommand
-    {
-        private var _image:XImageModel;
-        
-        
-        public function XAddImageCommand(target:*, image:XImageModel)
-        {
-            super(target);
-            _image = image;
-        }
-        
-        
-        public function get image():XImageModel
-        {
-            return _image;
-        }
-        
-        
-        override public function execute():void
-        {
-            parent.addImage(image);
-        }
-        
-        
-        override public function undo():void
-        {
-            parent.removeImage(image);
-        }
-    }
+	import com.drawfx.model.XImageModel;
+	
+	
+	public class XAddImageCommand extends XDrawingCommand
+	{
+		private var _image:XImageModel;
+		
+		
+		public function XAddImageCommand(target:*, image:XImageModel)
+		{
+			super(target);
+			_image = image;
+		}
+		
+		
+		public function get image():XImageModel
+		{
+			return _image;
+		}
+		
+		
+		override public function execute():void
+		{
+			parent.addImage(image);
+		}
+		
+		
+		override public function undo():void
+		{
+			parent.removeImage(image);
+		}
+	}
 }

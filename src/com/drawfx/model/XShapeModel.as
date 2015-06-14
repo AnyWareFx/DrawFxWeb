@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -39,18 +39,18 @@ package com.drawfx.model
 	
 	[Bindable]
 	public class XShapeModel extends XCompositeModel 
-        implements IBoundedModel, IConstrainedModel, IBorderedModel, IStrokedModel, IFilledModel, 
-                   IFormattedModel, IFxEnabledModel
+		implements IBoundedModel, IConstrainedModel, IBorderedModel, IStrokedModel, IFilledModel, 
+		IFormattedModel, IFxEnabledModel
 	{
 		public function XShapeModel()
 		{
 			super();
 			var model:* = {
 				bounds: null,
-                constraints: null,
+				constraints: null,
 				textBox: null,
 				border: null,
-                stroke: null,
+				stroke: null,
 				fill: null,
 				fx: null			
 			};
@@ -68,7 +68,7 @@ package com.drawfx.model
 			setProperty("bounds", value);
 			value.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onBoundsChange);
 		}
-
+		
 		private function onBoundsChange(event:PropertyChangeEvent):void
 		{
 			if (event.property == "width" || event.property == "height")
@@ -81,17 +81,17 @@ package com.drawfx.model
 				}
 			}
 		}
-        
-        
-        public function get constraints():XConstraintsModel
-        {
-            return getProperty("constraints");
-        }
-        
-        public function set constraints(value:XConstraintsModel):void
-        {
-            setProperty("constraints", value);
-        }
+		
+		
+		public function get constraints():XConstraintsModel
+		{
+			return getProperty("constraints");
+		}
+		
+		public function set constraints(value:XConstraintsModel):void
+		{
+			setProperty("constraints", value);
+		}
 		
 		
 		public function get textBox():XTextBoxModel
@@ -104,17 +104,17 @@ package com.drawfx.model
 			setProperty("textBox", value);
 		}
 		
-        
-        public function get format():XTextFormatModel
-        {
-            return textBox.format;
-        }
-        
-        public function set format(value:XTextFormatModel):void
-        {
-            textBox.format = value;
-        }
-        
+		
+		public function get format():XTextFormatModel
+		{
+			return textBox.format;
+		}
+		
+		public function set format(value:XTextFormatModel):void
+		{
+			textBox.format = value;
+		}
+		
 		
 		public function get border():XBorderModel
 		{
@@ -125,17 +125,17 @@ package com.drawfx.model
 		{
 			setProperty("border", value);
 		}
-        
-        
-        public function get stroke():XStrokeModel
-        {
-            return getProperty("stroke");
-        }
-        
-        public function set stroke(value:XStrokeModel):void
-        {
-            setProperty("stroke", value);
-        }
+		
+		
+		public function get stroke():XStrokeModel
+		{
+			return getProperty("stroke");
+		}
+		
+		public function set stroke(value:XStrokeModel):void
+		{
+			setProperty("stroke", value);
+		}
 		
 		
 		public function get fill():XFillModel

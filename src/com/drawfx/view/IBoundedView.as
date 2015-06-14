@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,18 +25,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.drawfx.view
 {
-    import com.anywarefx.view.IView;
-    import com.drawfx.model.XBoundsModel;
-    
-    import mx.core.UIComponent;
-    
-
-    public interface IBoundedView extends IView
-    {
-        function get resizeHandle():UIComponent;
-        
-        function get isEmbedded():Boolean;
-
-        function get bounds():XBoundsModel;
-    }
+	import com.anywarefx.view.IView;
+	import com.drawfx.model.XBoundsModel;
+	
+	import mx.core.UIComponent;
+	
+	
+	public interface IBoundedView extends IView
+	{
+		function get resizeHandle():UIComponent;
+		
+		function get isEmbedded():Boolean;
+		
+		function get bounds():XBoundsModel;
+	}
 }

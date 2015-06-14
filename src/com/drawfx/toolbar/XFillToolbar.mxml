@@ -3,13 +3,13 @@
 					 xmlns:s="library://ns.adobe.com/flex/spark" 
 					 xmlns:mx="library://ns.adobe.com/flex/mx" 
 					 xmlns:editor="com.anywarefx.editor.*"
-                     currentState="expanded"
-                     enabled="{_editable}">
-
+					 currentState="expanded"
+					 enabled="{_editable}">
+	
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -33,24 +33,24 @@
 			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			*/		
 			
-            import com.anywarefx.command.XUpdateCollectionCommand;
-            import com.anywarefx.manager.XSelectionManager;
-            import com.anywarefx.model.IModel;
-            import com.anywarefx.view.IView;
-            import com.drawfx.model.IFilledModel;
-            import com.drawfx.model.XFillModel;
-            
-            import mx.collections.ArrayCollection;
-            import mx.events.PropertyChangeEvent;
-            
-            import assets.Icons;
+			import com.anywarefx.command.XUpdateCollectionCommand;
+			import com.anywarefx.manager.XSelectionManager;
+			import com.anywarefx.model.IModel;
+			import com.anywarefx.view.IView;
+			import com.drawfx.model.IFilledModel;
+			import com.drawfx.model.XFillModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.PropertyChangeEvent;
+			
+			import assets.Icons;
 			
 			
 			[Bindable] private var _editable:Boolean;
 			[Bindable] private var _selectionManager:XSelectionManager;
 			[Bindable] private var _fillModel:XFillModel;
 			
-
+			
 			public function get editable():Boolean
 			{
 				return _editable;
@@ -60,7 +60,7 @@
 			{
 				_editable = value;
 			}
-
+			
 			
 			public function get selectionManager():XSelectionManager
 			{
@@ -70,11 +70,11 @@
 			public function set selectionManager(value:XSelectionManager):void
 			{
 				_selectionManager = value;
-                if (_selectionManager != null)
-                {
-    				_selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
-    				updateModel(_selectionManager.lastSelection);
-                }
+				if (_selectionManager != null)
+				{
+					_selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
+					updateModel(_selectionManager.lastSelection);
+				}
 			}
 			
 			
@@ -130,38 +130,38 @@
 			
 			override protected function setProperty(property:String, value:*):void
 			{
-                if (_selectionManager == null)
-                {
-                    super.setProperty(property, value);
-                }
-                else
-                {
-    				var items:ArrayCollection = new ArrayCollection();
-    				for each (var selection:IView in selectionManager.selections)
-    				{
-    					if (selection.model is IFilledModel)
-    					{
-    						items.addItem((selection.model as IFilledModel).fill);
-    					}
-    				}
-    				var command:XUpdateCollectionCommand = new XUpdateCollectionCommand(model, items, property, value);
-    				context.execute(command);
-                }
+				if (_selectionManager == null)
+				{
+					super.setProperty(property, value);
+				}
+				else
+				{
+					var items:ArrayCollection = new ArrayCollection();
+					for each (var selection:IView in selectionManager.selections)
+					{
+						if (selection.model is IFilledModel)
+						{
+							items.addItem((selection.model as IFilledModel).fill);
+						}
+					}
+					var command:XUpdateCollectionCommand = new XUpdateCollectionCommand(model, items, property, value);
+					context.execute(command);
+				}
 			}
-
-
-            private function onIconClick():void
-            {
-                currentState = (currentState == "expanded") ? "iconic" : "expanded";
-            }
-        ]]>
+			
+			
+			private function onIconClick():void
+			{
+				currentState = (currentState == "expanded") ? "iconic" : "expanded";
+			}
+		]]>
 	</fx:Script>
-
-    <editor:states>
-        <s:State name="iconic"/>
-        <s:State name="expanded"/>
-    </editor:states>
-
+	
+	<editor:states>
+		<s:State name="iconic"/>
+		<s:State name="expanded"/>
+	</editor:states>
+	
 	<s:VGroup gap="3">
 		<s:HGroup gap="3">
 			<mx:Image width="32" height="24" source="{Icons.Fill}" click="onIconClick();"/>

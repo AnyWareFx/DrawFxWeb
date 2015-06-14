@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <view:XComposite xmlns:fx="http://ns.adobe.com/mxml/2009" 
-					 xmlns:s="library://ns.adobe.com/flex/spark" 
-					 xmlns:mx="library://ns.adobe.com/flex/mx" 
-					 xmlns:view="com.drawfx.view.*"			
-					 x="{_bounds.x}"
-					 y="{_bounds.y}"
-					 z="{_bounds.z}"
-					 depth="{_bounds.depth}"
-					 width="{_bounds.width}" 
-					 height="{_bounds.height}"
-					 rotationX="{_bounds.rotationX}" 
-					 rotationY="{_bounds.rotationY}" 
-					 rotationZ="{_bounds.rotationZ}"
-					 scaleX="{_bounds.scaleX}" 
-					 scaleY="{_bounds.scaleY}" 
-					 scaleZ="{_bounds.scaleZ}"
-					 transformX="{_bounds.width / 2}"
-					 transformY="{_bounds.height / 2}"
-					 maintainProjectionCenter="true"
-                     preinitialize="onPreinitialize();">
-
+				 xmlns:s="library://ns.adobe.com/flex/spark" 
+				 xmlns:mx="library://ns.adobe.com/flex/mx" 
+				 xmlns:view="com.drawfx.view.*"			
+				 x="{_bounds.x}"
+				 y="{_bounds.y}"
+				 z="{_bounds.z}"
+				 depth="{_bounds.depth}"
+				 width="{_bounds.width}" 
+				 height="{_bounds.height}"
+				 rotationX="{_bounds.rotationX}" 
+				 rotationY="{_bounds.rotationY}" 
+				 rotationZ="{_bounds.rotationZ}"
+				 scaleX="{_bounds.scaleX}" 
+				 scaleY="{_bounds.scaleY}" 
+				 scaleZ="{_bounds.scaleZ}"
+				 transformX="{_bounds.width / 2}"
+				 transformY="{_bounds.height / 2}"
+				 maintainProjectionCenter="true"
+				 preinitialize="onPreinitialize();">
+	
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -47,45 +47,45 @@
 			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			*/		
 			
-            import com.anywarefx.event.XViewUpdateEvent;
-            import com.anywarefx.model.IModel;
-            import com.drawfx.model.XBoundsModel;
-            import com.drawfx.model.XGroupModel;
-            
-            import mx.core.UIComponent;
-
-
+			import com.anywarefx.event.XViewUpdateEvent;
+			import com.anywarefx.model.IModel;
+			import com.drawfx.model.XBoundsModel;
+			import com.drawfx.model.XGroupModel;
+			
+			import mx.core.UIComponent;
+			
+			
 			[Bindable] private var _group:XGroupModel
 			[Bindable] private var _bounds:XBoundsModel;
-            
-            
-            public static function getGroup(target:UIComponent):XGroup
-            {
-                while (!(target is XGroup) && target != null && target.parent != null)
-                {
-                    target = target.parent as UIComponent;
-                }
-                return target as XGroup;
-            }
 			
 			
-            private function onPreinitialize():void
-            {
-                addEventListener(XViewUpdateEvent.VIEW_ADDED, onViewUpdate);
-                addEventListener(XViewUpdateEvent.VIEW_REMOVED, onViewUpdate);
-            }
-
-            
-            private function onViewUpdate(event:XViewUpdateEvent):void
-            {
-                if (event.view !== this)
-                {
-                    event.stopImmediatePropagation();
-                }
-            }
-            
-
-            override public function set model(value:IModel):void
+			public static function getGroup(target:UIComponent):XGroup
+			{
+				while (!(target is XGroup) && target != null && target.parent != null)
+				{
+					target = target.parent as UIComponent;
+				}
+				return target as XGroup;
+			}
+			
+			
+			private function onPreinitialize():void
+			{
+				addEventListener(XViewUpdateEvent.VIEW_ADDED, onViewUpdate);
+				addEventListener(XViewUpdateEvent.VIEW_REMOVED, onViewUpdate);
+			}
+			
+			
+			private function onViewUpdate(event:XViewUpdateEvent):void
+			{
+				if (event.view !== this)
+				{
+					event.stopImmediatePropagation();
+				}
+			}
+			
+			
+			override public function set model(value:IModel):void
 			{
 				super.model = value;
 				_group = value as XGroupModel;
@@ -93,11 +93,11 @@
 			}
 		]]>
 	</fx:Script>
-
+	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-
+	
 	<view:states>
 		<s:State name="unselected"/>
 		<s:State name="selected"/>
@@ -106,7 +106,7 @@
 	<view:layout>
 		<s:BasicLayout/>
 	</view:layout>
-
+	
 	<s:BorderContainer 
 		id="_selectedBorder" 
 		borderColor="0x70B2EE" 
@@ -127,5 +127,5 @@
 		bottom="0" 
 		width="8"
 		height="8"/>
-
+	
 </view:XComposite>

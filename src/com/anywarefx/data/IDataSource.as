@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,16 +25,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.data
 {
-    import mx.collections.ArrayCollection;
-
-
-    public interface IDataSource
-    {
-        function list(query:String):ArrayCollection;
-        function lookup(uid:String):*;
-
-        function insert(uid:String, record:*):void;
-        function update(uid:String, record:*):void;
-        function remove(uid:String):void;
-    }
+	import mx.collections.ArrayCollection;
+	
+	
+	public interface IDataSource
+	{
+		function list(query:String):ArrayCollection;
+		function lookup(uid:String):*;
+		
+		function insert(uid:String, record:*):void;
+		function update(uid:String, record:*):void;
+		function remove(uid:String):void;
+	}
 }

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -31,11 +31,11 @@ package com.drawfx.model
 	import flash.utils.flash_proxy;
 	
 	import mx.utils.object_proxy;
-
+	
 	use namespace flash_proxy;
 	use namespace object_proxy;
-
-
+	
+	
 	[Bindable]
 	public class XBoundsModel extends XModel
 	{
@@ -103,23 +103,23 @@ package com.drawfx.model
 			setProperty("depth", value);
 		}
 		
-
+		
 		public function get width():Number
 		{
 			return getProperty("width");
 		}
-
+		
 		public function set width(value:Number):void
 		{
 			setProperty("width", value);
 		}
-
-
+		
+		
 		public function get height():Number
 		{
 			return getProperty("height");
 		}
-
+		
 		public function set height(value:Number):void
 		{
 			setProperty("height", value);
@@ -190,21 +190,21 @@ package com.drawfx.model
 		{
 			setProperty("rotationZ", value);
 		}
-
-	
+		
+		
 		public function get position():Point
 		{
 			var x:Number = getProperty("x");
 			var y:Number = getProperty("y");
 			return new Point(x, y);
 		}
-
+		
 		public function set position(value:Point):void
 		{
-            var oldPosition:Point = new Point(getProperty("x"), getProperty("y"));
+			var oldPosition:Point = new Point(getProperty("x"), getProperty("y"));
 			setProperty("x", value.x);
 			setProperty("y", value.y);
-            notifyPropertyChanged("position", oldPosition, value);
+			notifyPropertyChanged("position", oldPosition, value);
 		}
 		
 		
@@ -217,10 +217,10 @@ package com.drawfx.model
 		
 		public function set dimensions(value:Point):void
 		{
-            var oldDimensions:Point = new Point(getProperty("width"), getProperty("height"));
+			var oldDimensions:Point = new Point(getProperty("width"), getProperty("height"));
 			setProperty("width", value.x);
 			setProperty("height", value.y);
-            notifyPropertyChanged("dimensions", oldDimensions, value);
+			notifyPropertyChanged("dimensions", oldDimensions, value);
 		}
 	}
 }

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,31 +25,31 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.command
 {
-    public class XMacroCommand extends XCommand
-    {
-        private var _context:XCommandContext = new XCommandContext();
-
-
-        public function XMacroCommand(target:*)
-        {
-            super(target);
-        }
-
-
-        override public function undo():void
-        {
-            context.rewind();
-        }
-
-        override public function redo():void
-        {
-            context.replay();
-        }
-
-
-        protected function get context():XCommandContext
-        {
-            return _context;
-        }
-    }
+	public class XMacroCommand extends XCommand
+	{
+		private var _context:XCommandContext = new XCommandContext();
+		
+		
+		public function XMacroCommand(target:*)
+		{
+			super(target);
+		}
+		
+		
+		override public function undo():void
+		{
+			context.rewind();
+		}
+		
+		override public function redo():void
+		{
+			context.replay();
+		}
+		
+		
+		protected function get context():XCommandContext
+		{
+			return _context;
+		}
+	}
 }

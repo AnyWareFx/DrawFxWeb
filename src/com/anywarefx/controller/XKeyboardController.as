@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,34 +25,34 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.controller
 {
-    import com.anywarefx.view.IView;
-    
-    import flash.events.KeyboardEvent;
-
-
-    public class XKeyboardController extends XUIController
-    {
-        override public function addUserEventListeners(view:IView):void
-        {
-            if (view != null)
-            {
-               view.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-               view.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
-            }
-        }
-
-        override public function removeUserEventListeners(view:IView):void
-        {
-            if (view != null)
-            {
-                view.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-                view.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
-            }
-        }
-
-
-        protected  function onKeyDown(event:KeyboardEvent):void {}
-
-        protected  function onKeyUp(event:KeyboardEvent):void {}
-    }
+	import com.anywarefx.view.IView;
+	
+	import flash.events.KeyboardEvent;
+	
+	
+	public class XKeyboardController extends XUIController
+	{
+		override public function addUserEventListeners(view:IView):void
+		{
+			if (view != null)
+			{
+				view.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+				view.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			}
+		}
+		
+		override public function removeUserEventListeners(view:IView):void
+		{
+			if (view != null)
+			{
+				view.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+				view.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			}
+		}
+		
+		
+		protected  function onKeyDown(event:KeyboardEvent):void {}
+		
+		protected  function onKeyUp(event:KeyboardEvent):void {}
+	}
 }

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,34 +25,34 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.controller
 {
-    import com.anywarefx.view.IView;
-    
-    import mx.events.DragEvent;
-
-
-    public class XDragController extends XUIController
-    {
-        override public function addUserEventListeners(view:IView):void
-        {
-            if (view != null)
-            {
-                view.addEventListener(DragEvent.DRAG_COMPLETE, onDragComplete);
-                view.addEventListener(DragEvent.DRAG_START, onDragStart);
-            }
-        }
-
-        override public function removeUserEventListeners(view:IView):void
-        {
-            if (view != null)
-            {
-                view.removeEventListener(DragEvent.DRAG_COMPLETE, onDragComplete);
-                view.removeEventListener(DragEvent.DRAG_START, onDragStart);
-            }
-        }
-
-
-        protected function onDragComplete(event:DragEvent):void {}
-
-        protected function onDragStart(event:DragEvent):void {}
-    }
+	import com.anywarefx.view.IView;
+	
+	import mx.events.DragEvent;
+	
+	
+	public class XDragController extends XUIController
+	{
+		override public function addUserEventListeners(view:IView):void
+		{
+			if (view != null)
+			{
+				view.addEventListener(DragEvent.DRAG_COMPLETE, onDragComplete);
+				view.addEventListener(DragEvent.DRAG_START, onDragStart);
+			}
+		}
+		
+		override public function removeUserEventListeners(view:IView):void
+		{
+			if (view != null)
+			{
+				view.removeEventListener(DragEvent.DRAG_COMPLETE, onDragComplete);
+				view.removeEventListener(DragEvent.DRAG_START, onDragStart);
+			}
+		}
+		
+		
+		protected function onDragComplete(event:DragEvent):void {}
+		
+		protected function onDragStart(event:DragEvent):void {}
+	}
 }

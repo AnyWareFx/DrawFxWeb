@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -27,13 +27,13 @@ package com.anywarefx.controller
 {
 	import com.anywarefx.command.XCommandContext;
 	import com.anywarefx.view.IView;
-
-
+	
+	
 	public interface IController
 	{
 		function get context():XCommandContext;
 		function set context(value:XCommandContext):void;
-
+		
 		function addSystemEventListeners(view:IView):void;
 		function removeSystemEventListeners(view:IView):void;
 		

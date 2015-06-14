@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -39,7 +39,7 @@ package com.drawfx.controller
 	import mx.core.UIComponent;
 	import mx.managers.DragManager;
 	
-
+	
 	public class XStencilMouseController extends XMouseController
 	{
 		override protected function onMouseMove(event:MouseEvent):void
@@ -49,12 +49,12 @@ package com.drawfx.controller
 				var stencil:XStencil = XStencil.getStencil(event.target as UIComponent);
 				if (stencil != null)
 				{
-                    var offset:Point = new Point();
-                    var source:DragSource = new DragSource();
+					var offset:Point = new Point();
+					var source:DragSource = new DragSource();
 					var shape:XShape = XShape.getShape(event.target as UIComponent);
-                    var line:XLine = XLine.getLine(event.target as UIComponent);
-                    var image:XImage = XImage.getImage(event.target as UIComponent);
-                    var textBox:XTextBox = XTextBox.getTextBox(event.target as UIComponent);
+					var line:XLine = XLine.getLine(event.target as UIComponent);
+					var image:XImage = XImage.getImage(event.target as UIComponent);
+					var textBox:XTextBox = XTextBox.getTextBox(event.target as UIComponent);
 					if (shape != null)
 					{
 						offset.x = shape.contentMouseX;
@@ -62,35 +62,35 @@ package com.drawfx.controller
 						
 						source.addData(stencil, "parent");
 						source.addData(shape.model, "model");
-                        source.addData(shape, "view");
+						source.addData(shape, "view");
 						source.addData(offset, "offset");
 						
 						DragManager.doDrag(shape, source, event);
 					}
-                    else if (line != null)
-                    {
-                        offset.x = line.contentMouseX;
-                        offset.y = line.contentMouseY;
-                        
-                        source.addData(stencil, "parent");
-                        source.addData(line.model, "model");
-                        source.addData(line, "view");
-                        source.addData(offset, "offset");
-                        
-                        DragManager.doDrag(line, source, event);
-                    }
-                    else if (image != null)
-                    {
-                        offset.x = image.contentMouseX;
-                        offset.y = image.contentMouseY;
-                        
-                        source.addData(stencil, "parent");
-                        source.addData(image.model, "model");
-                        source.addData(image, "view");
-                        source.addData(offset, "offset");
-                        
-                        DragManager.doDrag(image, source, event);
-                    }
+					else if (line != null)
+					{
+						offset.x = line.contentMouseX;
+						offset.y = line.contentMouseY;
+						
+						source.addData(stencil, "parent");
+						source.addData(line.model, "model");
+						source.addData(line, "view");
+						source.addData(offset, "offset");
+						
+						DragManager.doDrag(line, source, event);
+					}
+					else if (image != null)
+					{
+						offset.x = image.contentMouseX;
+						offset.y = image.contentMouseY;
+						
+						source.addData(stencil, "parent");
+						source.addData(image.model, "model");
+						source.addData(image, "view");
+						source.addData(offset, "offset");
+						
+						DragManager.doDrag(image, source, event);
+					}
 					else if (textBox != null)
 					{
 						offset.x = textBox.contentMouseX;
@@ -98,7 +98,7 @@ package com.drawfx.controller
 						
 						source.addData(stencil, "parent");
 						source.addData(textBox.model, "model");
-                        source.addData(textBox, "view");
+						source.addData(textBox, "view");
 						source.addData(offset, "offset");
 						
 						DragManager.doDrag(textBox, source, event);

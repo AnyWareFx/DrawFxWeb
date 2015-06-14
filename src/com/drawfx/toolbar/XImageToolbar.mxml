@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <editor:XModelEditor xmlns:fx="http://ns.adobe.com/mxml/2009" 
-                     xmlns:s="library://ns.adobe.com/flex/spark" 
-                     xmlns:mx="library://ns.adobe.com/flex/mx" 
-                     xmlns:editor="com.anywarefx.editor.*"
-                     xmlns:net="flash.net.*"
-                     currentState="expanded"
-                     enabled="{_editable}">
-    
-    <fx:Script>
-        <![CDATA[
+					 xmlns:s="library://ns.adobe.com/flex/spark" 
+					 xmlns:mx="library://ns.adobe.com/flex/mx" 
+					 xmlns:editor="com.anywarefx.editor.*"
+					 xmlns:net="flash.net.*"
+					 currentState="expanded"
+					 enabled="{_editable}">
+	
+	<fx:Script>
+		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -34,244 +34,244 @@
 			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			*/		
 			
-            import com.anywarefx.command.XUpdateCollectionCommand;
-            import com.anywarefx.manager.XSelectionManager;
-            import com.anywarefx.model.IModel;
-            import com.anywarefx.view.IView;
-            import com.drawfx.model.XImageModel;
-            import com.drawfx.view.XImage;
-            import com.drawfx.view.XSnapshot;
-            
-            import mx.collections.ArrayCollection;
-            import mx.collections.ArrayList;
-            import mx.events.PropertyChangeEvent;
-            
-            import assets.Icons;
-            
-            
-            [Bindable] private var _editable:Boolean;
-            [Bindable] private var _selectionManager:XSelectionManager;
-            [Bindable] private var _imageModel:XImageModel;
-            [Bindable] private var _blendModes:ArrayList = new ArrayList([
-                BlendMode.NORMAL,
-                BlendMode.ADD,
-                BlendMode.ALPHA,
-                BlendMode.DARKEN,
-                BlendMode.DIFFERENCE,
-                BlendMode.ERASE,
-                BlendMode.HARDLIGHT,
-                BlendMode.INVERT,
-                BlendMode.LAYER,
-                BlendMode.LIGHTEN,
-                BlendMode.MULTIPLY,
-                BlendMode.OVERLAY,
-                BlendMode.SCREEN,
-                BlendMode.SUBTRACT 
-            ]);			
-            private var _snapshot:XSnapshot;
-            private var _imageView:XImage;
-            
-            
-            public function get snapshot():XSnapshot
-            {
-                return _snapshot;
-            }
-
-            public function set snapshot(value:XSnapshot):void
-            {
-                _snapshot = value;
-            }
-
-            
-            public function get editable():Boolean
-            {
-                return _editable;
-            }
-            
-            public function set editable(value:Boolean):void
-            {
-                _editable = value;
-            }
-            
-            
-            public function get selectionManager():XSelectionManager
-            {
-                return _selectionManager;
-            }
-            
-            public function set selectionManager(value:XSelectionManager):void
-            {
-                _selectionManager = value;
-                if (_selectionManager != null)
-                {
-                    _selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
-                    updateModel(_selectionManager.lastSelection);
-                }
-            }
-            
-            
-            override public function set model(value:IModel):void
-            {
-                super.model = value;
-                _imageModel = value as XImageModel;
-            }
-            
-            
-            private function onSelectionChange(event:PropertyChangeEvent):void
-            {
-                if (event.property == "lastSelection")
-                {
-                    updateModel(event.newValue as IView);
-                }
-                else if (event.property == "count")
-                {
-                    updateModel(_selectionManager.lastSelection);
-                }
-            }
-            
-            
-            private function updateModel(view:IView):void
-            {
-                editable = (view is XImage);
-                if (editable)
-                {
-                    model = view.model;
-                    _imageView = view as XImage;
-                    _snapshot.view = _imageView;
-                }
-                else
-                {
-                    for each (var selection:IView in selectionManager.selections)
-                    {
-                        editable = (selection is XImage);
-                        if (editable)
-                        {
-                            model = selection.model;
-                            _imageView = selection as XImage;
-                            _snapshot.view = _imageView;
-                            break;
-                        }
-                    }
-                }
-                /* TODO
-                if (!editable)
-                {
-                model = _defaults;
-                }
-                */
-            }
-            
-            
-            private function onImportImage():void
-            {
-                var fileFilters:Array = [];
-                fileFilters.push(new FileFilter("Images", "*.gif;*.jpeg;*.jpg;*.png"));
-                _fileReference.browse(fileFilters);
-            }
-            
-            private function onImageSelect(evt:Event):void 
-            {
-                _fileReference.load();
-            }
-            
-            private function onImportComplete(evt:Event):void
-            {
-                super.setProperty("sourceData", _fileReference.data);
-            }
-            
-            
-            private function onCaptureImage():void
-            {
-                if (_snapshot.currentState == "hidden")
-                {
-                    _snapshot.context = context;
-                    _snapshot.imageModel = _imageModel;
-                    _snapshot.view = _imageView;
-                    _snapshot.startCapture();
-                }
-                else
-                {
-                    _snapshot.stopCapture();
-                }
-            }
-            
-            
-            override protected function setProperty(property:String, value:*):void
-            {
-                if (_selectionManager == null)
-                {
-                    super.setProperty(property, value);
-                }
-                else
-                {
-                    var items:ArrayCollection = new ArrayCollection();
-                    for each (var selection:IView in selectionManager.selections)
-                    {
-                        if (selection is XImage)
-                        {
-                            items.addItem(selection.model);
-                        }
-                    }
-                    var command:XUpdateCollectionCommand = new XUpdateCollectionCommand(model, items, property, value);
-                    context.execute(command);
-                }
-            }
-            
-            
-            private function onIconClick():void
-            {
-                currentState = (currentState == "expanded") ? "iconic" : "expanded";
-            }
-        ]]>
-    </fx:Script>
-    
-    <fx:Declarations>
-        <net:FileReference
-            id="_fileReference"
-            select="onImageSelect(event);"
-            complete="onImportComplete(event);"/>
-    </fx:Declarations>
-
-    <editor:states>
-        <s:State name="iconic"/>
-        <s:State name="expanded"/>
-    </editor:states>
-
-    <s:VGroup gap="3">
-        <s:HGroup gap="5" verticalAlign="middle">
-            <mx:Image source="{Icons.Image}" click="onIconClick();"/>
-            <s:Label width="35" height="22" fontSize="11" text="Alpha:" textAlign="right"
-                     verticalAlign="middle" fontWeight="normal" visible="true" visible.iconic="false"/>
-            <s:NumericStepper id="__alpha" width="60" change="onStepperChange(event);" maximum="1"
-                              minimum="0" stepSize="0.025" value="{_imageModel.alpha}"
-                              visible="true" visible.iconic="false"/>
-            <mx:Button width="30" click="onImportImage();" toolTip="Import Image"
-                       icon="{Icons.DrawingOpen}" disabledIcon="{Icons.DrawingOpenDisabled}"
-                       visible="true" visible.iconic="false"/>
-            <mx:Button width="30" click="onCaptureImage();" toolTip="Capture Image"
-                       icon="{Icons.Camera}" disabledIcon="{Icons.CameraDisabled}"
-                       visible="true" visible.iconic="false"/>
-        </s:HGroup>
-        <s:HGroup gap="10">
-            <s:CheckBox 
-                id="_scaleContent" 
-                label="Scale content" 
-                visible="true" visible.iconic="false"
-                selected="{_imageModel.scaleContent}" 
-                change="onCheckBoxChange(event);"/>
-            <s:CheckBox 
-                id="_smoothBitmapContent" 
-                label="Smooth content" 
-                visible="true" visible.iconic="false"
-                selected="{_imageModel.smoothBitmapContent}" 
-                change="onCheckBoxChange(event);"/>
-        </s:HGroup>
-        <s:CheckBox 
-            id="_maintainAspectRatio" 
-            label="Maintain aspect ratio" 
-            visible="true" visible.iconic="false"
-            selected="{_imageModel.maintainAspectRatio}" 
-            change="onCheckBoxChange(event);"/>
-    </s:VGroup>
-    
+			import com.anywarefx.command.XUpdateCollectionCommand;
+			import com.anywarefx.manager.XSelectionManager;
+			import com.anywarefx.model.IModel;
+			import com.anywarefx.view.IView;
+			import com.drawfx.model.XImageModel;
+			import com.drawfx.view.XImage;
+			import com.drawfx.view.XSnapshot;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.ArrayList;
+			import mx.events.PropertyChangeEvent;
+			
+			import assets.Icons;
+			
+			
+			[Bindable] private var _editable:Boolean;
+			[Bindable] private var _selectionManager:XSelectionManager;
+			[Bindable] private var _imageModel:XImageModel;
+			[Bindable] private var _blendModes:ArrayList = new ArrayList([
+				BlendMode.NORMAL,
+				BlendMode.ADD,
+				BlendMode.ALPHA,
+				BlendMode.DARKEN,
+				BlendMode.DIFFERENCE,
+				BlendMode.ERASE,
+				BlendMode.HARDLIGHT,
+				BlendMode.INVERT,
+				BlendMode.LAYER,
+				BlendMode.LIGHTEN,
+				BlendMode.MULTIPLY,
+				BlendMode.OVERLAY,
+				BlendMode.SCREEN,
+				BlendMode.SUBTRACT 
+			]);			
+			private var _snapshot:XSnapshot;
+			private var _imageView:XImage;
+			
+			
+			public function get snapshot():XSnapshot
+			{
+				return _snapshot;
+			}
+			
+			public function set snapshot(value:XSnapshot):void
+			{
+				_snapshot = value;
+			}
+			
+			
+			public function get editable():Boolean
+			{
+				return _editable;
+			}
+			
+			public function set editable(value:Boolean):void
+			{
+				_editable = value;
+			}
+			
+			
+			public function get selectionManager():XSelectionManager
+			{
+				return _selectionManager;
+			}
+			
+			public function set selectionManager(value:XSelectionManager):void
+			{
+				_selectionManager = value;
+				if (_selectionManager != null)
+				{
+					_selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
+					updateModel(_selectionManager.lastSelection);
+				}
+			}
+			
+			
+			override public function set model(value:IModel):void
+			{
+				super.model = value;
+				_imageModel = value as XImageModel;
+			}
+			
+			
+			private function onSelectionChange(event:PropertyChangeEvent):void
+			{
+				if (event.property == "lastSelection")
+				{
+					updateModel(event.newValue as IView);
+				}
+				else if (event.property == "count")
+				{
+					updateModel(_selectionManager.lastSelection);
+				}
+			}
+			
+			
+			private function updateModel(view:IView):void
+			{
+				editable = (view is XImage);
+				if (editable)
+				{
+					model = view.model;
+					_imageView = view as XImage;
+					_snapshot.view = _imageView;
+				}
+				else
+				{
+					for each (var selection:IView in selectionManager.selections)
+					{
+						editable = (selection is XImage);
+						if (editable)
+						{
+							model = selection.model;
+							_imageView = selection as XImage;
+							_snapshot.view = _imageView;
+							break;
+						}
+					}
+				}
+				/* TODO
+				if (!editable)
+				{
+				model = _defaults;
+				}
+				*/
+			}
+			
+			
+			private function onImportImage():void
+			{
+				var fileFilters:Array = [];
+				fileFilters.push(new FileFilter("Images", "*.gif;*.jpeg;*.jpg;*.png"));
+				_fileReference.browse(fileFilters);
+			}
+			
+			private function onImageSelect(evt:Event):void 
+			{
+				_fileReference.load();
+			}
+			
+			private function onImportComplete(evt:Event):void
+			{
+				super.setProperty("sourceData", _fileReference.data);
+			}
+			
+			
+			private function onCaptureImage():void
+			{
+				if (_snapshot.currentState == "hidden")
+				{
+					_snapshot.context = context;
+					_snapshot.imageModel = _imageModel;
+					_snapshot.view = _imageView;
+					_snapshot.startCapture();
+				}
+				else
+				{
+					_snapshot.stopCapture();
+				}
+			}
+			
+			
+			override protected function setProperty(property:String, value:*):void
+			{
+				if (_selectionManager == null)
+				{
+					super.setProperty(property, value);
+				}
+				else
+				{
+					var items:ArrayCollection = new ArrayCollection();
+					for each (var selection:IView in selectionManager.selections)
+					{
+						if (selection is XImage)
+						{
+							items.addItem(selection.model);
+						}
+					}
+					var command:XUpdateCollectionCommand = new XUpdateCollectionCommand(model, items, property, value);
+					context.execute(command);
+				}
+			}
+			
+			
+			private function onIconClick():void
+			{
+				currentState = (currentState == "expanded") ? "iconic" : "expanded";
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<net:FileReference
+			id="_fileReference"
+			select="onImageSelect(event);"
+			complete="onImportComplete(event);"/>
+	</fx:Declarations>
+	
+	<editor:states>
+		<s:State name="iconic"/>
+		<s:State name="expanded"/>
+	</editor:states>
+	
+	<s:VGroup gap="3">
+		<s:HGroup gap="5" verticalAlign="middle">
+			<mx:Image source="{Icons.Image}" click="onIconClick();"/>
+			<s:Label width="35" height="22" fontSize="11" text="Alpha:" textAlign="right"
+					 verticalAlign="middle" fontWeight="normal" visible="true" visible.iconic="false"/>
+			<s:NumericStepper id="__alpha" width="60" change="onStepperChange(event);" maximum="1"
+							  minimum="0" stepSize="0.025" value="{_imageModel.alpha}"
+							  visible="true" visible.iconic="false"/>
+			<mx:Button width="30" click="onImportImage();" toolTip="Import Image"
+					   icon="{Icons.DrawingOpen}" disabledIcon="{Icons.DrawingOpenDisabled}"
+					   visible="true" visible.iconic="false"/>
+			<mx:Button width="30" click="onCaptureImage();" toolTip="Capture Image"
+					   icon="{Icons.Camera}" disabledIcon="{Icons.CameraDisabled}"
+					   visible="true" visible.iconic="false"/>
+		</s:HGroup>
+		<s:HGroup gap="10">
+			<s:CheckBox 
+				id="_scaleContent" 
+				label="Scale content" 
+				visible="true" visible.iconic="false"
+				selected="{_imageModel.scaleContent}" 
+				change="onCheckBoxChange(event);"/>
+			<s:CheckBox 
+				id="_smoothBitmapContent" 
+				label="Smooth content" 
+				visible="true" visible.iconic="false"
+				selected="{_imageModel.smoothBitmapContent}" 
+				change="onCheckBoxChange(event);"/>
+		</s:HGroup>
+		<s:CheckBox 
+			id="_maintainAspectRatio" 
+			label="Maintain aspect ratio" 
+			visible="true" visible.iconic="false"
+			selected="{_imageModel.maintainAspectRatio}" 
+			change="onCheckBoxChange(event);"/>
+	</s:VGroup>
+	
 </editor:XModelEditor>

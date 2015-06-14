@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,37 +25,37 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.data
 {
-    import com.anywarefx.XFactory;
-    import com.anywarefx.model.IModel;
-    
-    import mx.collections.ArrayCollection;
-    
-
-    public class XDataAccessObject implements IDataAccessObject
-    {
-        private var _dataSource:IDataSource;
+	import com.anywarefx.XFactory;
+	import com.anywarefx.model.IModel;
+	
+	import mx.collections.ArrayCollection;
+	
+	
+	public class XDataAccessObject implements IDataAccessObject
+	{
+		private var _dataSource:IDataSource;
 		private var _modelType:String;
-
-        
-        public function get dataSource():IDataSource
-        {
-            return _dataSource;
-        }
-        
-        public function set dataSource(value:IDataSource):void
-        {
-            if (_dataSource == null)
-            {
-                _dataSource = value;
-            }
-        }
-        
-
+		
+		
+		public function get dataSource():IDataSource
+		{
+			return _dataSource;
+		}
+		
+		public function set dataSource(value:IDataSource):void
+		{
+			if (_dataSource == null)
+			{
+				_dataSource = value;
+			}
+		}
+		
+		
 		public function get modelType():String
 		{
 			return _modelType;
 		}
-
+		
 		public function set modelType(value:String):void
 		{
 			if (_modelType == null)
@@ -63,60 +63,60 @@ package com.anywarefx.data
 				_modelType = value;
 			}
 		}
-
-
-        [ArrayElementType("com.anywarefx.model.IModel")]
-        public function list(query:String):ArrayCollection
-        {
-            var models:ArrayCollection = new ArrayCollection();
-            var data:ArrayCollection = dataSource.list(query);
-            for each (var json:String in data)
-            {
-                var model:IModel = XFactory.instance.getComponent(modelType);
-                model.fromJSON(json, true);
+		
+		
+		[ArrayElementType("com.anywarefx.model.IModel")]
+		public function list(query:String):ArrayCollection
+		{
+			var models:ArrayCollection = new ArrayCollection();
+			var data:ArrayCollection = dataSource.list(query);
+			for each (var json:String in data)
+			{
+				var model:IModel = XFactory.instance.getComponent(modelType);
+				model.fromJSON(json, true);
 				models.addItem(model);
-            }
-            return models;
-        }
-        
-        public function lookup(uid:String):IModel
-        {
-            var model:IModel = XFactory.instance.getComponent(modelType);
-            model.fromJSON(dataSource.lookup(uid), true);
-            return model;
-        }
-        
-        
-        public function add():IModel
-        {
-            return XFactory.instance.getComponent(modelType);
-        }
-        
-        public function insert(model:IModel):void
-        {
-            dataSource.insert(model.uid, model.toJSON());
-        }
-        
-
-        public function edit(uid:String):IModel
-        {
-            return lookup(uid);
-        }
-        
-        public function update(model:IModel):void
-        {
-            dataSource.update(model.uid, model.toJSON());
-        }
-        
-
-        public function remove(uid:String):IModel
-        {
-            return lookup(uid);
-        }
-        
-        public function purge(model:IModel):void
-        {
-            dataSource.remove(model.uid);
-        }
-    }
+			}
+			return models;
+		}
+		
+		public function lookup(uid:String):IModel
+		{
+			var model:IModel = XFactory.instance.getComponent(modelType);
+			model.fromJSON(dataSource.lookup(uid), true);
+			return model;
+		}
+		
+		
+		public function add():IModel
+		{
+			return XFactory.instance.getComponent(modelType);
+		}
+		
+		public function insert(model:IModel):void
+		{
+			dataSource.insert(model.uid, model.toJSON());
+		}
+		
+		
+		public function edit(uid:String):IModel
+		{
+			return lookup(uid);
+		}
+		
+		public function update(model:IModel):void
+		{
+			dataSource.update(model.uid, model.toJSON());
+		}
+		
+		
+		public function remove(uid:String):IModel
+		{
+			return lookup(uid);
+		}
+		
+		public function purge(model:IModel):void
+		{
+			dataSource.remove(model.uid);
+		}
+	}
 }

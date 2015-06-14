@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -30,7 +30,7 @@ package assets
 		[Bindable]
 		[Embed(source="assets/icons/align-bottom-disabled-icon.png")]
 		public static var AlignBottomDisabled:Class; 
-
+		
 		[Bindable]
 		[Embed(source="assets/icons/align-bottom-icon.png")]
 		public static var AlignBottom:Class; 
@@ -82,14 +82,14 @@ package assets
 		[Bindable]
 		[Embed(source="assets/icons/border-icon.png")]
 		public static var Border:Class; 
-        
-        [Bindable]
-        [Embed(source="assets/icons/camera-disabled-icon.png")]
-        public static var CameraDisabled:Class; 
-        
-        [Bindable]
-        [Embed(source="assets/icons/camera-icon.png")]
-        public static var Camera:Class; 
+		
+		[Bindable]
+		[Embed(source="assets/icons/camera-disabled-icon.png")]
+		public static var CameraDisabled:Class; 
+		
+		[Bindable]
+		[Embed(source="assets/icons/camera-icon.png")]
+		public static var Camera:Class; 
 		
 		[Bindable]
 		[Embed(source="assets/icons/color-fill-disabled-icon.png")]
@@ -98,10 +98,10 @@ package assets
 		[Bindable]
 		[Embed(source="assets/icons/color-fill-icon.png")]
 		public static var ColorFill:Class; 
-        
-        [Bindable]
-        [Embed(source="assets/icons/configure-icon.png")]
-        public static var Configure:Class; 
+		
+		[Bindable]
+		[Embed(source="assets/icons/configure-icon.png")]
+		public static var Configure:Class; 
 		
 		[Bindable]
 		[Embed(source="assets/icons/copy-disabled-icon.png")]
@@ -118,7 +118,7 @@ package assets
 		[Bindable]
 		[Embed(source="assets/icons/cut-icon.png")]
 		public static var Cut:Class; 
-
+		
 		[Bindable]
 		[Embed(source="assets/icons/distribute-bottom-disabled-icon.png")]
 		public static var DistributeBottomDisabled:Class; 
@@ -198,14 +198,14 @@ package assets
 		[Bindable]
 		[Embed(source="assets/icons/fast-forward-icon.png")]
 		public static var FastForward:Class; 
-        
-        [Bindable]
-        [Embed(source="assets/icons/fill-disabled-icon.png")]
-        public static var FillDisabled:Class; 
-        
-        [Bindable]
-        [Embed(source="assets/icons/fill-icon.png")]
-        public static var Fill:Class; 
+		
+		[Bindable]
+		[Embed(source="assets/icons/fill-disabled-icon.png")]
+		public static var FillDisabled:Class; 
+		
+		[Bindable]
+		[Embed(source="assets/icons/fill-icon.png")]
+		public static var Fill:Class; 
 		
 		[Bindable]
 		[Embed(source="assets/icons/flip-horizontal-disabled-icon.png")]
@@ -230,22 +230,22 @@ package assets
 		[Bindable]
 		[Embed(source="assets/icons/group-selections-icon.png")]
 		public static var GroupSelections:Class; 
-        
-        [Bindable]
-        [Embed(source="assets/icons/image-disabled-icon.png")]
-        public static var ImageDisabled:Class; 
-        
-        [Bindable]
-        [Embed(source="assets/icons/image-icon.png")]
-        public static var Image:Class; 
-        
-        [Bindable]
-        [Embed(source="assets/icons/lock-icon.png")]
-        public static var Lock:Class; 
-        
-        [Bindable]
-        [Embed(source="assets/icons/locked-icon.png")]
-        public static var Locked:Class; 
+		
+		[Bindable]
+		[Embed(source="assets/icons/image-disabled-icon.png")]
+		public static var ImageDisabled:Class; 
+		
+		[Bindable]
+		[Embed(source="assets/icons/image-icon.png")]
+		public static var Image:Class; 
+		
+		[Bindable]
+		[Embed(source="assets/icons/lock-icon.png")]
+		public static var Lock:Class; 
+		
+		[Bindable]
+		[Embed(source="assets/icons/locked-icon.png")]
+		public static var Locked:Class; 
 		
 		[Bindable]
 		[Embed(source="assets/icons/match-height-disabled-icon.png")]
@@ -294,19 +294,19 @@ package assets
 		[Bindable]
 		[Embed(source="assets/icons/rotate-x-icon.png")]
 		public static var RotateX:Class; 
-
+		
 		[Bindable]
 		[Embed(source="assets/icons/rotate-y-disabled-icon.png")]
 		public static var RotateYDisabled:Class; 
-
+		
 		[Bindable]
 		[Embed(source="assets/icons/rotate-y-icon.png")]
 		public static var RotateY:Class; 
-
+		
 		[Bindable]
 		[Embed(source="assets/icons/rotate-z-disabled-icon.png")]
 		public static var RotateZDisabled:Class; 
-
+		
 		[Bindable]
 		[Embed(source="assets/icons/rotate-z-icon.png")]
 		public static var RotateZ:Class; 
@@ -334,14 +334,14 @@ package assets
 		[Bindable]
 		[Embed(source="assets/icons/step-forward-icon.png")]
 		public static var StepForward:Class; 
-        
-        [Bindable]
-        [Embed(source="assets/icons/stroke-disabled-icon.png")]
-        public static var StrokeDisabled:Class; 
-        
-        [Bindable]
-        [Embed(source="assets/icons/stroke-icon.png")]
-        public static var Stroke:Class; 
+		
+		[Bindable]
+		[Embed(source="assets/icons/stroke-disabled-icon.png")]
+		public static var StrokeDisabled:Class; 
+		
+		[Bindable]
+		[Embed(source="assets/icons/stroke-icon.png")]
+		public static var Stroke:Class; 
 		
 		[Bindable]
 		[Embed(source="assets/icons/text-align-center-disabled-icon.png")]
@@ -398,10 +398,10 @@ package assets
 		[Bindable]
 		[Embed(source="assets/icons/text-strikethrough-icon.png")]
 		public static var TextStrikethrough:Class; 
-        
-        [Bindable]
-        [Embed(source="assets/icons/text-toolbar-icon.png")]
-        public static var TextToolbar:Class; 
+		
+		[Bindable]
+		[Embed(source="assets/icons/text-toolbar-icon.png")]
+		public static var TextToolbar:Class; 
 		
 		[Bindable]
 		[Embed(source="assets/icons/text-underline-disabled-icon.png")]
@@ -410,14 +410,14 @@ package assets
 		[Bindable]
 		[Embed(source="assets/icons/text-underline-icon.png")]
 		public static var TextUnderline:Class; 
-        
-        [Bindable]
-        [Embed(source="assets/icons/trash-disabled-icon.png")]
-        public static var TrashDisabled:Class; 
-        
-        [Bindable]
-        [Embed(source="assets/icons/trash-icon.png")]
-        public static var Trash:Class; 
+		
+		[Bindable]
+		[Embed(source="assets/icons/trash-disabled-icon.png")]
+		public static var TrashDisabled:Class; 
+		
+		[Bindable]
+		[Embed(source="assets/icons/trash-icon.png")]
+		public static var Trash:Class; 
 		
 		[Bindable]
 		[Embed(source="assets/icons/ungroup-selections-disabled-icon.png")]
@@ -426,9 +426,9 @@ package assets
 		[Bindable]
 		[Embed(source="assets/icons/ungroup-selections-icon.png")]
 		public static var UnGroupSelections:Class; 
-        
-        [Bindable]
-        [Embed(source="assets/icons/unlocked-icon.png")]
-        public static var Unlocked:Class; 
+		
+		[Bindable]
+		[Embed(source="assets/icons/unlocked-icon.png")]
+		public static var Unlocked:Class; 
 	}
 }

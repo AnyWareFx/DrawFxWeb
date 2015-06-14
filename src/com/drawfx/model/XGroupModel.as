@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -31,7 +31,7 @@ package com.drawfx.model
 	
 	use namespace flash_proxy;
 	use namespace object_proxy;
-
+	
 	
 	public class XGroupModel extends XCompositeModel implements IBoundedModel
 	{
@@ -57,32 +57,32 @@ package com.drawfx.model
 			super.removeGroup(group);
 			recalcBounds(group);
 		}
-        
-        
-        override public function addLine(line:XLineModel):void
-        {
-            super.addLine(line);
-            recalcBounds(line);
-        }
-        
-        override public function removeLine(line:XLineModel):void
-        {
-            super.removeLine(line);
-            recalcBounds(line);
-        }
-        
-        
-        override public function addImage(image:XImageModel):void
-        {
-            super.addImage(image);
-            recalcBounds(image);
-        }
-        
-        override public function removeImage(image:XImageModel):void
-        {
-            super.removeImage(image);
-            recalcBounds(image);
-        }
+		
+		
+		override public function addLine(line:XLineModel):void
+		{
+			super.addLine(line);
+			recalcBounds(line);
+		}
+		
+		override public function removeLine(line:XLineModel):void
+		{
+			super.removeLine(line);
+			recalcBounds(line);
+		}
+		
+		
+		override public function addImage(image:XImageModel):void
+		{
+			super.addImage(image);
+			recalcBounds(image);
+		}
+		
+		override public function removeImage(image:XImageModel):void
+		{
+			super.removeImage(image);
+			recalcBounds(image);
+		}
 		
 		
 		override public function addShape(shape:XShapeModel):void
@@ -103,7 +103,7 @@ package com.drawfx.model
 			super.addTextBox(textBox);
 			recalcBounds(textBox);
 		}
-
+		
 		override public function removeTextBox(textBox:XTextBoxModel):void
 		{
 			super.removeTextBox(textBox);

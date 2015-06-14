@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -57,20 +57,20 @@ package com.drawfx.command
 				command = new XAddGroupCommand(parent, group);
 				context.execute(command);
 			}
-            for each (json in _clipboard.lines)
-            {
-                var line:XLineModel = XFactory.instance.getComponent("XLineModel");
-                line.fromJSON(json);
-                command = new XAddLineCommand(parent, line);
-                context.execute(command);
-            }
-            for each (json in _clipboard.images)
-            {
-                var image:XImageModel = XFactory.instance.getComponent("XImageModel");
-                image.fromJSON(json);
-                command = new XAddImageCommand(parent, image);
-                context.execute(command);
-            }
+			for each (json in _clipboard.lines)
+			{
+				var line:XLineModel = XFactory.instance.getComponent("XLineModel");
+				line.fromJSON(json);
+				command = new XAddLineCommand(parent, line);
+				context.execute(command);
+			}
+			for each (json in _clipboard.images)
+			{
+				var image:XImageModel = XFactory.instance.getComponent("XImageModel");
+				image.fromJSON(json);
+				command = new XAddImageCommand(parent, image);
+				context.execute(command);
+			}
 			for each (json in _clipboard.shapes)
 			{
 				var shape:XShapeModel = XFactory.instance.getComponent("XShapeModel");

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,43 +25,43 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.event
 {
-    import com.anywarefx.XLogger;
-
-    import mx.events.PropertyChangeEvent;
-    import mx.events.PropertyChangeEventKind;
-
-
-    public class XPropertyChangeEvent extends PropertyChangeEvent
-    {
-        public function XPropertyChangeEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
-        {
-            super(type, bubbles, cancelable);
-        }
-
-
-        public static function createUpdateEvent(
-                                        source:Object,
-                                        property:Object,
-                                        oldValue:Object,
-                                        newValue:Object):PropertyChangeEvent
-        {
-            var event:XPropertyChangeEvent =
-                new XPropertyChangeEvent(PropertyChangeEvent.PROPERTY_CHANGE);
-            
-            event.kind = PropertyChangeEventKind.UPDATE;
-            event.oldValue = oldValue;
-            event.newValue = newValue;
-            event.source = source;
-            event.property = property;
-
-            XLogger.debug(
-                XPropertyChangeEvent, 
-                "source: " + XLogger.getSourceName(source) + 
-                "; property: " + property + 
-                "; oldValue: " + oldValue + 
-                "; newValue: " + newValue
-            );
-            return event;
-        }
-    }
+	import com.anywarefx.XLogger;
+	
+	import mx.events.PropertyChangeEvent;
+	import mx.events.PropertyChangeEventKind;
+	
+	
+	public class XPropertyChangeEvent extends PropertyChangeEvent
+	{
+		public function XPropertyChangeEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+		{
+			super(type, bubbles, cancelable);
+		}
+		
+		
+		public static function createUpdateEvent(
+			source:Object,
+			property:Object,
+			oldValue:Object,
+			newValue:Object):PropertyChangeEvent
+		{
+			var event:XPropertyChangeEvent =
+				new XPropertyChangeEvent(PropertyChangeEvent.PROPERTY_CHANGE);
+			
+			event.kind = PropertyChangeEventKind.UPDATE;
+			event.oldValue = oldValue;
+			event.newValue = newValue;
+			event.source = source;
+			event.property = property;
+			
+			XLogger.debug(
+				XPropertyChangeEvent, 
+				"source: " + XLogger.getSourceName(source) + 
+				"; property: " + property + 
+				"; oldValue: " + oldValue + 
+				"; newValue: " + newValue
+			);
+			return event;
+		}
+	}
 }

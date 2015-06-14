@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,22 +25,22 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.controller
 {
-    import com.anywarefx.manager.XSelectionManager;
-
-
-    public class XUIController extends XController implements IUIController
-    {
-        private var _selectionManager:XSelectionManager;
-        
-        
-        public function get selectionManager():XSelectionManager
-        {
-            return _selectionManager;
-        }
-        
-        public function set selectionManager(value:XSelectionManager):void
-        {
-            _selectionManager = value;
-        }
-    }
+	import com.anywarefx.manager.XSelectionManager;
+	
+	
+	public class XUIController extends XController implements IUIController
+	{
+		private var _selectionManager:XSelectionManager;
+		
+		
+		public function get selectionManager():XSelectionManager
+		{
+			return _selectionManager;
+		}
+		
+		public function set selectionManager(value:XSelectionManager):void
+		{
+			_selectionManager = value;
+		}
+	}
 }

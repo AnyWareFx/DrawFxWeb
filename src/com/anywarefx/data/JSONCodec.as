@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -27,18 +27,18 @@ package com.anywarefx.data
 {
 	import com.adobe.serialization.json.JSONDecoder;
 	import com.adobe.serialization.json.JSONEncoder;
-
-
-    public class JSONCodec implements ICodec
-    {
-        public function encode(data:*):*
-        {
-            return new JSONEncoder(data).getString();
-        }
-        
-        public function decode(data:*):*
-        {
-            return new JSONDecoder(data, true).getValue();
-        }
-    }
+	
+	
+	public class JSONCodec implements ICodec
+	{
+		public function encode(data:*):*
+		{
+			return new JSONEncoder(data).getString();
+		}
+		
+		public function decode(data:*):*
+		{
+			return new JSONDecoder(data, true).getValue();
+		}
+	}
 }

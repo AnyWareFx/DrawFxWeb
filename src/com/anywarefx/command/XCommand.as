@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,75 +25,75 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.command
 {
-    import com.anywarefx.XLogger;
-    
-    
-    public class XCommand
-    {
-        protected var _target:*;
-        protected var _canUndo:Boolean = true;
-        protected var _commandName:String = "";
-
-
-        public function XCommand(target:*)
-        {
-            _target = target;
-            XLogger.debug(this, "target: " + XLogger.getSourceName(target));
-        }
-
-
-        public function get target():*
-        {
-            return _target;
-        }
-
-
-        public function execute():void
-        {
-            // Override
-        }
-
-        public function undo():void
-        {
-            // Override
-        }
-
-        public function redo():void
-        {
-            execute();
-        }
-
-
-        public function get canUndo():Boolean
-        {
-            return _canUndo;
-        }
-
-
-        public function toString():String
-        {
-            if (_commandName.length == 0)
-            {
-                var className:String = XLogger.getSourceName(this);
-                var index:int = className.indexOf("Command");
-                if (index > 0)
-                {
-                    className = className.substr(1, index - 1);
-                    _commandName = className.charAt(0);
-                    for (index = 1; index < className.length; index++)
-                    {
-                        if (className.charAt(index) == className.charAt(index).toUpperCase())
-                        {
-                            _commandName = _commandName + " " + className.charAt(index);
-                        }
-                        else
-                        {
-                            _commandName = _commandName + className.charAt(index);
-                        }
-                    }
-                }
-            }
-            return _commandName;
-        }
-    }
+	import com.anywarefx.XLogger;
+	
+	
+	public class XCommand
+	{
+		protected var _target:*;
+		protected var _canUndo:Boolean = true;
+		protected var _commandName:String = "";
+		
+		
+		public function XCommand(target:*)
+		{
+			_target = target;
+			XLogger.debug(this, "target: " + XLogger.getSourceName(target));
+		}
+		
+		
+		public function get target():*
+		{
+			return _target;
+		}
+		
+		
+		public function execute():void
+		{
+			// Override
+		}
+		
+		public function undo():void
+		{
+			// Override
+		}
+		
+		public function redo():void
+		{
+			execute();
+		}
+		
+		
+		public function get canUndo():Boolean
+		{
+			return _canUndo;
+		}
+		
+		
+		public function toString():String
+		{
+			if (_commandName.length == 0)
+			{
+				var className:String = XLogger.getSourceName(this);
+				var index:int = className.indexOf("Command");
+				if (index > 0)
+				{
+					className = className.substr(1, index - 1);
+					_commandName = className.charAt(0);
+					for (index = 1; index < className.length; index++)
+					{
+						if (className.charAt(index) == className.charAt(index).toUpperCase())
+						{
+							_commandName = _commandName + " " + className.charAt(index);
+						}
+						else
+						{
+							_commandName = _commandName + className.charAt(index);
+						}
+					}
+				}
+			}
+			return _commandName;
+		}
+	}
 }

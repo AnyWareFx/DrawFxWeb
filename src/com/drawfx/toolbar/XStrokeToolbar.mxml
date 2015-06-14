@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <editor:XModelEditor xmlns:fx="http://ns.adobe.com/mxml/2009" 
-                     xmlns:s="library://ns.adobe.com/flex/spark" 
-                     xmlns:mx="library://ns.adobe.com/flex/mx" 
-                     xmlns:editor="com.anywarefx.editor.*"
-                     currentState="expanded"
-                     enabled="{_editable}">
-    
-    <fx:Script>
-        <![CDATA[
+					 xmlns:s="library://ns.adobe.com/flex/spark" 
+					 xmlns:mx="library://ns.adobe.com/flex/mx" 
+					 xmlns:editor="com.anywarefx.editor.*"
+					 currentState="expanded"
+					 enabled="{_editable}">
+	
+	<fx:Script>
+		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -33,144 +33,144 @@
 			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			*/		
 			
-            import com.anywarefx.command.XUpdateCollectionCommand;
-            import com.anywarefx.manager.XSelectionManager;
-            import com.anywarefx.model.IModel;
-            import com.anywarefx.view.IView;
-            import com.drawfx.model.IStrokedModel;
-            import com.drawfx.model.XStrokeModel;
-            
-            import mx.collections.ArrayCollection;
-            import mx.events.PropertyChangeEvent;
-            
-            import assets.Icons;
-            
-            
-            [Bindable] private var _editable:Boolean;
-            [Bindable] private var _selectionManager:XSelectionManager;
-            [Bindable] private var _strokeModel:XStrokeModel;
-            
-            
-            public function get editable():Boolean
-            {
-                return _editable;
-            }
-            
-            public function set editable(value:Boolean):void
-            {
-                _editable = value;
-            }
-            
-            
-            public function get selectionManager():XSelectionManager
-            {
-                return _selectionManager;
-            }
-            
-            public function set selectionManager(value:XSelectionManager):void
-            {
-                _selectionManager = value;
-                if (_selectionManager != null)
-                {
-                    _selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
-                    updateModel(_selectionManager.lastSelection);
-                }
-            }
-            
-            
-            override public function set model(value:IModel):void
-            {
-                if (value is IStrokedModel)
-                {
-                    super.model = value["stroke"];
-                    _strokeModel = super.model as XStrokeModel;
-                }
-            }
-            
-            
-            private function onSelectionChange(event:PropertyChangeEvent):void
-            {
-                if (event.property == "lastSelection")
-                {
-                    updateModel(event.newValue as IView);
-                }
-                else if (event.property == "count")
-                {
-                    updateModel(_selectionManager.lastSelection);
-                }
-            }
-            
-            private function updateModel(view:IView):void
-            {
-                editable = (view != null && view.model is IStrokedModel);
-                if (editable)
-                {
-                    model = view.model;
-                }
-                else
-                {
-                    for each (var selection:IView in selectionManager.selections)
-                    {
-                        editable = (selection != null && selection.model is IStrokedModel);
-                        if (editable)
-                        {
-                            model = selection.model;
-                            break;
-                        }
-                    }
-                }
-                /* TODO
-                if (!editable)
-                {
-                model = _defaults;
-                }
-                */
-            }
-            
-            
-            override protected function setProperty(property:String, value:*):void
-            {
-                if (_selectionManager == null)
-                {
-                    super.setProperty(property, value);
-                }
-                else
-                {
-                    var items:ArrayCollection = new ArrayCollection();
-                    for each (var selection:IView in selectionManager.selections)
-                    {
-                        if (selection.model is IStrokedModel)
-                        {
-                            items.addItem((selection.model as IStrokedModel).stroke);
-                        }
-                    }
-                    var command:XUpdateCollectionCommand = new XUpdateCollectionCommand(model, items, property, value);
-                    context.execute(command);
-                }
-            }
-
-
-            private function onIconClick():void
-            {
-                currentState = (currentState == "expanded") ? "iconic" : "expanded";
-            }
-        ]]>
-    </fx:Script>
-
-    <editor:states>
-        <s:State name="iconic"/>
-        <s:State name="expanded"/>
-    </editor:states>
-    
-    <s:HGroup gap="3">
-        <mx:Image width="32" height="24" source="{Icons.Stroke}" click="onIconClick();"/>
-        <mx:ColorPicker id="_color" change="onColorChange(event);" visible="true" visible.iconic="false"
-                        selectedColor="{_strokeModel.color}"/>
-        <s:Label width="42" height="22" fontSize="11" text="Weight:" textAlign="right"
-                 verticalAlign="middle" visible="true" visible.iconic="false"/>
-        <s:NumericStepper id="_weight" width="55" change="onStepperChange(event);"
-                          fontSize="11" maximum="10" minimum="1" visible="true" visible.iconic="false"
-                          value="{_strokeModel.weight}"/>
-    </s:HGroup>
-    
+			import com.anywarefx.command.XUpdateCollectionCommand;
+			import com.anywarefx.manager.XSelectionManager;
+			import com.anywarefx.model.IModel;
+			import com.anywarefx.view.IView;
+			import com.drawfx.model.IStrokedModel;
+			import com.drawfx.model.XStrokeModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.PropertyChangeEvent;
+			
+			import assets.Icons;
+			
+			
+			[Bindable] private var _editable:Boolean;
+			[Bindable] private var _selectionManager:XSelectionManager;
+			[Bindable] private var _strokeModel:XStrokeModel;
+			
+			
+			public function get editable():Boolean
+			{
+				return _editable;
+			}
+			
+			public function set editable(value:Boolean):void
+			{
+				_editable = value;
+			}
+			
+			
+			public function get selectionManager():XSelectionManager
+			{
+				return _selectionManager;
+			}
+			
+			public function set selectionManager(value:XSelectionManager):void
+			{
+				_selectionManager = value;
+				if (_selectionManager != null)
+				{
+					_selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
+					updateModel(_selectionManager.lastSelection);
+				}
+			}
+			
+			
+			override public function set model(value:IModel):void
+			{
+				if (value is IStrokedModel)
+				{
+					super.model = value["stroke"];
+					_strokeModel = super.model as XStrokeModel;
+				}
+			}
+			
+			
+			private function onSelectionChange(event:PropertyChangeEvent):void
+			{
+				if (event.property == "lastSelection")
+				{
+					updateModel(event.newValue as IView);
+				}
+				else if (event.property == "count")
+				{
+					updateModel(_selectionManager.lastSelection);
+				}
+			}
+			
+			private function updateModel(view:IView):void
+			{
+				editable = (view != null && view.model is IStrokedModel);
+				if (editable)
+				{
+					model = view.model;
+				}
+				else
+				{
+					for each (var selection:IView in selectionManager.selections)
+					{
+						editable = (selection != null && selection.model is IStrokedModel);
+						if (editable)
+						{
+							model = selection.model;
+							break;
+						}
+					}
+				}
+				/* TODO
+				if (!editable)
+				{
+				model = _defaults;
+				}
+				*/
+			}
+			
+			
+			override protected function setProperty(property:String, value:*):void
+			{
+				if (_selectionManager == null)
+				{
+					super.setProperty(property, value);
+				}
+				else
+				{
+					var items:ArrayCollection = new ArrayCollection();
+					for each (var selection:IView in selectionManager.selections)
+					{
+						if (selection.model is IStrokedModel)
+						{
+							items.addItem((selection.model as IStrokedModel).stroke);
+						}
+					}
+					var command:XUpdateCollectionCommand = new XUpdateCollectionCommand(model, items, property, value);
+					context.execute(command);
+				}
+			}
+			
+			
+			private function onIconClick():void
+			{
+				currentState = (currentState == "expanded") ? "iconic" : "expanded";
+			}
+		]]>
+	</fx:Script>
+	
+	<editor:states>
+		<s:State name="iconic"/>
+		<s:State name="expanded"/>
+	</editor:states>
+	
+	<s:HGroup gap="3">
+		<mx:Image width="32" height="24" source="{Icons.Stroke}" click="onIconClick();"/>
+		<mx:ColorPicker id="_color" change="onColorChange(event);" visible="true" visible.iconic="false"
+						selectedColor="{_strokeModel.color}"/>
+		<s:Label width="42" height="22" fontSize="11" text="Weight:" textAlign="right"
+				 verticalAlign="middle" visible="true" visible.iconic="false"/>
+		<s:NumericStepper id="_weight" width="55" change="onStepperChange(event);"
+						  fontSize="11" maximum="10" minimum="1" visible="true" visible.iconic="false"
+						  value="{_strokeModel.weight}"/>
+	</s:HGroup>
+	
 </editor:XModelEditor>

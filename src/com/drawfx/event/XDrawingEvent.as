@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -32,17 +32,17 @@ package com.drawfx.event
 	
 	public class XDrawingEvent extends XEvent
 	{
-        public static const LINE_ADDED:String = "lineAdded";
-        public static const LINE_REMOVED:String = "lineRemoved";
+		public static const LINE_ADDED:String = "lineAdded";
+		public static const LINE_REMOVED:String = "lineRemoved";
 		public static const GROUP_ADDED:String = "groupAdded";
 		public static const GROUP_REMOVED:String = "groupRemoved";
-        public static const IMAGE_ADDED:String = "imageAdded";
-        public static const IMAGE_REMOVED:String = "imageRemoved";
+		public static const IMAGE_ADDED:String = "imageAdded";
+		public static const IMAGE_REMOVED:String = "imageRemoved";
 		public static const SHAPE_ADDED:String = "shapeAdded";
 		public static const SHAPE_REMOVED:String = "shapeRemoved";
 		public static const TEXT_BOX_ADDED:String = "textBoxAdded";
 		public static const TEXT_BOX_REMOVED:String = "textBoxRemoved";
-	
+		
 		private var _parent:XCompositeModel;
 		private var _model:IModel;
 		
@@ -52,8 +52,8 @@ package com.drawfx.event
 			super(type, message, bubbles, cancelable);
 			_parent = parent;
 		}
-
-
+		
+		
 		public function get parent():XCompositeModel
 		{
 			return _parent;

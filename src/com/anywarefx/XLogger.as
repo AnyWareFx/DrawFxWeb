@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,52 +25,52 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx
 {
-    import flash.utils.describeType;
-    import flash.utils.getQualifiedClassName;
-    
-    import mx.logging.Log;
-
-
-    public class XLogger
-    {
-        public static function debug(source:*, message:String):void
-        {
-            var name:String = getSourceName(source);
-            Log.getLogger(name).debug(message);
-        }
-
-        public static function error(source:*, message:String):void
-        {
-            var name:String = getSourceName(source);
-            Log.getLogger(name).error(message);
-        }
-
-        public static function fatal(source:*, message:String):void
-        {
-            var name:String = getSourceName(source);
-            Log.getLogger(name).fatal(message);
-        }
-
-        public static function info(source:*, message:String):void
-        {
-            var name:String = getSourceName(source);
-            Log.getLogger(name).info(message);
-        }
-
-        public static function warn(source:*, message:String):void
-        {
-            var name:String = getSourceName(source);
-            Log.getLogger(name).warn(message);
-        }
-
-
-        public static function getSourceName(source:*):String
-        {
-            var className:String = getQualifiedClassName(source);
-            var start:Number = className.indexOf("::") + 2;
-            start = (start == 1) ? 0 : start;
-            var end:Number = className.length;
-            return className.substring(start, end);
-        }
-    }
+	import flash.utils.describeType;
+	import flash.utils.getQualifiedClassName;
+	
+	import mx.logging.Log;
+	
+	
+	public class XLogger
+	{
+		public static function debug(source:*, message:String):void
+		{
+			var name:String = getSourceName(source);
+			Log.getLogger(name).debug(message);
+		}
+		
+		public static function error(source:*, message:String):void
+		{
+			var name:String = getSourceName(source);
+			Log.getLogger(name).error(message);
+		}
+		
+		public static function fatal(source:*, message:String):void
+		{
+			var name:String = getSourceName(source);
+			Log.getLogger(name).fatal(message);
+		}
+		
+		public static function info(source:*, message:String):void
+		{
+			var name:String = getSourceName(source);
+			Log.getLogger(name).info(message);
+		}
+		
+		public static function warn(source:*, message:String):void
+		{
+			var name:String = getSourceName(source);
+			Log.getLogger(name).warn(message);
+		}
+		
+		
+		public static function getSourceName(source:*):String
+		{
+			var className:String = getQualifiedClassName(source);
+			var start:Number = className.indexOf("::") + 2;
+			start = (start == 1) ? 0 : start;
+			var end:Number = className.length;
+			return className.substring(start, end);
+		}
+	}
 }

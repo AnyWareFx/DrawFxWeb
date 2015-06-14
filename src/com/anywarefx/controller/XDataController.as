@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 2015 Dave Jackson
 
 MIT License
 
@@ -27,7 +27,7 @@ package com.anywarefx.controller
 {
 	import com.anywarefx.data.IDataAccessObject;
 	
-
+	
 	public class XDataController extends XController implements IDataController
 	{
 		private var _dataAccessObject:IDataAccessObject;

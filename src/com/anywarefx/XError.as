@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,24 +25,24 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx
 {
-    public class XError extends Error
-    {
-        private var _cause:Error;
-
-
-        public function XError(message:String="", cause:Error=null)
-        {
-            var id:int = cause ? cause.errorID : 0;
-            super(message, id);
-            _cause = cause;
-
-            XLogger.error(this, "message: " + message + "; id: " + id + "; cause: " + cause);
-        }
-
-
-        public function get cause():Error
-        {
-            return _cause;
-        }
-    }
+	public class XError extends Error
+	{
+		private var _cause:Error;
+		
+		
+		public function XError(message:String="", cause:Error=null)
+		{
+			var id:int = cause ? cause.errorID : 0;
+			super(message, id);
+			_cause = cause;
+			
+			XLogger.error(this, "message: " + message + "; id: " + id + "; cause: " + cause);
+		}
+		
+		
+		public function get cause():Error
+		{
+			return _cause;
+		}
+	}
 }

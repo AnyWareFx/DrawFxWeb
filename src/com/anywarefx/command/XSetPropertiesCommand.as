@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 2015 Dave Jackson
 
 MIT License
 
@@ -28,15 +28,15 @@ package com.anywarefx.command
 	public class XSetPropertiesCommand extends XMacroCommand
 	{
 		private var _properties:Array;
-
-
+		
+		
 		public function XSetPropertiesCommand(target:*, properties:Array)
 		{
 			super(target);
 			_properties = properties;
 		}
-
-
+		
+		
 		override public function execute():void
 		{
 			for each (var property:* in _properties)

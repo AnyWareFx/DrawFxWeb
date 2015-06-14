@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -31,26 +31,26 @@ package com.drawfx.command
 	public class XAddShapeCommand extends XDrawingCommand
 	{
 		private var _shape:XShapeModel;
-
+		
 		
 		public function XAddShapeCommand(target:*, shape:XShapeModel)
 		{
 			super(target);
 			_shape = shape;
 		}
-
+		
 		
 		public function get shape():XShapeModel
 		{
 			return _shape;
 		}
-
-	
+		
+		
 		override public function execute():void
 		{
 			parent.addShape(shape);
 		}
-
+		
 		
 		override public function undo():void
 		{

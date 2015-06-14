@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <editor:XModelEditor xmlns:fx="http://ns.adobe.com/mxml/2009" 
-				   xmlns:s="library://ns.adobe.com/flex/spark" 
-				   xmlns:mx="library://ns.adobe.com/flex/mx" 
-				   xmlns:editor="com.anywarefx.editor.*" 
-				   enabled="{_editable}"
-				   width="100%" height="100%">
-
+					 xmlns:s="library://ns.adobe.com/flex/spark" 
+					 xmlns:mx="library://ns.adobe.com/flex/mx" 
+					 xmlns:editor="com.anywarefx.editor.*" 
+					 enabled="{_editable}"
+					 width="100%" height="100%">
+	
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -43,7 +43,7 @@
 			import mx.collections.ArrayCollection;
 			import mx.collections.ArrayList;
 			import mx.events.PropertyChangeEvent;
-
+			
 			
 			[Bindable] private var _editable:Boolean;
 			[Bindable] private var _selectionManager:XSelectionManager;
@@ -65,31 +65,31 @@
 				BlendMode.SUBTRACT 
 			]);			
 			
-
+			
 			public function get editable():Boolean
 			{
 				return _editable;
 			}
-
+			
 			public function set editable(value:Boolean):void
 			{
 				_editable = value;
 			}
-
-
+			
+			
 			public function get selectionManager():XSelectionManager
 			{
 				return _selectionManager;
 			}
-
+			
 			public function set selectionManager(value:XSelectionManager):void
 			{
 				_selectionManager = value;
 				_selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
 				updateModel(_selectionManager.lastSelection);
 			}
-
-
+			
+			
 			override public function set model(value:IModel):void
 			{
 				if (value is IFilledModel)
@@ -98,8 +98,8 @@
 					_fillModel = super.model as XFillModel;
 				}
 			}
-
-
+			
+			
 			private function onSelectionChange(event:PropertyChangeEvent):void
 			{
 				if (event.property == "lastSelection")
@@ -111,7 +111,7 @@
 					updateModel(_selectionManager.lastSelection);
 				}
 			}
-
+			
 			private function updateModel(view:IView):void
 			{
 				editable = (view != null && view.model is IFilledModel);
@@ -138,8 +138,8 @@
 				}
 				*/
 			}
-
-
+			
+			
 			override protected function setProperty(property:String, value:*):void
 			{
 				var items:ArrayCollection = new ArrayCollection();
@@ -159,7 +159,7 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-
+	
 	<s:VGroup left="10" right="10" top="10" bottom="10">
 		<mx:Form>
 			<mx:FormItem label="Color:">
@@ -178,5 +178,5 @@
 			</mx:FormItem>
 		</mx:Form>
 	</s:VGroup>
-
+	
 </editor:XModelEditor>

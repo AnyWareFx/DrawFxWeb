@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,84 +25,84 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.data
 {
-    import flash.net.SharedObject;
-    
-    import mx.collections.ArrayCollection;
-
-
-    public class XSharedObjectDataSource implements IDataSource
-    {
-        private var _storage:SharedObject;
-        private var _appName:String;
-        private var _type:String;
-        
-        
-        public function get appName():String
-        {
-            return _appName;
-        }
-        
-        public function set appName(value:String):void
-        {
-            if (_appName == null)
-            {
-                _appName = value;
-                _storage = SharedObject.getLocal(_appName);
-            }
-        }
-
-        
-        protected function get storage():SharedObject
-        {
-            return _storage;
-        }
-
-        
-        public function get type():String
-        {
-            return _type;
-        }
-        
-        public function set type(value:String):void
-        {
-            if (_type == null)
-            {
-                _type = value;
-            }
-        }
-        
-
-        public function list(query:String):ArrayCollection
-        {
-            var records:ArrayCollection = new ArrayCollection();
-            // TODO
-            return records;
-        }
-
-        public function lookup(uid:String):*
-        {
-            return storage.data[type][uid];
-        }
-
-
-        public function insert(uid:String, json:*):void
-        {
-            storage.data[type] = storage.data[type] || {};
-            storage.data[type][uid] = json;
-            storage.flush();
-        }
-        
-
-        public function update(uid:String, json:*):void
-        {
-            insert(uid, json);
-        }
-        
-
-        public function remove(uid:String):void
-        {
-            delete storage.data[type][uid];
-            storage.flush();
-        }
-    }
+	import flash.net.SharedObject;
+	
+	import mx.collections.ArrayCollection;
+	
+	
+	public class XSharedObjectDataSource implements IDataSource
+	{
+		private var _storage:SharedObject;
+		private var _appName:String;
+		private var _type:String;
+		
+		
+		public function get appName():String
+		{
+			return _appName;
+		}
+		
+		public function set appName(value:String):void
+		{
+			if (_appName == null)
+			{
+				_appName = value;
+				_storage = SharedObject.getLocal(_appName);
+			}
+		}
+		
+		
+		protected function get storage():SharedObject
+		{
+			return _storage;
+		}
+		
+		
+		public function get type():String
+		{
+			return _type;
+		}
+		
+		public function set type(value:String):void
+		{
+			if (_type == null)
+			{
+				_type = value;
+			}
+		}
+		
+		
+		public function list(query:String):ArrayCollection
+		{
+			var records:ArrayCollection = new ArrayCollection();
+			// TODO
+			return records;
+		}
+		
+		public function lookup(uid:String):*
+		{
+			return storage.data[type][uid];
+		}
+		
+		
+		public function insert(uid:String, json:*):void
+		{
+			storage.data[type] = storage.data[type] || {};
+			storage.data[type][uid] = json;
+			storage.flush();
+		}
+		
+		
+		public function update(uid:String, json:*):void
+		{
+			insert(uid, json);
+		}
+		
+		
+		public function remove(uid:String):void
+		{
+			delete storage.data[type][uid];
+			storage.flush();
+		}
+	}
 }

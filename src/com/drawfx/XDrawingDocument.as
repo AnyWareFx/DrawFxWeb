@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -40,23 +40,23 @@ package com.drawfx
 	[Bindable]
 	public class XDrawingDocument extends XDocument
 	{
-        override protected function initControllers():void
-        {
-            if (controllers == null)
-            {
-                var drawingControllers:ArrayCollection = new ArrayCollection();
-                drawingControllers.addItem(XFactory.instance.getComponent("XBoundedMouseController"));
-                drawingControllers.addItem(XFactory.instance.getComponent("XConstraintController"));
-                drawingControllers.addItem(XFactory.instance.getComponent("XCompositeDropController"));
-                drawingControllers.addItem(XFactory.instance.getComponent("XDrawingMouseController"));
-                drawingControllers.addItem(XFactory.instance.getComponent("XDrawingKeyboardController"));
-                drawingControllers.addItem(XFactory.instance.getComponent("XGroupMouseController"));
-                drawingControllers.addItem(XFactory.instance.getComponent("XShapeKeyboardController"));
-                drawingControllers.addItem(XFactory.instance.getComponent("XTextBoxKeyboardController"));
-
-                setProperty("controllers", drawingControllers);
-            }
-            super.initControllers();
-        }
-    }
+		override protected function initControllers():void
+		{
+			if (controllers == null)
+			{
+				var drawingControllers:ArrayCollection = new ArrayCollection();
+				drawingControllers.addItem(XFactory.instance.getComponent("XBoundedMouseController"));
+				drawingControllers.addItem(XFactory.instance.getComponent("XConstraintController"));
+				drawingControllers.addItem(XFactory.instance.getComponent("XCompositeDropController"));
+				drawingControllers.addItem(XFactory.instance.getComponent("XDrawingMouseController"));
+				drawingControllers.addItem(XFactory.instance.getComponent("XDrawingKeyboardController"));
+				drawingControllers.addItem(XFactory.instance.getComponent("XGroupMouseController"));
+				drawingControllers.addItem(XFactory.instance.getComponent("XShapeKeyboardController"));
+				drawingControllers.addItem(XFactory.instance.getComponent("XTextBoxKeyboardController"));
+				
+				setProperty("controllers", drawingControllers);
+			}
+			super.initControllers();
+		}
+	}
 }

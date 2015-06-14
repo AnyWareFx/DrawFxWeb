@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,21 +25,21 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.model
 {
-    import com.anywarefx.IComponent;
-    
-    import flash.utils.IExternalizable;
-    
-    
-    public interface IModel extends IComponent, IExternalizable
-    {
+	import com.anywarefx.IComponent;
+	
+	import flash.utils.IExternalizable;
+	
+	
+	public interface IModel extends IComponent, IExternalizable
+	{
 		function get rev():String;
-
+		
 		function clone():IModel;
-
-        function copy():IModel;
-        function copyFrom(other:IModel):void;
-
-        function toJSON():String;
-        function fromJSON(json:*, clone:Boolean=false):void;
-    }
+		
+		function copy():IModel;
+		function copyFrom(other:IModel):void;
+		
+		function toJSON():String;
+		function fromJSON(json:*, clone:Boolean=false):void;
+	}
 }

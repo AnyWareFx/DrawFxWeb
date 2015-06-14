@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -32,15 +32,15 @@ package com.drawfx.command
 	public class XDrawingCommand extends XCommand
 	{
 		private var _parent:XCompositeModel;
-
+		
 		
 		public function XDrawingCommand(target:*)
 		{
 			super(target);
 			_parent = target as XCompositeModel;
 		}
-
-	
+		
+		
 		public function get parent():XCompositeModel
 		{
 			return _parent;

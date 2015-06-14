@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -54,7 +54,7 @@ package com.drawfx.controller
 				super.addUserEventListeners(view);
 			}
 		}
-
+		
 		override public function removeUserEventListeners(view:IView):void
 		{
 			if (view is XGroup)
@@ -63,7 +63,7 @@ package com.drawfx.controller
 			}
 		}
 		
-
+		
 		override protected function onMouseMove(event:MouseEvent):void
 		{
 			if (event.buttonDown)

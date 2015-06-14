@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -65,21 +65,21 @@ package com.drawfx.command
 					var group:XGroupModel = selection.model as XGroupModel;
 					_clipboard.addGroup(group.toJSON());
 				}
-                else if (selection is XLine)
-                {
-                    var line:XLineModel = selection.model as XLineModel;
-                    _clipboard.addLine(line.toJSON());
-                }
+				else if (selection is XLine)
+				{
+					var line:XLineModel = selection.model as XLineModel;
+					_clipboard.addLine(line.toJSON());
+				}
 				else if (selection is XImage)
 				{
 					var image:XImageModel = selection.model as XImageModel;
 					_clipboard.addImage(image.toJSON());
 				}
-                else if (selection is XShape)
-                {
-                    var shape:XShapeModel = selection.model as XShapeModel;
-                    _clipboard.addShape(shape.toJSON());
-                }
+				else if (selection is XShape)
+				{
+					var shape:XShapeModel = selection.model as XShapeModel;
+					_clipboard.addShape(shape.toJSON());
+				}
 				else if (selection is XTextBox)
 				{
 					var textBox:XTextBoxModel = selection.model as XTextBoxModel;

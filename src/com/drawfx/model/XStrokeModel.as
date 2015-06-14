@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -46,7 +46,7 @@ package com.drawfx.model
 				alpha: 1.0,
 				weight: 1,
 				style: "solid",
-                caps: "square"
+				caps: "square"
 			};
 			plugin(model);
 		}
@@ -94,16 +94,16 @@ package com.drawfx.model
 		{
 			setProperty("style", value);
 		}
-        
-        
-        public function get caps():String
-        {
-            return getProperty("caps");
-        }
-        
-        public function set caps(value:String):void
-        {
-            setProperty("caps", value);
-        }
+		
+		
+		public function get caps():String
+		{
+			return getProperty("caps");
+		}
+		
+		public function set caps(value:String):void
+		{
+			setProperty("caps", value);
+		}
 	}
 }

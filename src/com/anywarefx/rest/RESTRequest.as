@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -25,77 +25,77 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.rest
 {
-    public class RESTRequest
-    {
-        public static const GET:String = "GET";
-        public static const PUT:String = "PUT";
-        public static const POST:String = "POST";
-        public static const DELETE:String = "DELETE";
-        public static const HEAD:String = "HEAD";
-        public static const OPTIONS:String = "OPTIONS";
-
-
-        [ArrayElementType("com.webtopwidgets.rest.HTTPHeader")]
-        private var _headers:Array = [];
-        private var _method:String = GET;
-        private var _resource:String;
-        private var _data:*;
-        private var _contentType:String;
-
-
-        [ArrayElementType("com.webtopwidgets.rest.HTTPHeader")]
-        public function get headers():Array
-        {
-            return _headers;
-        }
-
-        public function set headers(value:Array):void
-        {
-            _headers = value;
-        }
-
-
-        public function get method():String
-        {
-            return _method;
-        }
-
-        public function set method(value:String):void
-        {
-            _method = value;
-        }
-
-
-        public function get resource():String
-        {
-            return _resource;
-        }
-
-        public function set resource(value:String):void
-        {
-            _resource = value;
-        }
-
-
-        public function get data():*
-        {
-            return _data;
-        }
-
-        public function set data(value:*):void
-        {
-            _data = value;
-        }
-
-
-        public function get contentType():String
-        {
-            return _contentType;
-        }
-
-        public function set contentType(value:String):void
-        {
-            _contentType = value;
-        }
-    }
+	public class RESTRequest
+	{
+		public static const GET:String = "GET";
+		public static const PUT:String = "PUT";
+		public static const POST:String = "POST";
+		public static const DELETE:String = "DELETE";
+		public static const HEAD:String = "HEAD";
+		public static const OPTIONS:String = "OPTIONS";
+		
+		
+		[ArrayElementType("com.webtopwidgets.rest.HTTPHeader")]
+		private var _headers:Array = [];
+		private var _method:String = GET;
+		private var _resource:String;
+		private var _data:*;
+		private var _contentType:String;
+		
+		
+		[ArrayElementType("com.webtopwidgets.rest.HTTPHeader")]
+		public function get headers():Array
+		{
+			return _headers;
+		}
+		
+		public function set headers(value:Array):void
+		{
+			_headers = value;
+		}
+		
+		
+		public function get method():String
+		{
+			return _method;
+		}
+		
+		public function set method(value:String):void
+		{
+			_method = value;
+		}
+		
+		
+		public function get resource():String
+		{
+			return _resource;
+		}
+		
+		public function set resource(value:String):void
+		{
+			_resource = value;
+		}
+		
+		
+		public function get data():*
+		{
+			return _data;
+		}
+		
+		public function set data(value:*):void
+		{
+			_data = value;
+		}
+		
+		
+		public function get contentType():String
+		{
+			return _contentType;
+		}
+		
+		public function set contentType(value:String):void
+		{
+			_contentType = value;
+		}
+	}
 }

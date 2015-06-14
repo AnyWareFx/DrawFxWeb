@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -35,8 +35,8 @@ package com.drawfx.command
 	import flash.ui.Keyboard;
 	
 	import mx.collections.ArrayCollection;
-
-
+	
+	
 	public class XNudgeSelectionsCommand extends XDrawingMacroCommand
 	{
 		public static const MOVE_INCREMENT_SMALL:Number  =  1;

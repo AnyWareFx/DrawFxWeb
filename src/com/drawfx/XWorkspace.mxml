@@ -1,503 +1,503 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
-         xmlns:s="library://ns.adobe.com/flex/spark" 
-         xmlns:mx="library://ns.adobe.com/flex/mx" 
-         xmlns:editor="com.drawfx.editor.*"
-         xmlns:fx-editor="com.drawfx.fx.editor.*"
-         xmlns:toolbar="com.drawfx.toolbar.*"
-         xmlns:view="com.drawfx.view.*"
-         preinitialize="onPreinitialize();"
-         initialize="onInitialize();"
-         creationComplete="onCreationComplete();"
-         width="100%" height="100%">
-    
-    <fx:Script>
-        <![CDATA[
-			/*
-			Copyright (c) 2013 Dave Jackson
-			
-			MIT License
-			
-			Permission is hereby granted, free of charge, to any person obtaining
-			a copy of this software and associated documentation files (the
-			"Software"), to deal in the Software without restriction, including
-			without limitation the rights to use, copy, modify, merge, publish,
-			distribute, sublicense, and/or sell copies of the Software, and to
-			permit persons to whom the Software is furnished to do so, subject to
-			the following conditions:
-			
-			The above copyright notice and this permission notice shall be
-			included in all copies or substantial portions of the Software.
-			
-			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-			EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-			MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-			LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-			OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-			WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-			*/		
-			
-            import com.anywarefx.XFactory;
-            import com.anywarefx.command.XCommand;
-            import com.anywarefx.command.XCommandContext;
-            import com.anywarefx.event.XViewUpdateEvent;
-            import com.anywarefx.manager.XSelectionManager;
-            import com.anywarefx.view.IView;
-            import com.drawfx.command.XRemoveSelectionsCommand;
-            import com.drawfx.controller.XStencilDropController;
-            import com.drawfx.controller.XStencilMouseController;
-            import com.drawfx.model.IBoundedModel;
-            import com.drawfx.model.XDrawingModel;
-            import com.drawfx.model.XStencilModel;
-            import com.drawfx.view.XDrawing;
-            
-            import mx.events.MenuEvent;
-            import mx.events.PropertyChangeEvent;
-            import mx.logging.Log;
-            import mx.logging.targets.TraceTarget;
-            
-            
-            private var _stencilDocument:XStencilDocument;
-            private var _drawingDocument:XDrawingDocument;
-            
-            [Bindable] private var _model:XDrawingModel;
-            [Bindable] private var _view:XDrawing;
-            [Bindable] private var _context:XCommandContext;
-            [Bindable] private var _selectionManager:XSelectionManager;
-            [Bindable] private var _storage:SharedObject;
-            
-            [Bindable] private var _basicStencilModel:XStencilModel;
-            [Bindable] private var _dropBoxStencilModel:XStencilModel;
-            [Bindable] private var _previewStencil:XStencil;
-            
-            private var _stencilDropController:XStencilDropController;
-            private var _stencilMouseController:XStencilMouseController;
-            
-            private var _openingDrawing:Boolean;
-            private var _openingStencil:Boolean;
-            private var _loadingStencil:Boolean;
-            private var _drawingFilter:FileFilter;
-            private var _stencilFilter:FileFilter;
-            private var _fileReference:FileReference;
-            
-            
-            private function onPreinitialize():void
-            {
-                _drawingFilter = new FileFilter("Drawings", "*.drawing");
-                _stencilFilter = new FileFilter("Stencils", "*.stencil");
-                _fileReference = new FileReference();
-                _fileReference.addEventListener(Event.SELECT, onFileSelected);
-                _fileReference.addEventListener(Event.COMPLETE, onFileLoaded);
-                
-                initLogger();
-                
-                _stencilDocument = XFactory.instance.getComponent("XStencilDocument");
-                _stencilDocument.selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
-                _drawingDocument = XFactory.instance.getComponent("XDrawingDocument");
-                _drawingDocument.selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
-
-                _model = _drawingDocument.model as XDrawingModel;
-                _view = _drawingDocument.openView("XDrawing") as XDrawing;
-                
-                _context = _drawingDocument.context;
-                _selectionManager = _drawingDocument.selectionManager;
-                
-                _basicStencilModel = DrawFxStencilInitializer.initialize("Basic");
-//                _dropBoxStencilModel = DrawFxStencilInitializer.initialize("DropBox");
-                _dropBoxStencilModel = XFactory.instance.getComponent("XStencilModel");
-                _stencilMouseController = XFactory.instance.getComponent("XStencilMouseController");
-                _stencilDropController = XFactory.instance.getComponent("XStencilDropController");
-                _stencilDropController.context = _context;
-
-                _storage = SharedObject.getLocal("drawfx");
-/*
-                var json:String;
-                if (_storage.data.drawings != null && _storage.data.drawings.current != null)
-                {
-                    json = _storage.data.drawings.current;
-                    _model.fromJSON(json);
-                }
-				if (_storage.data.stencils != null && _storage.data.stencils.DropBox != null)
-                {
-                    json = _storage.data.stencils.DropBox;
-                    _dropBoxStencilModel.fromJSON(json);
-                }
-*/            
-			}
-            
-            private function onInitialize():void
-            {
-                currentState = "Drawing";
-                transform.perspectiveProjection = new PerspectiveProjection();
-                transform.perspectiveProjection.projectionCenter = new Point(_canvas.width / 2, _canvas.height / 2);
-                transform.perspectiveProjection.fieldOfView = 1;
-            }
-            
-            private function onCreationComplete():void
-            {
-                _canvas.viewport = _view;
-                _stencilMouseController.addUserEventListeners(_basicStencil as IView);
-                _stencilMouseController.addUserEventListeners(_dropBoxStencil as IView);
-                _stencilDropController.addUserEventListeners(_dropBoxStencil as IView);
-                
-                _dropBoxStencil.addEventListener(XViewUpdateEvent.VIEW_ADDED, onDropBoxViewAdded);
-                _dropBoxStencil.addEventListener(XViewUpdateEvent.VIEW_REMOVED, onDropBoxViewRemoved);
-            }
-            
-            
-            private function initLogger():void
-            {
-                var target:TraceTarget = XFactory.instance.getComponent("TraceTarget");
-                Log.addTarget(target);
-            }
-            
-            
-            private function onDropBoxViewAdded(event:XViewUpdateEvent):void
-            {
-                saveDropBoxStencil();
-                // TODO Fix selection bug
-            }
-            
-            private function onDropBoxViewRemoved(event:XViewUpdateEvent):void
-            {
-                saveDropBoxStencil();
-            }
-
-            private function saveDropBoxStencil():void
-            {
-                var json:String = _dropBoxStencilModel.toJSON();
-                _storage.data.stencils = _storage.data.stencils || {};
-                _storage.data.stencils.DropBox = json;
-                _storage.flush();
-            }
-            
-            
-            private function onSelectionChange(event:PropertyChangeEvent):void
-            {
-                if (event.property == "count")
-                {
-                    if (_selectionManager.count == 1)
-                    {
-                        selectionHalo.view = _selectionManager.lastSelection;
-                        selectionHalo.visible = true;
-                    }
-                    else
-                    {
-                        selectionHalo.visible = false;
-                    }
-                }
-            }
-            
-
-            private function onFileSelected(event:Event):void
-            {
-                if (_openingDrawing || _openingStencil || _loadingStencil)
-                {
-                    _fileReference.load();
-                }
-            }
-            
-            private function onFileLoaded(event:Event):void
-            {
-                if (_openingDrawing || _openingStencil || _loadingStencil)
-                {
-                    var json:String = new String(event.target.data);
-                    if (_openingDrawing)
-                    {
-                        openDrawing(json);
-                    }
-                    else if (_openingStencil)
-                    {
-                        openStencil(json);
-                    }
-                    else if (_loadingStencil)
-                    {
-                        loadStencil(json);
-                    }
-                }
-            }
-
-            private function openDrawing(json:String):void
-            {
-                currentState = "Drawing";
-                _canvas.viewport = null;
-
-                _model = _drawingDocument.model as XDrawingModel;
-                _model.fromJSON(json);
-                _view = _drawingDocument.openView("XDrawing") as XDrawing;
-                _context = _drawingDocument.context;
-                _selectionManager = _drawingDocument.selectionManager;
-
-                _canvas.viewport = _view;
-                _openingDrawing = false;
-            }
-            
-            private function openStencil(json:String):void
-            {
-                currentState = "Stencil";
-                _canvas.viewport = null;
-                _preview.viewport = null;
-                
-                _model = _stencilDocument.model as XDrawingModel;
-                _model.fromJSON(json);
-                _view = _stencilDocument.openView("XStencilDesigner") as XDrawing;
-                _previewStencil = _stencilDocument.openStencil("XStencil", true); 
-                _context = _stencilDocument.context;
-                _selectionManager = _stencilDocument.selectionManager;
-
-                _canvas.viewport = _view;
-                _preview.viewport = _previewStencil;
-                _openingStencil = false;
-            }
-            
-            private function loadStencil(json:String):void
-            {
-                var document:XStencilDocument = XFactory.instance.getComponent("XStencilDocument");
-                document.model.fromJSON(json);
-                
-                var navigatorContent:NavigatorContent = XFactory.instance.getComponent("NavigatorContent");
-                navigatorContent.label = document.model.name;
-                var scroller:Scroller = XFactory.instance.getComponent("Scroller");
-                navigatorContent.addElement(scroller);
-                scroller.viewport = document.openStencil("XStencil");
-                _stencils.addElement(navigatorContent);
-                _stencils.selectedIndex = _stencils.numElements - 1;
-                
-                _loadingStencil = false;
-            }
-            
-
-            private function onMenuSelection(event:MenuEvent):void
-            {
-                var selection:String = event.item.@data;
-                switch (selection)
-                {
-                    case "file_new_drawing":
-                        _context.reset();
-                        _selectionManager.clearSelections();
-                        var drawing:XDrawingModel = XFactory.instance.getComponent("XDrawingModel");
-                        openDrawing(drawing.toJSON());
-                        break;
-                    
-                    case "file_new_stencil":
-                        _context.reset();
-                        _selectionManager.clearSelections();
-                        var stencil:XStencilModel = XFactory.instance.getComponent("XStencilModel");
-                        openStencil(stencil.toJSON());
-                        break;
-                    
-                    case "file_open_drawing":
-                        _context.reset();
-                        _selectionManager.clearSelections();
-                        _openingDrawing = true;
-                        _fileReference.browse([_drawingFilter]);
-                        break;
-                    
-                    case "file_open_stencil":
-                        _context.reset();
-                        _selectionManager.clearSelections();
-                        _openingStencil = true;
-                        _fileReference.browse([_stencilFilter]);
-                        break;
-                    
-                    case "file_load_stencil":
-                        _loadingStencil = true;
-                        _fileReference.browse([_stencilFilter]);
-                        break;
-                    
-                    case "file_save":
-                        var extension:String = (_model is XStencilModel) ? ".stencil" : ".drawing";
-                        _fileReference.save(_model.toJSON(), _model.name + extension);
-                        _context.reset();
-                        break;
-                    
-                    case "file_export_png":
-                        _selectionManager.clearSelections();
-                        _fileReference.save(_view.toPNG(), _model.name + ".png");
-                        break;
-                    
-                    case "file_export_jpg":
-                        _selectionManager.clearSelections();
-                        _fileReference.save(_view.toJPG(), _model.name + ".jpg");
-                        break;
-                    
-                    case "file_print":
-                        _selectionManager.clearSelections();
-                        var printer:PrintJob = new PrintJob();
-                        printer.start();
-                        printer.addPage(_view);
-                        printer.send();
-                        break;
-                    
-                    case "edit_undo":
-                        _context.undo();
-                        break;
-                    
-                    case "edit_redo":
-                        _context.redo();
-                        break;
-                    
-                    case "edit_cut":
-                        _clipboardToolbar.onCut();
-                        break;
-                    
-                    case "ecit_copy":
-                        _clipboardToolbar.onCopy();
-                        break;
-                    
-                    case "edit_paste":
-                        _clipboardToolbar.onPaste();
-                        break;
-                    
-                    case "edit_delete":
-                        var command:XCommand = new XRemoveSelectionsCommand(_model, _selectionManager.selections);
-                        _context.execute(command);
-                        break;
-                    
-                    case "edit_select_all":
-                        // TODO Implement command?
-                        break;
-                }
-            }
-        ]]>
-    </fx:Script>
-    
-    <fx:Declarations>
-        <fx:XML format="e4x" id="_menuItems">
-            <root>
-                <menuitem label="File" data="top">
-                    <menuitem label="New" icon="assets.Icons_DrawingAdd" data="file_new">
-                        <menuitem label="Drawing" data="file_new_drawing"/>
-                        <menuitem label="Stencil" data="file_new_stencil"/>
-                    </menuitem>
-                    <menuitem label="Open" icon="assets.Icons_DrawingOpen" data="file_open">
-                        <menuitem label="Drawing..." data="file_open_drawing"/>
-                        <menuitem label="Stencil..." data="file_open_stencil"/>
-                    </menuitem>
-                    <menuitem type="separator"/>
-                    <menuitem label="Save..." icon="assets.Icons_Save" data="file_save"/>
-                    <menuitem label="Export" data="file_export">
-                        <menuitem label="to PNG..." data="file_export_png"/>
-                        <menuitem label="to JPG..." data="file_export_jpg"/>
-                    </menuitem>
-                    <menuitem type="separator"/>
-                    <menuitem label="Load Stencil..." data="file_load_stencil"/>
-                    <menuitem type="separator"/>
-                    <menuitem label="Print..." icon="assets.Icons_Print" data="file_print"/>
-                </menuitem>
-                <menuitem label="Edit" data="top">
-                    <menuitem label="Undo" icon="assets.Icons_StepBack" enabled="{_context.canUndo}" data="edit_undo"/>
-                    <menuitem label="Redo" icon="assets.Icons_StepForward" enabled="{_context.canRedo}" data="edit_redo"/>
-                    <menuitem type="separator"/>
-                    <menuitem label="Cut" icon="assets.Icons_Cut" enabled="{_selectionManager.lastSelection != null}" data="edit_cut"/>
-                    <menuitem label="Copy" icon="assets.Icons_Copy" enabled="{_selectionManager.lastSelection != null}" data="edit_copy"/>
-                    <menuitem label="Paste" icon="assets.Icons_Paste" data="edit_paste"/>
-                    <menuitem type="separator"/>
-                    <menuitem label="Delete" enabled="{_selectionManager.lastSelection != null}" data="edit_delete"/>
-                    <menuitem label="Select All" data="edit_select_all"/>
-                </menuitem>
-                <menuitem label="Help" data="top">
-                    <menuitem label="About" data="help_about"/>
-                </menuitem>
-            </root>
-        </fx:XML>
-    </fx:Declarations>
-
-    <s:states>
-        <s:State name="Drawing"/>
-        <s:State name="Stencil"/>
-    </s:states>
-    
-    <s:BorderContainer top="0" left="0" right="0" dropShadowVisible="false" borderVisible="true" height="105" backgroundColor="#EFEFEF">
-        <s:HGroup top="10" left="10" right="10">
-            <mx:MenuBar labelField="@label" iconField="@icon" dataProvider="{_menuItems}" showRoot="false" itemClick="onMenuSelection(event);"/>
-            <mx:VRule height="83"/>
-            <s:VGroup>
-                <toolbar:XFileToolbar id="_fileToolbar" model="{_model}" context="{_context}" storage="{_storage}" autoSave="false"/>
-                <toolbar:XClipboardToolbar id="_clipboardToolbar" model="{_model}" context="{_context}" selectionManager="{_selectionManager}"/>
-            </s:VGroup>
-            <mx:VRule height="83"/>
-            <toolbar:XContextToolbar context="{_context}"/>
-            <mx:VRule height="83"/>
-            <toolbar:XFormatToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_selectionManager.lastSelection.model}"/>
-            <mx:VRule height="83"/>
-            <s:VGroup>
-                <toolbar:XStrokeToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_selectionManager.lastSelection.model}"/>
-                <toolbar:XBorderToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_selectionManager.lastSelection.model}"/>
-                <toolbar:XFillToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_selectionManager.lastSelection.model}"/>
-            </s:VGroup>
-            <mx:VRule height="83"/>
-            <toolbar:XBoundsToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_selectionManager.lastSelection.model}"/>
-            <mx:VRule height="83"/>
-            <s:VGroup>
-                <toolbar:XLayoutToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_model}"/>
-                <s:HGroup gap="3">
-                    <toolbar:XResizeToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_model}"/>
-                    <s:Label width="30"/>
-                    <toolbar:XArrangeToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_model}"/>
-                </s:HGroup>
-            </s:VGroup>
-            <mx:VRule height="83"/>
-            <toolbar:XImageToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_selectionManager.lastSelection.model}" snapshot="{_view.snapshot}"/>
-        </s:HGroup>
-    </s:BorderContainer>
-    
-    <s:HGroup top="115" left="10" bottom="10" right="10">
-        <mx:HDividedBox width="100%" height="100%">
-            <s:Panel id="stencil" width="225" height="100%" title="Stencils">
-                <mx:Accordion id="_stencils" top="5" left="5" bottom="5" right="5" backgroundColor="0xDEDEDE" creationPolicy="all">
-                    <s:NavigatorContent width="100%" height="100%" label="Basic">
-                        <s:Scroller width="100%" height="100%">
-                            <view:XStencil 
-                                id="_basicStencil" 
-                                clipAndEnableScrolling="true"
-                                model="{_basicStencilModel}" 
-                                top="5" 
-                                bottom="5" 
-                                scaleX="0.50" 
-                                scaleY="0.50" 
-                                left="5" 
-                                right="5"/>
-                        </s:Scroller>
-                    </s:NavigatorContent>
-                    <s:NavigatorContent width="100%" height="100%" label="Drop Box">
-                        <s:Scroller width="100%" height="100%">
-                            <view:XStencil 
-                                id="_dropBoxStencil" 
-                                clipAndEnableScrolling="true"
-                                model="{_dropBoxStencilModel}" 
-                                top="5" 
-                                bottom="5" 
-                                scaleX="0.50" 
-                                scaleY="0.50" 
-                                left="5" 
-                                right="5"/>
-                        </s:Scroller>
-                    </s:NavigatorContent>
-                    <s:NavigatorContent includeIn="Stencil" width="100%" height="100%" label="Preview: {_model.name}">
-                        <s:Scroller id="_preview" width="100%" height="100%"/>
-                    </s:NavigatorContent>
-                </mx:Accordion>
-            </s:Panel>
-            <s:Panel width="100%" height="100%" title="{(_context.canUndo ? '* ' : '') + _model.name}">
-                <s:Scroller id="_canvas" width="100%" height="100%"/>
-            </s:Panel>
-        </mx:HDividedBox>
-        <s:Panel id="_editors" title="Effects" width="275" height="100%">
-            <fx-editor:FxEditor 
-                id="_fxEditor" 
-                model="{_selectionManager.lastSelection.model}" 
-                selectionManager="{_selectionManager}"
-                context="{_context}"/>
-        </s:Panel>
-    </s:HGroup>
-
-    <view:XSelectionHalo
-        id="selectionHalo" 
-        visible="false"
-        workspace="{this}"
-        snapshot="{_view.snapshot}"
-        context="{_context}"/>
-
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:editor="com.drawfx.editor.*"
+		 xmlns:fx-editor="com.drawfx.fx.editor.*"
+		 xmlns:toolbar="com.drawfx.toolbar.*"
+		 xmlns:view="com.drawfx.view.*"
+		 preinitialize="onPreinitialize();"
+		 initialize="onInitialize();"
+		 creationComplete="onCreationComplete();"
+		 width="100%" height="100%">
+	
+	<fx:Script>
+		<![CDATA[
+		/*
+		Copyright (c) 2013 - 2015 Dave Jackson
+		
+		MIT License
+		
+		Permission is hereby granted, free of charge, to any person obtaining
+		a copy of this software and associated documentation files (the
+		"Software"), to deal in the Software without restriction, including
+		without limitation the rights to use, copy, modify, merge, publish,
+		distribute, sublicense, and/or sell copies of the Software, and to
+		permit persons to whom the Software is furnished to do so, subject to
+		the following conditions:
+		
+		The above copyright notice and this permission notice shall be
+		included in all copies or substantial portions of the Software.
+		
+		THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+		EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+		MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+		NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+		LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+		OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+		WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+		*/		
+		
+		import com.anywarefx.XFactory;
+		import com.anywarefx.command.XCommand;
+		import com.anywarefx.command.XCommandContext;
+		import com.anywarefx.event.XViewUpdateEvent;
+		import com.anywarefx.manager.XSelectionManager;
+		import com.anywarefx.view.IView;
+		import com.drawfx.command.XRemoveSelectionsCommand;
+		import com.drawfx.controller.XStencilDropController;
+		import com.drawfx.controller.XStencilMouseController;
+		import com.drawfx.model.IBoundedModel;
+		import com.drawfx.model.XDrawingModel;
+		import com.drawfx.model.XStencilModel;
+		import com.drawfx.view.XDrawing;
+		
+		import mx.events.MenuEvent;
+		import mx.events.PropertyChangeEvent;
+		import mx.logging.Log;
+		import mx.logging.targets.TraceTarget;
+		
+		
+		private var _stencilDocument:XStencilDocument;
+		private var _drawingDocument:XDrawingDocument;
+		
+		[Bindable] private var _model:XDrawingModel;
+		[Bindable] private var _view:XDrawing;
+		[Bindable] private var _context:XCommandContext;
+		[Bindable] private var _selectionManager:XSelectionManager;
+		[Bindable] private var _storage:SharedObject;
+		
+		[Bindable] private var _basicStencilModel:XStencilModel;
+		[Bindable] private var _dropBoxStencilModel:XStencilModel;
+		[Bindable] private var _previewStencil:XStencil;
+		
+		private var _stencilDropController:XStencilDropController;
+		private var _stencilMouseController:XStencilMouseController;
+		
+		private var _openingDrawing:Boolean;
+		private var _openingStencil:Boolean;
+		private var _loadingStencil:Boolean;
+		private var _drawingFilter:FileFilter;
+		private var _stencilFilter:FileFilter;
+		private var _fileReference:FileReference;
+		
+		
+		private function onPreinitialize():void
+		{
+		_drawingFilter = new FileFilter("Drawings", "*.drawing");
+		_stencilFilter = new FileFilter("Stencils", "*.stencil");
+		_fileReference = new FileReference();
+		_fileReference.addEventListener(Event.SELECT, onFileSelected);
+		_fileReference.addEventListener(Event.COMPLETE, onFileLoaded);
+		
+		initLogger();
+		
+		_stencilDocument = XFactory.instance.getComponent("XStencilDocument");
+		_stencilDocument.selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
+		_drawingDocument = XFactory.instance.getComponent("XDrawingDocument");
+		_drawingDocument.selectionManager.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onSelectionChange);
+		
+		_model = _drawingDocument.model as XDrawingModel;
+		_view = _drawingDocument.openView("XDrawing") as XDrawing;
+		
+		_context = _drawingDocument.context;
+		_selectionManager = _drawingDocument.selectionManager;
+		
+		_basicStencilModel = DrawFxStencilInitializer.initialize("Basic");
+		//                _dropBoxStencilModel = DrawFxStencilInitializer.initialize("DropBox");
+		_dropBoxStencilModel = XFactory.instance.getComponent("XStencilModel");
+		_stencilMouseController = XFactory.instance.getComponent("XStencilMouseController");
+		_stencilDropController = XFactory.instance.getComponent("XStencilDropController");
+		_stencilDropController.context = _context;
+		
+		_storage = SharedObject.getLocal("drawfx");
+		/*
+		var json:String;
+		if (_storage.data.drawings != null && _storage.data.drawings.current != null)
+		{
+		json = _storage.data.drawings.current;
+		_model.fromJSON(json);
+		}
+		if (_storage.data.stencils != null && _storage.data.stencils.DropBox != null)
+		{
+		json = _storage.data.stencils.DropBox;
+		_dropBoxStencilModel.fromJSON(json);
+		}
+		*/            
+		}
+		
+		private function onInitialize():void
+		{
+		currentState = "Drawing";
+		transform.perspectiveProjection = new PerspectiveProjection();
+		transform.perspectiveProjection.projectionCenter = new Point(_canvas.width / 2, _canvas.height / 2);
+		transform.perspectiveProjection.fieldOfView = 1;
+		}
+		
+		private function onCreationComplete():void
+		{
+		_canvas.viewport = _view;
+		_stencilMouseController.addUserEventListeners(_basicStencil as IView);
+		_stencilMouseController.addUserEventListeners(_dropBoxStencil as IView);
+		_stencilDropController.addUserEventListeners(_dropBoxStencil as IView);
+		
+		_dropBoxStencil.addEventListener(XViewUpdateEvent.VIEW_ADDED, onDropBoxViewAdded);
+		_dropBoxStencil.addEventListener(XViewUpdateEvent.VIEW_REMOVED, onDropBoxViewRemoved);
+		}
+		
+		
+		private function initLogger():void
+		{
+		var target:TraceTarget = XFactory.instance.getComponent("TraceTarget");
+		Log.addTarget(target);
+		}
+		
+		
+		private function onDropBoxViewAdded(event:XViewUpdateEvent):void
+		{
+		saveDropBoxStencil();
+		// TODO Fix selection bug
+		}
+		
+		private function onDropBoxViewRemoved(event:XViewUpdateEvent):void
+		{
+		saveDropBoxStencil();
+		}
+		
+		private function saveDropBoxStencil():void
+		{
+		var json:String = _dropBoxStencilModel.toJSON();
+		_storage.data.stencils = _storage.data.stencils || {};
+		_storage.data.stencils.DropBox = json;
+		_storage.flush();
+		}
+		
+		
+		private function onSelectionChange(event:PropertyChangeEvent):void
+		{
+		if (event.property == "count")
+		{
+		if (_selectionManager.count == 1)
+		{
+		selectionHalo.view = _selectionManager.lastSelection;
+		selectionHalo.visible = true;
+		}
+		else
+		{
+		selectionHalo.visible = false;
+		}
+		}
+		}
+		
+		
+		private function onFileSelected(event:Event):void
+		{
+		if (_openingDrawing || _openingStencil || _loadingStencil)
+		{
+		_fileReference.load();
+		}
+		}
+		
+		private function onFileLoaded(event:Event):void
+		{
+		if (_openingDrawing || _openingStencil || _loadingStencil)
+		{
+		var json:String = new String(event.target.data);
+		if (_openingDrawing)
+		{
+		openDrawing(json);
+		}
+		else if (_openingStencil)
+		{
+		openStencil(json);
+		}
+		else if (_loadingStencil)
+		{
+		loadStencil(json);
+		}
+		}
+		}
+		
+		private function openDrawing(json:String):void
+		{
+		currentState = "Drawing";
+		_canvas.viewport = null;
+		
+		_model = _drawingDocument.model as XDrawingModel;
+		_model.fromJSON(json);
+		_view = _drawingDocument.openView("XDrawing") as XDrawing;
+		_context = _drawingDocument.context;
+		_selectionManager = _drawingDocument.selectionManager;
+		
+		_canvas.viewport = _view;
+		_openingDrawing = false;
+		}
+		
+		private function openStencil(json:String):void
+		{
+		currentState = "Stencil";
+		_canvas.viewport = null;
+		_preview.viewport = null;
+		
+		_model = _stencilDocument.model as XDrawingModel;
+		_model.fromJSON(json);
+		_view = _stencilDocument.openView("XStencilDesigner") as XDrawing;
+		_previewStencil = _stencilDocument.openStencil("XStencil", true); 
+		_context = _stencilDocument.context;
+		_selectionManager = _stencilDocument.selectionManager;
+		
+		_canvas.viewport = _view;
+		_preview.viewport = _previewStencil;
+		_openingStencil = false;
+		}
+		
+		private function loadStencil(json:String):void
+		{
+		var document:XStencilDocument = XFactory.instance.getComponent("XStencilDocument");
+		document.model.fromJSON(json);
+		
+		var navigatorContent:NavigatorContent = XFactory.instance.getComponent("NavigatorContent");
+		navigatorContent.label = document.model.name;
+		var scroller:Scroller = XFactory.instance.getComponent("Scroller");
+		navigatorContent.addElement(scroller);
+		scroller.viewport = document.openStencil("XStencil");
+		_stencils.addElement(navigatorContent);
+		_stencils.selectedIndex = _stencils.numElements - 1;
+		
+		_loadingStencil = false;
+		}
+		
+		
+		private function onMenuSelection(event:MenuEvent):void
+		{
+		var selection:String = event.item.@data;
+		switch (selection)
+		{
+		case "file_new_drawing":
+		_context.reset();
+		_selectionManager.clearSelections();
+		var drawing:XDrawingModel = XFactory.instance.getComponent("XDrawingModel");
+		openDrawing(drawing.toJSON());
+		break;
+		
+		case "file_new_stencil":
+		_context.reset();
+		_selectionManager.clearSelections();
+		var stencil:XStencilModel = XFactory.instance.getComponent("XStencilModel");
+		openStencil(stencil.toJSON());
+		break;
+		
+		case "file_open_drawing":
+		_context.reset();
+		_selectionManager.clearSelections();
+		_openingDrawing = true;
+		_fileReference.browse([_drawingFilter]);
+		break;
+		
+		case "file_open_stencil":
+		_context.reset();
+		_selectionManager.clearSelections();
+		_openingStencil = true;
+		_fileReference.browse([_stencilFilter]);
+		break;
+		
+		case "file_load_stencil":
+		_loadingStencil = true;
+		_fileReference.browse([_stencilFilter]);
+		break;
+		
+		case "file_save":
+		var extension:String = (_model is XStencilModel) ? ".stencil" : ".drawing";
+		_fileReference.save(_model.toJSON(), _model.name + extension);
+		_context.reset();
+		break;
+		
+		case "file_export_png":
+		_selectionManager.clearSelections();
+		_fileReference.save(_view.toPNG(), _model.name + ".png");
+		break;
+		
+		case "file_export_jpg":
+		_selectionManager.clearSelections();
+		_fileReference.save(_view.toJPG(), _model.name + ".jpg");
+		break;
+		
+		case "file_print":
+		_selectionManager.clearSelections();
+		var printer:PrintJob = new PrintJob();
+		printer.start();
+		printer.addPage(_view);
+		printer.send();
+		break;
+		
+		case "edit_undo":
+		_context.undo();
+		break;
+		
+		case "edit_redo":
+		_context.redo();
+		break;
+		
+		case "edit_cut":
+		_clipboardToolbar.onCut();
+		break;
+		
+		case "ecit_copy":
+		_clipboardToolbar.onCopy();
+		break;
+		
+		case "edit_paste":
+		_clipboardToolbar.onPaste();
+		break;
+		
+		case "edit_delete":
+		var command:XCommand = new XRemoveSelectionsCommand(_model, _selectionManager.selections);
+		_context.execute(command);
+		break;
+		
+		case "edit_select_all":
+		// TODO Implement command?
+		break;
+		}
+		}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<fx:XML format="e4x" id="_menuItems">
+			<root>
+				<menuitem label="File" data="top">
+					<menuitem label="New" icon="assets.Icons_DrawingAdd" data="file_new">
+						<menuitem label="Drawing" data="file_new_drawing"/>
+						<menuitem label="Stencil" data="file_new_stencil"/>
+					</menuitem>
+					<menuitem label="Open" icon="assets.Icons_DrawingOpen" data="file_open">
+						<menuitem label="Drawing..." data="file_open_drawing"/>
+						<menuitem label="Stencil..." data="file_open_stencil"/>
+					</menuitem>
+					<menuitem type="separator"/>
+					<menuitem label="Save..." icon="assets.Icons_Save" data="file_save"/>
+					<menuitem label="Export" data="file_export">
+						<menuitem label="to PNG..." data="file_export_png"/>
+						<menuitem label="to JPG..." data="file_export_jpg"/>
+					</menuitem>
+					<menuitem type="separator"/>
+					<menuitem label="Load Stencil..." data="file_load_stencil"/>
+					<menuitem type="separator"/>
+					<menuitem label="Print..." icon="assets.Icons_Print" data="file_print"/>
+				</menuitem>
+				<menuitem label="Edit" data="top">
+					<menuitem label="Undo" icon="assets.Icons_StepBack" enabled="{_context.canUndo}" data="edit_undo"/>
+					<menuitem label="Redo" icon="assets.Icons_StepForward" enabled="{_context.canRedo}" data="edit_redo"/>
+					<menuitem type="separator"/>
+					<menuitem label="Cut" icon="assets.Icons_Cut" enabled="{_selectionManager.lastSelection != null}" data="edit_cut"/>
+					<menuitem label="Copy" icon="assets.Icons_Copy" enabled="{_selectionManager.lastSelection != null}" data="edit_copy"/>
+					<menuitem label="Paste" icon="assets.Icons_Paste" data="edit_paste"/>
+					<menuitem type="separator"/>
+					<menuitem label="Delete" enabled="{_selectionManager.lastSelection != null}" data="edit_delete"/>
+					<menuitem label="Select All" data="edit_select_all"/>
+				</menuitem>
+				<menuitem label="Help" data="top">
+					<menuitem label="About" data="help_about"/>
+				</menuitem>
+			</root>
+		</fx:XML>
+	</fx:Declarations>
+	
+	<s:states>
+		<s:State name="Drawing"/>
+		<s:State name="Stencil"/>
+	</s:states>
+	
+	<s:BorderContainer top="0" left="0" right="0" dropShadowVisible="false" borderVisible="true" height="105" backgroundColor="#EFEFEF">
+		<s:HGroup top="10" left="10" right="10">
+			<mx:MenuBar labelField="@label" iconField="@icon" dataProvider="{_menuItems}" showRoot="false" itemClick="onMenuSelection(event);"/>
+			<mx:VRule height="83"/>
+			<s:VGroup>
+				<toolbar:XFileToolbar id="_fileToolbar" model="{_model}" context="{_context}" storage="{_storage}" autoSave="false"/>
+				<toolbar:XClipboardToolbar id="_clipboardToolbar" model="{_model}" context="{_context}" selectionManager="{_selectionManager}"/>
+			</s:VGroup>
+			<mx:VRule height="83"/>
+			<toolbar:XContextToolbar context="{_context}"/>
+			<mx:VRule height="83"/>
+			<toolbar:XFormatToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_selectionManager.lastSelection.model}"/>
+			<mx:VRule height="83"/>
+			<s:VGroup>
+				<toolbar:XStrokeToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_selectionManager.lastSelection.model}"/>
+				<toolbar:XBorderToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_selectionManager.lastSelection.model}"/>
+				<toolbar:XFillToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_selectionManager.lastSelection.model}"/>
+			</s:VGroup>
+			<mx:VRule height="83"/>
+			<toolbar:XBoundsToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_selectionManager.lastSelection.model}"/>
+			<mx:VRule height="83"/>
+			<s:VGroup>
+				<toolbar:XLayoutToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_model}"/>
+				<s:HGroup gap="3">
+					<toolbar:XResizeToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_model}"/>
+					<s:Label width="30"/>
+					<toolbar:XArrangeToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_model}"/>
+				</s:HGroup>
+			</s:VGroup>
+			<mx:VRule height="83"/>
+			<toolbar:XImageToolbar context="{_context}" selectionManager="{_selectionManager}" model="{_selectionManager.lastSelection.model}" snapshot="{_view.snapshot}"/>
+		</s:HGroup>
+	</s:BorderContainer>
+	
+	<s:HGroup top="115" left="10" bottom="10" right="10">
+		<mx:HDividedBox width="100%" height="100%">
+			<s:Panel id="stencil" width="225" height="100%" title="Stencils">
+				<mx:Accordion id="_stencils" top="5" left="5" bottom="5" right="5" backgroundColor="0xDEDEDE" creationPolicy="all">
+					<s:NavigatorContent width="100%" height="100%" label="Basic">
+						<s:Scroller width="100%" height="100%">
+							<view:XStencil 
+								id="_basicStencil" 
+								clipAndEnableScrolling="true"
+								model="{_basicStencilModel}" 
+								top="5" 
+								bottom="5" 
+								scaleX="0.50" 
+								scaleY="0.50" 
+								left="5" 
+								right="5"/>
+						</s:Scroller>
+					</s:NavigatorContent>
+					<s:NavigatorContent width="100%" height="100%" label="Drop Box">
+						<s:Scroller width="100%" height="100%">
+							<view:XStencil 
+								id="_dropBoxStencil" 
+								clipAndEnableScrolling="true"
+								model="{_dropBoxStencilModel}" 
+								top="5" 
+								bottom="5" 
+								scaleX="0.50" 
+								scaleY="0.50" 
+								left="5" 
+								right="5"/>
+						</s:Scroller>
+					</s:NavigatorContent>
+					<s:NavigatorContent includeIn="Stencil" width="100%" height="100%" label="Preview: {_model.name}">
+						<s:Scroller id="_preview" width="100%" height="100%"/>
+					</s:NavigatorContent>
+				</mx:Accordion>
+			</s:Panel>
+			<s:Panel width="100%" height="100%" title="{(_context.canUndo ? '* ' : '') + _model.name}">
+				<s:Scroller id="_canvas" width="100%" height="100%"/>
+			</s:Panel>
+		</mx:HDividedBox>
+		<s:Panel id="_editors" title="Effects" width="275" height="100%">
+			<fx-editor:FxEditor 
+				id="_fxEditor" 
+				model="{_selectionManager.lastSelection.model}" 
+				selectionManager="{_selectionManager}"
+				context="{_context}"/>
+		</s:Panel>
+	</s:HGroup>
+	
+	<view:XSelectionHalo
+		id="selectionHalo" 
+		visible="false"
+		workspace="{this}"
+		snapshot="{_view.snapshot}"
+		context="{_context}"/>
+	
 </s:Group>

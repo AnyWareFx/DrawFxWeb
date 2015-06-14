@@ -2,12 +2,12 @@
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
-          enabled="{_context.canUndo || _context.canRedo}">
-
+		  enabled="{_context.canUndo || _context.canRedo}">
+	
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -34,7 +34,7 @@
 			import com.anywarefx.command.XCommandContext;
 			
 			import assets.Icons;
-
+			
 			
 			[Bindable] private var _context:XCommandContext;
 			
@@ -76,7 +76,7 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-
+	
 	<s:HGroup gap="3">
 		<mx:Button id="rewind" width="30" click="onRewind();" toolTip="Rewind - Ctrl-Shift-Z"
 				   disabledIcon="{Icons.FastBackDisabled}"

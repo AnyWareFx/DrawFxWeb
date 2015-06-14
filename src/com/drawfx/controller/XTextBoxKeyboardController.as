@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 - 2015 Dave Jackson
 
 MIT License
 
@@ -50,7 +50,7 @@ package com.drawfx.controller
 				super.addUserEventListeners(view);
 				textBox._input.addEventListener(FlexEvent.ENTER, onEnter);
 				textBox._input.addEventListener(FocusEvent.FOCUS_OUT, onFocusOut);
-                textBox._input.addEventListener(TextOperationEvent.CHANGE, onChange);
+				textBox._input.addEventListener(TextOperationEvent.CHANGE, onChange);
 			}
 		}
 		
@@ -62,11 +62,11 @@ package com.drawfx.controller
 			{
 				textBox._input.removeEventListener(FlexEvent.ENTER, onEnter);
 				textBox._input.removeEventListener(FocusEvent.FOCUS_OUT, onFocusOut);
-                textBox._input.removeEventListener(TextOperationEvent.CHANGE, onChange);
+				textBox._input.removeEventListener(TextOperationEvent.CHANGE, onChange);
 			}
 		}
 		
-
+		
 		override protected function onKeyDown(event:KeyboardEvent):void
 		{
 			var textBox:XTextBox = XTextBox.getTextBox(event.target as UIComponent);
@@ -90,32 +90,32 @@ package com.drawfx.controller
 				textBox._input.selectRange(0, 1);
 			}
 		}
-
-	
+		
+		
 		protected virtual function onEnter(event:FlexEvent):void
 		{
 			var textBox:XTextBox = XTextBox.getTextBox(event.target as UIComponent);
 			setProperty(textBox.model, "text", textBox._input.text);
 			textBox.selected = true;
-//			selectionManager.addSelection(textBox);
+			//			selectionManager.addSelection(textBox);
 		}
-
-	
+		
+		
 		protected virtual function onFocusOut(event:FocusEvent):void
 		{
 			var textBox:XTextBox = XTextBox.getTextBox(event.target as UIComponent);
 			setProperty(textBox.model, "text", textBox._input.text);
 			textBox.selected = false;
-//			selectionManager.removeSelection(textBox);
+			//			selectionManager.removeSelection(textBox);
 		}
-
-
-        protected virtual function onChange(event:TextOperationEvent):void
-        {
-            var textBox:XTextBox = XTextBox.getTextBox(event.target as UIComponent);
-            var text:String = textBox._input.text;
-            var metrics:TextLineMetrics = textBox._input.measureText(text);
-            setProperty(textBox.model["bounds"], "width", metrics.width);
-        }
+		
+		
+		protected virtual function onChange(event:TextOperationEvent):void
+		{
+			var textBox:XTextBox = XTextBox.getTextBox(event.target as UIComponent);
+			var text:String = textBox._input.text;
+			var metrics:TextLineMetrics = textBox._input.measureText(text);
+			setProperty(textBox.model["bounds"], "width", metrics.width);
+		}
 	}
 }

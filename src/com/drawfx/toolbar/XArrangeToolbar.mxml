@@ -2,13 +2,13 @@
 <s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
-          enabled="{_selectionManager.selections.length > 1 || _selectionManager.lastSelection is XGroup}"
+		  enabled="{_selectionManager.selections.length > 1 || _selectionManager.lastSelection is XGroup}"
 		  gap="3">
 	
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -89,7 +89,7 @@
 				_context.execute(command);
 			}
 			
-
+			
 			private function onUnGroupLastSelection():void
 			{
 				var command:XUnGroupCommand = new XUnGroupCommand(

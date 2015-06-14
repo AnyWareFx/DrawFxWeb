@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Dave Jackson
+Copyright (c) 2013 2015 Dave Jackson
 
 MIT License
 
@@ -25,36 +25,36 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.anywarefx.command
 {
-    public class XSetPropertyCommand extends XCommand
-    {
-        private var _property:String;
-        private var _oldValue:*;
-        private var _newValue:*;
-
-
-        public function XSetPropertyCommand(target:*, property:String, value:*)
-        {
-            super(target);
-            _property = property;
-            _oldValue = target[_property];
-            _newValue = value;
-        }
-
-
-        override public function execute():void
-        {
-            target[_property] = _newValue;
-        }
-
-        override public function undo():void
-        {
-            target[_property] = _oldValue;
-        }
-
-
-        override public function toString():String
-        {
-            return super.toString() + ": " + _property + " = " + _newValue;
-        }
-    }
+	public class XSetPropertyCommand extends XCommand
+	{
+		private var _property:String;
+		private var _oldValue:*;
+		private var _newValue:*;
+		
+		
+		public function XSetPropertyCommand(target:*, property:String, value:*)
+		{
+			super(target);
+			_property = property;
+			_oldValue = target[_property];
+			_newValue = value;
+		}
+		
+		
+		override public function execute():void
+		{
+			target[_property] = _newValue;
+		}
+		
+		override public function undo():void
+		{
+			target[_property] = _oldValue;
+		}
+		
+		
+		override public function toString():String
+		{
+			return super.toString() + ": " + _property + " = " + _newValue;
+		}
+	}
 }

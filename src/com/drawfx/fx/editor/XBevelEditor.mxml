@@ -8,7 +8,7 @@
 	<fx:Script>
 		<![CDATA[
 			/*
-			Copyright (c) 2013 Dave Jackson
+			Copyright (c) 2013 - 2015 Dave Jackson
 			
 			MIT License
 			
@@ -41,29 +41,29 @@
 			
 			import mx.collections.ArrayCollection;
 			
-
+			
 			[Bindable] private var _effect:XBevelModel;
 			[Bindable] private var _selectionManager:XSelectionManager;
-
-
+			
+			
 			public function get selectionManager():XSelectionManager
 			{
 				return _selectionManager;
 			}
-
+			
 			public function set selectionManager(value:XSelectionManager):void
 			{
 				_selectionManager = value;
 			}
-
+			
 			
 			override public function set model(value:IModel):void
 			{
 				super.model = value;
 				_effect = value as XBevelModel;
 			}
-
-
+			
+			
 			override protected function setProperty(property:String, value:*):void
 			{
 				var models:ArrayCollection = new ArrayCollection();
@@ -172,5 +172,5 @@
 				change="onStepperChange(event);"/>
 		</mx:FormItem>
 	</mx:Form>
-
+	
 </editor:XModelEditor>
