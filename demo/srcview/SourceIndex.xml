@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<index>
+	<title>Source of DrawFxWeb</title>
+	<nodes>
+		<node label="src">
+			<node icon="packageIcon" label="assets" expanded="true">
+				<node icon="actionScriptIcon" label="Icons.as" url="source/assets/Icons.as.html"/>
+				<node icon="actionScriptIcon" label="Images.as" url="source/assets/Images.as.html"/>
+			</node>
+			<node label="assets.icons">
+				<node icon="imageIcon" label="align-bottom-disabled-icon.png" url="source/assets/icons/align-bottom-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="align-bottom-icon.png" url="source/assets/icons/align-bottom-icon.png.html"/>
+				<node icon="imageIcon" label="align-horizontal-center-disabled-icon.png" url="source/assets/icons/align-horizontal-center-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="align-horizontal-center-icon.png" url="source/assets/icons/align-horizontal-center-icon.png.html"/>
+				<node icon="imageIcon" label="align-left-disabled-icon.png" url="source/assets/icons/align-left-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="align-left-icon.png" url="source/assets/icons/align-left-icon.png.html"/>
+				<node icon="imageIcon" label="align-right-disabled-icon.png" url="source/assets/icons/align-right-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="align-right-icon.png" url="source/assets/icons/align-right-icon.png.html"/>
+				<node icon="imageIcon" label="align-top-disabled-icon.png" url="source/assets/icons/align-top-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="align-top-icon.png" url="source/assets/icons/align-top-icon.png.html"/>
+				<node icon="imageIcon" label="align-vertical-center-disabled-icon.png" url="source/assets/icons/align-vertical-center-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="align-vertical-center-icon.png" url="source/assets/icons/align-vertical-center-icon.png.html"/>
+				<node icon="imageIcon" label="border-disabled-icon.png" url="source/assets/icons/border-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="border-icon.png" url="source/assets/icons/border-icon.png.html"/>
+				<node icon="imageIcon" label="camera-disabled-icon.png" url="source/assets/icons/camera-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="camera-icon.png" url="source/assets/icons/camera-icon.png.html"/>
+				<node icon="imageIcon" label="color-fill-disabled-icon.png" url="source/assets/icons/color-fill-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="color-fill-icon.png" url="source/assets/icons/color-fill-icon.png.html"/>
+				<node icon="imageIcon" label="configure-icon.png" url="source/assets/icons/configure-icon.png.html"/>
+				<node icon="imageIcon" label="copy-disabled-icon.png" url="source/assets/icons/copy-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="copy-icon.png" url="source/assets/icons/copy-icon.png.html"/>
+				<node icon="imageIcon" label="cut-disabled-icon.png" url="source/assets/icons/cut-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="cut-icon.png" url="source/assets/icons/cut-icon.png.html"/>
+				<node icon="imageIcon" label="distribute-bottom-disabled-icon.png" url="source/assets/icons/distribute-bottom-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="distribute-bottom-icon.png" url="source/assets/icons/distribute-bottom-icon.png.html"/>
+				<node icon="imageIcon" label="distribute-horizontal-center-disabled-icon.png" url="source/assets/icons/distribute-horizontal-center-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="distribute-horizontal-center-icon.png" url="source/assets/icons/distribute-horizontal-center-icon.png.html"/>
+				<node icon="imageIcon" label="distribute-left-disabled-icon.png" url="source/assets/icons/distribute-left-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="distribute-left-icon.png" url="source/assets/icons/distribute-left-icon.png.html"/>
+				<node icon="imageIcon" label="distribute-right-disabled-icon.png" url="source/assets/icons/distribute-right-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="distribute-right-icon.png" url="source/assets/icons/distribute-right-icon.png.html"/>
+				<node icon="imageIcon" label="distribute-top-disabled-icon.png" url="source/assets/icons/distribute-top-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="distribute-top-icon.png" url="source/assets/icons/distribute-top-icon.png.html"/>
+				<node icon="imageIcon" label="distribute-vertical-center-disabled-icon.png" url="source/assets/icons/distribute-vertical-center-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="distribute-vertical-center-icon.png" url="source/assets/icons/distribute-vertical-center-icon.png.html"/>
+				<node icon="imageIcon" label="drawing-add-disabled-icon.png" url="source/assets/icons/drawing-add-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="drawing-add-icon.png" url="source/assets/icons/drawing-add-icon.png.html"/>
+				<node icon="imageIcon" label="drawing-open-disabled-icon.png" url="source/assets/icons/drawing-open-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="drawing-open-icon.png" url="source/assets/icons/drawing-open-icon.png.html"/>
+				<node icon="imageIcon" label="fast-back-disabled-icon.png" url="source/assets/icons/fast-back-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="fast-back-icon.png" url="source/assets/icons/fast-back-icon.png.html"/>
+				<node icon="imageIcon" label="fast-forward-disabled-icon.png" url="source/assets/icons/fast-forward-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="fast-forward-icon.png" url="source/assets/icons/fast-forward-icon.png.html"/>
+				<node icon="imageIcon" label="fill-disabled-icon.png" url="source/assets/icons/fill-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="fill-icon.png" url="source/assets/icons/fill-icon.png.html"/>
+				<node icon="imageIcon" label="flip-horizontal-disabled-icon.png" url="source/assets/icons/flip-horizontal-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="flip-horizontal-icon.png" url="source/assets/icons/flip-horizontal-icon.png.html"/>
+				<node icon="imageIcon" label="flip-vertical-disabled-icon.png" url="source/assets/icons/flip-vertical-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="flip-vertical-icon.png" url="source/assets/icons/flip-vertical-icon.png.html"/>
+				<node icon="imageIcon" label="group-selections-disabled-icon.png" url="source/assets/icons/group-selections-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="group-selections-icon.png" url="source/assets/icons/group-selections-icon.png.html"/>
+				<node icon="imageIcon" label="image-disabled-icon.png" url="source/assets/icons/image-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="image-icon.png" url="source/assets/icons/image-icon.png.html"/>
+				<node icon="imageIcon" label="image.png" url="source/assets/icons/image.png.html"/>
+				<node icon="imageIcon" label="lock-icon.png" url="source/assets/icons/lock-icon.png.html"/>
+				<node icon="imageIcon" label="locked-icon.png" url="source/assets/icons/locked-icon.png.html"/>
+				<node icon="imageIcon" label="match-height-disabled-icon.png" url="source/assets/icons/match-height-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="match-height-icon.png" url="source/assets/icons/match-height-icon.png.html"/>
+				<node icon="imageIcon" label="match-size-disabled-icon.png" url="source/assets/icons/match-size-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="match-size-icon.png" url="source/assets/icons/match-size-icon.png.html"/>
+				<node icon="imageIcon" label="match-width-disabled-icon.png" url="source/assets/icons/match-width-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="match-width-icon.png" url="source/assets/icons/match-width-icon.png.html"/>
+				<node icon="imageIcon" label="paste-disabled-icon.png" url="source/assets/icons/paste-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="paste-icon.png" url="source/assets/icons/paste-icon.png.html"/>
+				<node icon="imageIcon" label="print-disabled-icon.png" url="source/assets/icons/print-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="print-icon.png" url="source/assets/icons/print-icon.png.html"/>
+				<node icon="imageIcon" label="rotate-x-disabled-icon.png" url="source/assets/icons/rotate-x-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="rotate-x-icon.png" url="source/assets/icons/rotate-x-icon.png.html"/>
+				<node icon="imageIcon" label="rotate-y-disabled-icon.png" url="source/assets/icons/rotate-y-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="rotate-y-icon.png" url="source/assets/icons/rotate-y-icon.png.html"/>
+				<node icon="imageIcon" label="rotate-z-disabled-icon.png" url="source/assets/icons/rotate-z-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="rotate-z-icon.png" url="source/assets/icons/rotate-z-icon.png.html"/>
+				<node icon="imageIcon" label="save-disabled-icon.png" url="source/assets/icons/save-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="save-icon.png" url="source/assets/icons/save-icon.png.html"/>
+				<node icon="imageIcon" label="step-back-disabled-icon.png" url="source/assets/icons/step-back-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="step-back-icon.png" url="source/assets/icons/step-back-icon.png.html"/>
+				<node icon="imageIcon" label="step-forward-disabled-icon.png" url="source/assets/icons/step-forward-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="step-forward-icon.png" url="source/assets/icons/step-forward-icon.png.html"/>
+				<node icon="imageIcon" label="stroke-disabled-icon.png" url="source/assets/icons/stroke-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="stroke-icon.png" url="source/assets/icons/stroke-icon.png.html"/>
+				<node icon="imageIcon" label="text-align-center-disabled-icon.png" url="source/assets/icons/text-align-center-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="text-align-center-icon.png" url="source/assets/icons/text-align-center-icon.png.html"/>
+				<node icon="imageIcon" label="text-align-justify-disabled-icon.png" url="source/assets/icons/text-align-justify-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="text-align-justify-icon.png" url="source/assets/icons/text-align-justify-icon.png.html"/>
+				<node icon="imageIcon" label="text-align-left-disabled-icon.png" url="source/assets/icons/text-align-left-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="text-align-left-icon.png" url="source/assets/icons/text-align-left-icon.png.html"/>
+				<node icon="imageIcon" label="text-align-right-disabled-icon.png" url="source/assets/icons/text-align-right-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="text-align-right-icon.png" url="source/assets/icons/text-align-right-icon.png.html"/>
+				<node icon="imageIcon" label="text-bold-disabled-icon.png" url="source/assets/icons/text-bold-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="text-bold-icon.png" url="source/assets/icons/text-bold-icon.png.html"/>
+				<node icon="imageIcon" label="text-italic-disabled-icon.png" url="source/assets/icons/text-italic-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="text-italic-icon.png" url="source/assets/icons/text-italic-icon.png.html"/>
+				<node icon="imageIcon" label="text-strikethrough-disabled-icon.png" url="source/assets/icons/text-strikethrough-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="text-strikethrough-icon.png" url="source/assets/icons/text-strikethrough-icon.png.html"/>
+				<node icon="imageIcon" label="text-toolbar-icon.png" url="source/assets/icons/text-toolbar-icon.png.html"/>
+				<node icon="imageIcon" label="text-underline-disabled-icon.png" url="source/assets/icons/text-underline-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="text-underline-icon.png" url="source/assets/icons/text-underline-icon.png.html"/>
+				<node icon="imageIcon" label="trash-disabled-icon.png" url="source/assets/icons/trash-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="trash-icon.png" url="source/assets/icons/trash-icon.png.html"/>
+				<node icon="imageIcon" label="ungroup-selections-disabled-icon.png" url="source/assets/icons/ungroup-selections-disabled-icon.png.html"/>
+				<node icon="imageIcon" label="ungroup-selections-icon.png" url="source/assets/icons/ungroup-selections-icon.png.html"/>
+				<node icon="imageIcon" label="unlocked-icon.png" url="source/assets/icons/unlocked-icon.png.html"/>
+			</node>
+			<node label="assets.images">
+				<node icon="imageIcon" label="image-thumbnail.png" url="source/assets/images/image-thumbnail.png.html"/>
+			</node>
+			<node icon="packageIcon" label="com.anywarefx" expanded="true">
+				<node icon="actionScriptIcon" label="IComponent.as" url="source/com/anywarefx/IComponent.as.html"/>
+				<node icon="actionScriptIcon" label="IDocument.as" url="source/com/anywarefx/IDocument.as.html"/>
+				<node icon="actionScriptIcon" label="XComponent.as" url="source/com/anywarefx/XComponent.as.html"/>
+				<node icon="actionScriptIcon" label="XDocument.as" url="source/com/anywarefx/XDocument.as.html"/>
+				<node icon="actionScriptIcon" label="XError.as" url="source/com/anywarefx/XError.as.html"/>
+				<node icon="actionScriptIcon" label="XFactory.as" url="source/com/anywarefx/XFactory.as.html"/>
+				<node icon="actionScriptIcon" label="XLogger.as" url="source/com/anywarefx/XLogger.as.html"/>
+				<node icon="actionScriptIcon" label="XObject.as" url="source/com/anywarefx/XObject.as.html"/>
+				<node icon="actionScriptIcon" label="XStateMachine.as" url="source/com/anywarefx/XStateMachine.as.html"/>
+			</node>
+			<node icon="packageIcon" label="com.anywarefx.collection" expanded="true">
+				<node icon="actionScriptIcon" label="XStack.as" url="source/com/anywarefx/collection/XStack.as.html"/>
+			</node>
+			<node icon="packageIcon" label="com.anywarefx.command" expanded="true">
+				<node icon="actionScriptIcon" label="XCommand.as" url="source/com/anywarefx/command/XCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XCommandContext.as" url="source/com/anywarefx/command/XCommandContext.as.html"/>
+				<node icon="actionScriptIcon" label="XMacroCommand.as" url="source/com/anywarefx/command/XMacroCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XSetPropertiesCommand.as" url="source/com/anywarefx/command/XSetPropertiesCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XSetPropertyCommand.as" url="source/com/anywarefx/command/XSetPropertyCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XUpdateCollectionCommand.as" url="source/com/anywarefx/command/XUpdateCollectionCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XUpdateSelectionsCommand.as" url="source/com/anywarefx/command/XUpdateSelectionsCommand.as.html"/>
+			</node>
+			<node icon="packageIcon" label="com.anywarefx.controller" expanded="true">
+				<node icon="actionScriptIcon" label="IController.as" url="source/com/anywarefx/controller/IController.as.html"/>
+				<node icon="actionScriptIcon" label="IDataController.as" url="source/com/anywarefx/controller/IDataController.as.html"/>
+				<node icon="actionScriptIcon" label="IUIController.as" url="source/com/anywarefx/controller/IUIController.as.html"/>
+				<node icon="actionScriptIcon" label="XController.as" url="source/com/anywarefx/controller/XController.as.html"/>
+				<node icon="actionScriptIcon" label="XDataController.as" url="source/com/anywarefx/controller/XDataController.as.html"/>
+				<node icon="actionScriptIcon" label="XDragController.as" url="source/com/anywarefx/controller/XDragController.as.html"/>
+				<node icon="actionScriptIcon" label="XDropController.as" url="source/com/anywarefx/controller/XDropController.as.html"/>
+				<node icon="actionScriptIcon" label="XKeyboardController.as" url="source/com/anywarefx/controller/XKeyboardController.as.html"/>
+				<node icon="actionScriptIcon" label="XKeyCodes.as" url="source/com/anywarefx/controller/XKeyCodes.as.html"/>
+				<node icon="actionScriptIcon" label="XMouseController.as" url="source/com/anywarefx/controller/XMouseController.as.html"/>
+				<node icon="actionScriptIcon" label="XUIController.as" url="source/com/anywarefx/controller/XUIController.as.html"/>
+			</node>
+			<node icon="packageIcon" label="com.anywarefx.data" expanded="true">
+				<node icon="actionScriptIcon" label="ICodec.as" url="source/com/anywarefx/data/ICodec.as.html"/>
+				<node icon="actionScriptIcon" label="IDataAccessObject.as" url="source/com/anywarefx/data/IDataAccessObject.as.html"/>
+				<node icon="actionScriptIcon" label="IDataSource.as" url="source/com/anywarefx/data/IDataSource.as.html"/>
+				<node icon="actionScriptIcon" label="JSONCodec.as" url="source/com/anywarefx/data/JSONCodec.as.html"/>
+				<node icon="actionScriptIcon" label="XCodecFactory.as" url="source/com/anywarefx/data/XCodecFactory.as.html"/>
+				<node icon="actionScriptIcon" label="XDataAccessObject.as" url="source/com/anywarefx/data/XDataAccessObject.as.html"/>
+				<node icon="actionScriptIcon" label="XMLCodec.as" url="source/com/anywarefx/data/XMLCodec.as.html"/>
+				<node icon="actionScriptIcon" label="XSharedObjectDataSource.as" url="source/com/anywarefx/data/XSharedObjectDataSource.as.html"/>
+			</node>
+			<node icon="packageIcon" label="com.anywarefx.editor" expanded="true">
+				<node icon="mxmlIcon" label="XModelEditor.mxml" url="source/com/anywarefx/editor/XModelEditor.mxml.html"/>
+			</node>
+			<node icon="packageIcon" label="com.anywarefx.event" expanded="true">
+				<node icon="actionScriptIcon" label="RESTEvent.as" url="source/com/anywarefx/event/RESTEvent.as.html"/>
+				<node icon="actionScriptIcon" label="XEvent.as" url="source/com/anywarefx/event/XEvent.as.html"/>
+				<node icon="actionScriptIcon" label="XFactoryEvent.as" url="source/com/anywarefx/event/XFactoryEvent.as.html"/>
+				<node icon="actionScriptIcon" label="XPropertyChangeEvent.as" url="source/com/anywarefx/event/XPropertyChangeEvent.as.html"/>
+				<node icon="actionScriptIcon" label="XViewUpdateEvent.as" url="source/com/anywarefx/event/XViewUpdateEvent.as.html"/>
+			</node>
+			<node icon="packageIcon" label="com.anywarefx.manager" expanded="true">
+				<node icon="actionScriptIcon" label="XSelectionManager.as" url="source/com/anywarefx/manager/XSelectionManager.as.html"/>
+			</node>
+			<node icon="packageIcon" label="com.anywarefx.model" expanded="true">
+				<node icon="actionScriptIcon" label="IModel.as" url="source/com/anywarefx/model/IModel.as.html"/>
+				<node icon="actionScriptIcon" label="XModel.as" url="source/com/anywarefx/model/XModel.as.html"/>
+			</node>
+			<node icon="packageIcon" label="com.anywarefx.rest" expanded="true">
+				<node icon="actionScriptIcon" label="HTTPHeader.as" url="source/com/anywarefx/rest/HTTPHeader.as.html"/>
+				<node icon="actionScriptIcon" label="RESTRequest.as" url="source/com/anywarefx/rest/RESTRequest.as.html"/>
+				<node icon="actionScriptIcon" label="RESTResource.as" url="source/com/anywarefx/rest/RESTResource.as.html"/>
+				<node icon="actionScriptIcon" label="RESTResponse.as" url="source/com/anywarefx/rest/RESTResponse.as.html"/>
+				<node icon="actionScriptIcon" label="RESTService.as" url="source/com/anywarefx/rest/RESTService.as.html"/>
+			</node>
+			<node icon="packageIcon" label="com.anywarefx.view" expanded="true">
+				<node icon="actionScriptIcon" label="ISelectableView.as" url="source/com/anywarefx/view/ISelectableView.as.html"/>
+				<node icon="actionScriptIcon" label="IView.as" url="source/com/anywarefx/view/IView.as.html"/>
+				<node icon="mxmlIcon" label="XSelectableView.mxml" url="source/com/anywarefx/view/XSelectableView.mxml.html"/>
+				<node icon="mxmlIcon" label="XView.mxml" url="source/com/anywarefx/view/XView.mxml.html"/>
+			</node>
+			<node icon="packageIcon" label="com.drawfx" expanded="true">
+				<node icon="actionScriptIcon" label="DrawFxFactoryInitializer.as" url="source/com/drawfx/DrawFxFactoryInitializer.as.html"/>
+				<node icon="actionScriptIcon" label="DrawFxStencilInitializer.as" url="source/com/drawfx/DrawFxStencilInitializer.as.html"/>
+				<node icon="actionScriptIcon" label="XDrawingDocument.as" url="source/com/drawfx/XDrawingDocument.as.html"/>
+				<node icon="actionScriptIcon" label="XStencilDocument.as" url="source/com/drawfx/XStencilDocument.as.html"/>
+				<node icon="mxmlIcon" label="XWorkspace.mxml" url="source/com/drawfx/XWorkspace.mxml.html"/>
+			</node>
+			<node icon="packageIcon" label="com.drawfx.command" expanded="true">
+				<node icon="actionScriptIcon" label="XAddGroupCommand.as" url="source/com/drawfx/command/XAddGroupCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XAddImageCommand.as" url="source/com/drawfx/command/XAddImageCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XAddLineCommand.as" url="source/com/drawfx/command/XAddLineCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XAddShapeCommand.as" url="source/com/drawfx/command/XAddShapeCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XAddTextBoxCommand.as" url="source/com/drawfx/command/XAddTextBoxCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XAlignSelectionsCommand.as" url="source/com/drawfx/command/XAlignSelectionsCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XCopySelectionsCommand.as" url="source/com/drawfx/command/XCopySelectionsCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XCutSelectionsCommand.as" url="source/com/drawfx/command/XCutSelectionsCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XDistributeSelectionsCommand.as" url="source/com/drawfx/command/XDistributeSelectionsCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XDrawingCommand.as" url="source/com/drawfx/command/XDrawingCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XDrawingCommandFactory.as" url="source/com/drawfx/command/XDrawingCommandFactory.as.html"/>
+				<node icon="actionScriptIcon" label="XDrawingMacroCommand.as" url="source/com/drawfx/command/XDrawingMacroCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XGroupSelectionsCommand.as" url="source/com/drawfx/command/XGroupSelectionsCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XNudgeSelectionsCommand.as" url="source/com/drawfx/command/XNudgeSelectionsCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XPasteCommand.as" url="source/com/drawfx/command/XPasteCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XRemoveGroupCommand.as" url="source/com/drawfx/command/XRemoveGroupCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XRemoveImageCommand.as" url="source/com/drawfx/command/XRemoveImageCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XRemoveLineCommand.as" url="source/com/drawfx/command/XRemoveLineCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XRemoveSelectionsCommand.as" url="source/com/drawfx/command/XRemoveSelectionsCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XRemoveShapeCommand.as" url="source/com/drawfx/command/XRemoveShapeCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XRemoveTextBoxCommand.as" url="source/com/drawfx/command/XRemoveTextBoxCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XResizeSelectionsCommand.as" url="source/com/drawfx/command/XResizeSelectionsCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XRotateSelectionsCommand.as" url="source/com/drawfx/command/XRotateSelectionsCommand.as.html"/>
+				<node icon="actionScriptIcon" label="XUnGroupCommand.as" url="source/com/drawfx/command/XUnGroupCommand.as.html"/>
+			</node>
+			<node icon="packageIcon" label="com.drawfx.controller" expanded="true">
+				<node icon="actionScriptIcon" label="XBoundedMouseController.as" url="source/com/drawfx/controller/XBoundedMouseController.as.html"/>
+				<node icon="actionScriptIcon" label="XCompositeDropController.as" url="source/com/drawfx/controller/XCompositeDropController.as.html"/>
+				<node icon="actionScriptIcon" label="XConstraintController.as" url="source/com/drawfx/controller/XConstraintController.as.html"/>
+				<node icon="actionScriptIcon" label="XDrawingKeyboardController.as" url="source/com/drawfx/controller/XDrawingKeyboardController.as.html"/>
+				<node icon="actionScriptIcon" label="XDrawingMouseController.as" url="source/com/drawfx/controller/XDrawingMouseController.as.html"/>
+				<node icon="actionScriptIcon" label="XGroupMouseController.as" url="source/com/drawfx/controller/XGroupMouseController.as.html"/>
+				<node icon="actionScriptIcon" label="XShapeKeyboardController.as" url="source/com/drawfx/controller/XShapeKeyboardController.as.html"/>
+				<node icon="actionScriptIcon" label="XStencilDropController.as" url="source/com/drawfx/controller/XStencilDropController.as.html"/>
+				<node icon="actionScriptIcon" label="XStencilMouseController.as" url="source/com/drawfx/controller/XStencilMouseController.as.html"/>
+				<node icon="actionScriptIcon" label="XTextBoxKeyboardController.as" url="source/com/drawfx/controller/XTextBoxKeyboardController.as.html"/>
+			</node>
+			<node icon="packageIcon" label="com.drawfx.editor" expanded="true">
+				<node icon="mxmlIcon" label="XBorderEditor.mxml" url="source/com/drawfx/editor/XBorderEditor.mxml.html"/>
+				<node icon="mxmlIcon" label="XBoundsEditor.mxml" url="source/com/drawfx/editor/XBoundsEditor.mxml.html"/>
+				<node icon="mxmlIcon" label="XDrawingEditor.mxml" url="source/com/drawfx/editor/XDrawingEditor.mxml.html"/>
+				<node icon="mxmlIcon" label="XFillEditor.mxml" url="source/com/drawfx/editor/XFillEditor.mxml.html"/>
+				<node icon="mxmlIcon" label="XImageEditor.mxml" url="source/com/drawfx/editor/XImageEditor.mxml.html"/>
+				<node icon="mxmlIcon" label="XStrokeEditor.mxml" url="source/com/drawfx/editor/XStrokeEditor.mxml.html"/>
+			</node>
+			<node icon="packageIcon" label="com.drawfx.event" expanded="true">
+				<node icon="actionScriptIcon" label="XDrawingEvent.as" url="source/com/drawfx/event/XDrawingEvent.as.html"/>
+			</node>
+			<node icon="packageIcon" label="com.drawfx.fx.editor" expanded="true">
+				<node icon="mxmlIcon" label="FxEditor.mxml" url="source/com/drawfx/fx/editor/FxEditor.mxml.html"/>
+				<node icon="mxmlIcon" label="XBevelEditor.mxml" url="source/com/drawfx/fx/editor/XBevelEditor.mxml.html"/>
+				<node icon="mxmlIcon" label="XBlurEditor.mxml" url="source/com/drawfx/fx/editor/XBlurEditor.mxml.html"/>
+				<node icon="mxmlIcon" label="XDropShadowEditor.mxml" url="source/com/drawfx/fx/editor/XDropShadowEditor.mxml.html"/>
+				<node icon="mxmlIcon" label="XGlowEditor.mxml" url="source/com/drawfx/fx/editor/XGlowEditor.mxml.html"/>
+			</node>
+			<node icon="packageIcon" label="com.drawfx.fx.model" expanded="true">
+				<node icon="actionScriptIcon" label="FxModel.as" url="source/com/drawfx/fx/model/FxModel.as.html"/>
+				<node icon="actionScriptIcon" label="IFxEnabledModel.as" url="source/com/drawfx/fx/model/IFxEnabledModel.as.html"/>
+				<node icon="actionScriptIcon" label="XBevelModel.as" url="source/com/drawfx/fx/model/XBevelModel.as.html"/>
+				<node icon="actionScriptIcon" label="XBlurModel.as" url="source/com/drawfx/fx/model/XBlurModel.as.html"/>
+				<node icon="actionScriptIcon" label="XDropShadowModel.as" url="source/com/drawfx/fx/model/XDropShadowModel.as.html"/>
+				<node icon="actionScriptIcon" label="XGlowModel.as" url="source/com/drawfx/fx/model/XGlowModel.as.html"/>
+			</node>
+			<node icon="packageIcon" label="com.drawfx.manager" expanded="true">
+				<node icon="actionScriptIcon" label="XClipboardManager.as" url="source/com/drawfx/manager/XClipboardManager.as.html"/>
+			</node>
+			<node icon="packageIcon" label="com.drawfx.model" expanded="true">
+				<node icon="actionScriptIcon" label="IBorderedModel.as" url="source/com/drawfx/model/IBorderedModel.as.html"/>
+				<node icon="actionScriptIcon" label="IBoundedModel.as" url="source/com/drawfx/model/IBoundedModel.as.html"/>
+				<node icon="actionScriptIcon" label="IConstrainedModel.as" url="source/com/drawfx/model/IConstrainedModel.as.html"/>
+				<node icon="actionScriptIcon" label="IFilledModel.as" url="source/com/drawfx/model/IFilledModel.as.html"/>
+				<node icon="actionScriptIcon" label="IFormattedModel.as" url="source/com/drawfx/model/IFormattedModel.as.html"/>
+				<node icon="actionScriptIcon" label="IStrokedModel.as" url="source/com/drawfx/model/IStrokedModel.as.html"/>
+				<node icon="actionScriptIcon" label="XBorderModel.as" url="source/com/drawfx/model/XBorderModel.as.html"/>
+				<node icon="actionScriptIcon" label="XBoundsModel.as" url="source/com/drawfx/model/XBoundsModel.as.html"/>
+				<node icon="actionScriptIcon" label="XCompositeModel.as" url="source/com/drawfx/model/XCompositeModel.as.html"/>
+				<node icon="actionScriptIcon" label="XConstraintsModel.as" url="source/com/drawfx/model/XConstraintsModel.as.html"/>
+				<node icon="actionScriptIcon" label="XDrawingModel.as" url="source/com/drawfx/model/XDrawingModel.as.html"/>
+				<node icon="actionScriptIcon" label="XFillModel.as" url="source/com/drawfx/model/XFillModel.as.html"/>
+				<node icon="actionScriptIcon" label="XGroupModel.as" url="source/com/drawfx/model/XGroupModel.as.html"/>
+				<node icon="actionScriptIcon" label="XImageModel.as" url="source/com/drawfx/model/XImageModel.as.html"/>
+				<node icon="actionScriptIcon" label="XLineModel.as" url="source/com/drawfx/model/XLineModel.as.html"/>
+				<node icon="actionScriptIcon" label="XShapeModel.as" url="source/com/drawfx/model/XShapeModel.as.html"/>
+				<node icon="actionScriptIcon" label="XStencilModel.as" url="source/com/drawfx/model/XStencilModel.as.html"/>
+				<node icon="actionScriptIcon" label="XStrokeModel.as" url="source/com/drawfx/model/XStrokeModel.as.html"/>
+				<node icon="actionScriptIcon" label="XTextBoxModel.as" url="source/com/drawfx/model/XTextBoxModel.as.html"/>
+				<node icon="actionScriptIcon" label="XTextFormatModel.as" url="source/com/drawfx/model/XTextFormatModel.as.html"/>
+			</node>
+			<node icon="packageIcon" label="com.drawfx.toolbar" expanded="true">
+				<node icon="mxmlIcon" label="XArrangeToolbar.mxml" url="source/com/drawfx/toolbar/XArrangeToolbar.mxml.html"/>
+				<node icon="mxmlIcon" label="XBorderToolbar.mxml" url="source/com/drawfx/toolbar/XBorderToolbar.mxml.html"/>
+				<node icon="mxmlIcon" label="XBoundsToolbar.mxml" url="source/com/drawfx/toolbar/XBoundsToolbar.mxml.html"/>
+				<node icon="mxmlIcon" label="XClipboardToolbar.mxml" url="source/com/drawfx/toolbar/XClipboardToolbar.mxml.html"/>
+				<node icon="mxmlIcon" label="XContextToolbar.mxml" url="source/com/drawfx/toolbar/XContextToolbar.mxml.html"/>
+				<node icon="mxmlIcon" label="XFileToolbar.mxml" url="source/com/drawfx/toolbar/XFileToolbar.mxml.html"/>
+				<node icon="mxmlIcon" label="XFillToolbar.mxml" url="source/com/drawfx/toolbar/XFillToolbar.mxml.html"/>
+				<node icon="mxmlIcon" label="XFormatToolbar.mxml" url="source/com/drawfx/toolbar/XFormatToolbar.mxml.html"/>
+				<node icon="mxmlIcon" label="XImageToolbar.mxml" url="source/com/drawfx/toolbar/XImageToolbar.mxml.html"/>
+				<node icon="mxmlIcon" label="XLayoutToolbar.mxml" url="source/com/drawfx/toolbar/XLayoutToolbar.mxml.html"/>
+				<node icon="mxmlIcon" label="XResizeToolbar.mxml" url="source/com/drawfx/toolbar/XResizeToolbar.mxml.html"/>
+				<node icon="mxmlIcon" label="XStrokeToolbar.mxml" url="source/com/drawfx/toolbar/XStrokeToolbar.mxml.html"/>
+				<node icon="mxmlIcon" label="XTransformToolbar.mxml" url="source/com/drawfx/toolbar/XTransformToolbar.mxml.html"/>
+			</node>
+			<node icon="packageIcon" label="com.drawfx.view" expanded="true">
+				<node icon="actionScriptIcon" label="IBoundedView.as" url="source/com/drawfx/view/IBoundedView.as.html"/>
+				<node icon="actionScriptIcon" label="IConstrainedView.as" url="source/com/drawfx/view/IConstrainedView.as.html"/>
+				<node icon="mxmlIcon" label="XComposite.mxml" url="source/com/drawfx/view/XComposite.mxml.html"/>
+				<node icon="mxmlIcon" label="XDrawing.mxml" url="source/com/drawfx/view/XDrawing.mxml.html"/>
+				<node icon="mxmlIcon" label="XGroup.mxml" url="source/com/drawfx/view/XGroup.mxml.html"/>
+				<node icon="mxmlIcon" label="XImage.mxml" url="source/com/drawfx/view/XImage.mxml.html"/>
+				<node icon="mxmlIcon" label="XLine.mxml" url="source/com/drawfx/view/XLine.mxml.html"/>
+				<node icon="mxmlIcon" label="XRubberBand.mxml" url="source/com/drawfx/view/XRubberBand.mxml.html"/>
+				<node icon="mxmlIcon" label="XSelectionHalo.mxml" url="source/com/drawfx/view/XSelectionHalo.mxml.html"/>
+				<node icon="mxmlIcon" label="XShape.mxml" url="source/com/drawfx/view/XShape.mxml.html"/>
+				<node icon="mxmlIcon" label="XSnapshot.mxml" url="source/com/drawfx/view/XSnapshot.mxml.html"/>
+				<node icon="mxmlIcon" label="XStencil.mxml" url="source/com/drawfx/view/XStencil.mxml.html"/>
+				<node icon="mxmlIcon" label="XStencilDesigner.mxml" url="source/com/drawfx/view/XStencilDesigner.mxml.html"/>
+				<node icon="mxmlIcon" label="XTextBox.mxml" url="source/com/drawfx/view/XTextBox.mxml.html"/>
+			</node>
+			<node icon="packageIcon" label="mx.utils" expanded="true">
+				<node icon="actionScriptIcon" label="ObjectUtil.as" url="source/mx/utils/ObjectUtil.as.html"/>
+			</node>
+			<node icon="mxmlAppIcon" selected="true" label="DrawFxWeb.mxml" url="source/DrawFxWeb.mxml.html"/>
+		</node>
+	</nodes>
+	<zipfile label="Download source (ZIP, 1702K)" url="DrawFxWeb.zip">
+	</zipfile>
+	<sdklink label="Download Flex SDK" url="http://www.adobe.com/go/flex451_sdk_download">
+	</sdklink>
+</index>
