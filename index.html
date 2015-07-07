@@ -33,12 +33,20 @@
     <div class="inner clearfix">
         <section id="main-content">
             <h3>Demo</h3>
-
-            <p>Click <a href="demo/DrawFxWeb.html" target="_blank">here</a> to see a live demo. Right-click demo to view source.</p>
+            <p>Click <a href="demo/DrawFxWeb.html" target="_blank">here</a> to see a live demo. Right-click anywhere on the demo to view source.</p>
 
             <h3>AS Docs</h3>
-
             <p>Click <a href="docs/index.html" target="_blank">here</a> to see documentation.</p>
+
+            <h3>Architecture</h3>
+            <p>
+                DrawFx uses an MVC Architecture with multiple views updating or updated by a single model.
+
+                The top-level container is a Document which has a Model, a Collection of Views and a Collection of Controllers. Controllers
+                handle user interactions with the Keyboard and Mouse, including Drag and Drop, Selection, Copy/Paste, etc.
+
+                The Document also has a CommandContext which
+            </p>
         </section>
 
         <aside id="sidebar">
