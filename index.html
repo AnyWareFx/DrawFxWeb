@@ -32,20 +32,75 @@
 <div id="content-wrapper">
     <div class="inner clearfix">
         <section id="main-content">
-            <h3>Demo</h3>
-            <p>Click <a href="demo/DrawFxWeb.html" target="_blank">here</a> to see a live demo. Right-click anywhere on the demo to view source.</p>
-
-            <h3>AS Docs</h3>
-            <p>Click <a href="docs/index.html" target="_blank">here</a> to see documentation.</p>
-
             <h3>Architecture</h3>
             <p>
-                DrawFx uses an MVC Architecture with multiple views updating or updated by a single model.
+                DrawFx uses an MVC Architecture with multiple
+                <a href="http://anywarefx.github.io/DrawFxWeb/docs/com/drawfx/view/package-detail.html" target="_blank">Views</a>
+                bound to a
+                <a href="http://anywarefx.github.io/DrawFxWeb/docs/com/drawfx/model/package-detail.html" target="_blank">Model.</a>
+                <a href="http://anywarefx.github.io/DrawFxWeb/docs/com/drawfx/controller/package-detail.html" target="_blank">Controllers</a>
+                handle user interactions with the Keyboard and Mouse, including Drag/Drop, Selection, Copy/Paste, etc.
+            </p>
+            <p>
+                The top-level container is a
+                <a href="http://anywarefx.github.io/DrawFxWeb/docs/com/drawfx/XDrawingDocument.html" target="_blank">Document</a>
+                which has a
+                <a href="http://anywarefx.github.io/DrawFxWeb/docs/com/drawfx/model/XDrawingModel.html" target="_blank">Model</a>,
+                a Collection of Views and a Collection of Controllers. It also has a
+                <a href="http://anywarefx.github.io/DrawFxWeb/docs/com/anywarefx/command/XCommandContext.html" target="_blank">CommandContext</a>
+                which manages Undo/Redo stacks for
+                <a href="http://anywarefx.github.io/DrawFxWeb/docs/com/drawfx/command/package-detail.html" target="_blank">Commands.</a>
+            </p>
+            <p>
+                A Dependency Injection
+                <a href="https://github.com/AnyWareFx/DrawFxWeb/blob/master/src/com/anywarefx/XFactory.as" target="_blank">Factory</a>
+                (similar to Spring) allows Component definitions to extend other definitions,
+                provides for Singletons and uses the AS3 Reflection/Metadata API to construct and initialize components
+                and their dependencies. See the
+                <a href="https://github.com/AnyWareFx/DrawFxWeb/blob/master/src/com/drawfx/DrawFxFactoryInitializer.as" target="_blank">DrawFxFactoryInitializer</a>
+                class for example.
+            </p>
 
-                The top-level container is a Document which has a Model, a Collection of Views and a Collection of Controllers. Controllers
-                handle user interactions with the Keyboard and Mouse, including Drag and Drop, Selection, Copy/Paste, etc.
+            <h3>In-Context Editing</h3>
+            <p>
+                In-context editing of shapes, images, lines and text boxes (via the check mark to the lower left of the
+                selected object) allows you to change font, stroke, fill and constraint properties without having to
+                switch contexts from the selected shape(s) to the toolbar and back again.
+            </p>
+            <img src="images/selection-halo.png"
+                 style="box-shadow: 5px 5px 5px #888888; border: solid thin; display: block; margin-left: auto; margin-right: auto;">
 
-                The Document also has a CommandContext which
+            <h3>Effects</h3>
+            <p>
+                In addition to the in-context settings, you can also apply four different effects to the selected objects:
+            </p>
+            <ul>
+                <li>Drop Shadow</li>
+                <li>Glow</li>
+                <li>Bevel</li>
+                <li>Blur</li>
+            </ul>
+            <img src="images/effects.png"
+                 style="border: solid thin; display: block; margin-left: auto; margin-right: auto;">
+
+            <h3>Export Options</h3>
+            <p>
+                In addition to saving drawings to
+                <a href="saved/drawing.json" target="_blank">JSON files</a>
+                DrawFx can also export
+                <a href="saved/drawing.png" target="_blank">PNG</a> and
+                <a href="saved/drawing.jpg" target="_blank">JPG</a> files.
+            </p>
+
+            <h3>Demo</h3>
+            <p>
+                Click <a href="demo/DrawFxWeb.html" target="_blank">here</a> to see a live demo. Right-click anywhere on
+                the demo to view source.
+            </p>
+
+            <h3>AS Docs</h3>
+            <p>
+                Click <a href="docs/index.html" target="_blank">here</a> to see documentation.
             </p>
         </section>
 

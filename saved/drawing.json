@@ -1,0 +1,735 @@
+{
+  "dateCreated": {
+    "fullYear": 2015,
+    "month": 6,
+    "date": 7,
+    "hours": 10,
+    "minutes": 43,
+    "seconds": 16,
+    "milliseconds": 541,
+    "fullYearUTC": 2015,
+    "monthUTC": 6,
+    "dateUTC": 7,
+    "hoursUTC": 15,
+    "minutesUTC": 43,
+    "secondsUTC": 16,
+    "millisecondsUTC": 541,
+    "time": 1436283796541,
+    "timezoneOffset": 300,
+    "day": 2,
+    "dayUTC": 2
+  },
+  "dateModified": null,
+  "modifiedBy": "",
+  "createdBy": "",
+  "name": "New Drawing",
+  "rev": "",
+  "parent": null,
+  "uid": "C4363D69-7BC1-C81A-E732-692F7C441C00",
+  "images": {
+    "filterFunction": null,
+    "list": {
+      "uid": "8736C0B0-C36C-D92E-C06B-692F7C3D07A3",
+      "source": [],
+      "length": 0
+    },
+    "sort": null,
+    "length": 0,
+    "source": []
+  },
+  "shapes": {
+    "filterFunction": null,
+    "list": {
+      "uid": "1E747527-C01A-1CF8-F6C7-692F7C3D6A18",
+      "source": [
+        {
+          "format": {
+            "name": null,
+            "rev": "",
+            "fontSize": 22,
+            "color": 0,
+            "uid": "1B388F2E-F72A-F787-EDD9-692F8B7F87B0",
+            "lineThrough": false,
+            "verticalAlign": "middle",
+            "fontStyle": "normal",
+            "fontFamily": "Arial",
+            "textAlign": "center",
+            "textDecoration": "none",
+            "fontWeight": "normal"
+          },
+          "constraints": {
+            "right": null,
+            "bottom": null,
+            "name": null,
+            "rev": "",
+            "top": null,
+            "uid": "C19FB53F-74C1-7960-C139-692F8B80A0BC",
+            "horizontalCenter": null,
+            "verticalCenter": null,
+            "left": null
+          },
+          "stroke": {
+            "name": null,
+            "rev": "",
+            "color": 0,
+            "uid": "437F4EB9-AE12-28E4-CB32-692F8B80F533",
+            "style": "solid",
+            "caps": "square",
+            "weight": 1,
+            "alpha": 1
+          },
+          "textBox": {
+            "fx": {
+              "name": null,
+              "bevel": {
+                "highlightColor": 16645629,
+                "highlightAlpha": 0.5,
+                "shadowColor": 3355443,
+                "shadowAlpha": 0.5,
+                "blurX": 0,
+                "blurY": 0,
+                "strength": 1,
+                "quality": 1,
+                "active": false,
+                "name": null,
+                "rev": "",
+                "uid": "6B819671-342F-4F8D-BC1E-692F8B82DB4F",
+                "distance": 0,
+                "angle": 45
+              },
+              "rev": "",
+              "uid": "15D23543-D2C2-2164-2297-692F8B82D887",
+              "blur": {
+                "name": null,
+                "blurX": 0,
+                "blurY": 0,
+                "rev": "",
+                "quality": 1,
+                "uid": "382E05A4-2FB3-8164-D2D7-692F8B82C331",
+                "active": false
+              },
+              "glow": {
+                "blurX": 0,
+                "blurY": 0,
+                "strength": 1,
+                "knockout": false,
+                "quality": 1,
+                "active": false,
+                "alpha": 0.5,
+                "inner": false,
+                "name": null,
+                "rev": "",
+                "color": 0,
+                "uid": "DEAF72AB-8860-0489-F192-692F8B836039",
+                "distance": null,
+                "angle": null
+              },
+              "dropShadow": {
+                "blurX": 0,
+                "blurY": 0,
+                "strength": 1,
+                "knockout": false,
+                "quality": 1,
+                "active": false,
+                "alpha": 0.5,
+                "inner": false,
+                "name": null,
+                "rev": "",
+                "color": 0,
+                "uid": "2DC53842-999B-46EF-7B3D-692F8B846BB5",
+                "distance": 0,
+                "angle": 45
+              }
+            },
+            "name": null,
+            "constraints": {
+              "right": null,
+              "bottom": null,
+              "name": null,
+              "rev": "",
+              "top": null,
+              "uid": "BD7A1A0D-5F8D-729C-E9A3-692F8B85E9F0",
+              "horizontalCenter": null,
+              "verticalCenter": null,
+              "left": null
+            },
+            "rev": "",
+            "text": "",
+            "uid": "2F795F39-0CD1-A694-47BC-692F8B85A3CE",
+            "sizeToContent": false,
+            "bounds": {
+              "width": 150,
+              "height": 75,
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "scaleX": 1,
+              "scaleY": 1,
+              "position": {
+                "x": 0,
+                "y": 0,
+                "length": 0
+              },
+              "name": null,
+              "rev": "",
+              "uid": "3D376981-ECC6-2820-8609-692F8B865E51",
+              "scaleZ": 1,
+              "rotationX": 0,
+              "rotationZ": 0,
+              "depth": 0,
+              "dimensions": {
+                "x": 150,
+                "y": 75,
+                "length": 167.70509831248424
+              },
+              "rotationY": 0
+            },
+            "format": {
+              "name": null,
+              "rev": "",
+              "fontSize": 22,
+              "color": 0,
+              "uid": "1B388F2E-F72A-F787-EDD9-692F8B7F87B0",
+              "lineThrough": false,
+              "verticalAlign": "middle",
+              "fontStyle": "normal",
+              "fontFamily": "Arial",
+              "textAlign": "center",
+              "textDecoration": "none",
+              "fontWeight": "normal"
+            }
+          },
+          "fill": {
+            "name": null,
+            "rev": "",
+            "color": 13487565,
+            "uid": "AC73AFA4-C009-2C1C-2795-692F8B9109F5",
+            "contentBackgroundColor": 15724527,
+            "blendMode": "normal",
+            "alpha": 1,
+            "contentBackgroundAlpha": 1
+          },
+          "fx": {
+            "name": null,
+            "bevel": {
+              "highlightColor": 16645629,
+              "highlightAlpha": 0.5,
+              "shadowColor": 3355443,
+              "shadowAlpha": 0.5,
+              "blurX": 0,
+              "blurY": 0,
+              "strength": 1,
+              "quality": 1,
+              "active": false,
+              "name": null,
+              "rev": "",
+              "uid": "731CECB5-8607-17E9-30D7-692F8B922522",
+              "distance": 0,
+              "angle": 45
+            },
+            "rev": "",
+            "uid": "07FCE003-8112-723D-0BA3-692F8B922ABA",
+            "blur": {
+              "name": null,
+              "blurX": 0,
+              "blurY": 0,
+              "rev": "",
+              "quality": 1,
+              "uid": "1C56219E-9911-634A-8DEF-692F8B9380BF",
+              "active": false
+            },
+            "glow": {
+              "blurX": 0,
+              "blurY": 0,
+              "strength": 1,
+              "knockout": false,
+              "quality": 1,
+              "active": false,
+              "alpha": 0.5,
+              "inner": false,
+              "name": null,
+              "rev": "",
+              "color": 0,
+              "uid": "79DEAA13-1F58-EB67-15A5-692F8B931325",
+              "distance": null,
+              "angle": null
+            },
+            "dropShadow": {
+              "blurX": 0,
+              "blurY": 0,
+              "strength": 1,
+              "knockout": false,
+              "quality": 1,
+              "active": false,
+              "alpha": 0.5,
+              "inner": false,
+              "name": null,
+              "rev": "",
+              "color": 0,
+              "uid": "E98D5A06-534A-B8FE-6FE1-692F8B94E1CD",
+              "distance": 0,
+              "angle": 45
+            }
+          },
+          "bounds": {
+            "width": 150,
+            "height": 75,
+            "x": 415,
+            "y": 183,
+            "z": 0,
+            "scaleX": 1,
+            "scaleY": 1,
+            "position": {
+              "x": 415,
+              "y": 183,
+              "length": 453.5570526405691
+            },
+            "name": null,
+            "rev": "",
+            "uid": "3CA123B4-B848-CD16-2A5C-692F8B955B5D",
+            "scaleZ": 1,
+            "rotationX": 0,
+            "rotationZ": 0,
+            "depth": 0,
+            "dimensions": {
+              "x": 150,
+              "y": 75,
+              "length": 167.70509831248424
+            },
+            "rotationY": 0
+          },
+          "border": {
+            "name": null,
+            "rev": "",
+            "uid": "B9A616F6-3690-57ED-74B3-692F8B951EA6",
+            "cornerRadius": 0,
+            "dropShadowVisible": false,
+            "visible": true
+          },
+          "name": null,
+          "rev": "",
+          "parent": null,
+          "uid": "687F7E8E-273F-DAFC-FE19-692F8B95B9BA",
+          "images": {
+            "filterFunction": null,
+            "list": {
+              "uid": "A4ADE0C0-A6EC-3A18-068C-692F8B6A068A",
+              "source": [],
+              "length": 0
+            },
+            "sort": null,
+            "length": 0,
+            "source": []
+          },
+          "shapes": {
+            "filterFunction": null,
+            "list": {
+              "uid": "012C03BD-88AB-1274-7D25-692F8B6AFF89",
+              "source": [],
+              "length": 0
+            },
+            "sort": null,
+            "length": 0,
+            "source": []
+          },
+          "textBoxes": {
+            "filterFunction": null,
+            "list": {
+              "uid": "F6F7A8AB-2B8F-D94F-A5BA-692F8B6A9C14",
+              "source": [],
+              "length": 0
+            },
+            "sort": null,
+            "length": 0,
+            "source": []
+          },
+          "groups": {
+            "filterFunction": null,
+            "list": {
+              "uid": "59BA4C3B-55B4-0416-5914-692F8B6A78E7",
+              "source": [],
+              "length": 0
+            },
+            "sort": null,
+            "length": 0,
+            "source": []
+          },
+          "lines": {
+            "filterFunction": null,
+            "list": {
+              "uid": "7667170F-6035-1554-2649-692F8B6A0216",
+              "source": [],
+              "length": 0
+            },
+            "sort": null,
+            "length": 0,
+            "source": []
+          }
+        }
+      ],
+      "length": 1
+    },
+    "sort": null,
+    "length": 1,
+    "source": [
+      {
+        "format": {
+          "name": null,
+          "rev": "",
+          "fontSize": 22,
+          "color": 0,
+          "uid": "1B388F2E-F72A-F787-EDD9-692F8B7F87B0",
+          "lineThrough": false,
+          "verticalAlign": "middle",
+          "fontStyle": "normal",
+          "fontFamily": "Arial",
+          "textAlign": "center",
+          "textDecoration": "none",
+          "fontWeight": "normal"
+        },
+        "constraints": {
+          "right": null,
+          "bottom": null,
+          "name": null,
+          "rev": "",
+          "top": null,
+          "uid": "C19FB53F-74C1-7960-C139-692F8B80A0BC",
+          "horizontalCenter": null,
+          "verticalCenter": null,
+          "left": null
+        },
+        "stroke": {
+          "name": null,
+          "rev": "",
+          "color": 0,
+          "uid": "437F4EB9-AE12-28E4-CB32-692F8B80F533",
+          "style": "solid",
+          "caps": "square",
+          "weight": 1,
+          "alpha": 1
+        },
+        "textBox": {
+          "fx": {
+            "name": null,
+            "bevel": {
+              "highlightColor": 16645629,
+              "highlightAlpha": 0.5,
+              "shadowColor": 3355443,
+              "shadowAlpha": 0.5,
+              "blurX": 0,
+              "blurY": 0,
+              "strength": 1,
+              "quality": 1,
+              "active": false,
+              "name": null,
+              "rev": "",
+              "uid": "6B819671-342F-4F8D-BC1E-692F8B82DB4F",
+              "distance": 0,
+              "angle": 45
+            },
+            "rev": "",
+            "uid": "15D23543-D2C2-2164-2297-692F8B82D887",
+            "blur": {
+              "name": null,
+              "blurX": 0,
+              "blurY": 0,
+              "rev": "",
+              "quality": 1,
+              "uid": "382E05A4-2FB3-8164-D2D7-692F8B82C331",
+              "active": false
+            },
+            "glow": {
+              "blurX": 0,
+              "blurY": 0,
+              "strength": 1,
+              "knockout": false,
+              "quality": 1,
+              "active": false,
+              "alpha": 0.5,
+              "inner": false,
+              "name": null,
+              "rev": "",
+              "color": 0,
+              "uid": "DEAF72AB-8860-0489-F192-692F8B836039",
+              "distance": null,
+              "angle": null
+            },
+            "dropShadow": {
+              "blurX": 0,
+              "blurY": 0,
+              "strength": 1,
+              "knockout": false,
+              "quality": 1,
+              "active": false,
+              "alpha": 0.5,
+              "inner": false,
+              "name": null,
+              "rev": "",
+              "color": 0,
+              "uid": "2DC53842-999B-46EF-7B3D-692F8B846BB5",
+              "distance": 0,
+              "angle": 45
+            }
+          },
+          "name": null,
+          "constraints": {
+            "right": null,
+            "bottom": null,
+            "name": null,
+            "rev": "",
+            "top": null,
+            "uid": "BD7A1A0D-5F8D-729C-E9A3-692F8B85E9F0",
+            "horizontalCenter": null,
+            "verticalCenter": null,
+            "left": null
+          },
+          "rev": "",
+          "text": "",
+          "uid": "2F795F39-0CD1-A694-47BC-692F8B85A3CE",
+          "sizeToContent": false,
+          "bounds": {
+            "width": 150,
+            "height": 75,
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "scaleX": 1,
+            "scaleY": 1,
+            "position": {
+              "x": 0,
+              "y": 0,
+              "length": 0
+            },
+            "name": null,
+            "rev": "",
+            "uid": "3D376981-ECC6-2820-8609-692F8B865E51",
+            "scaleZ": 1,
+            "rotationX": 0,
+            "rotationZ": 0,
+            "depth": 0,
+            "dimensions": {
+              "x": 150,
+              "y": 75,
+              "length": 167.70509831248424
+            },
+            "rotationY": 0
+          },
+          "format": {
+            "name": null,
+            "rev": "",
+            "fontSize": 22,
+            "color": 0,
+            "uid": "1B388F2E-F72A-F787-EDD9-692F8B7F87B0",
+            "lineThrough": false,
+            "verticalAlign": "middle",
+            "fontStyle": "normal",
+            "fontFamily": "Arial",
+            "textAlign": "center",
+            "textDecoration": "none",
+            "fontWeight": "normal"
+          }
+        },
+        "fill": {
+          "name": null,
+          "rev": "",
+          "color": 13487565,
+          "uid": "AC73AFA4-C009-2C1C-2795-692F8B9109F5",
+          "contentBackgroundColor": 15724527,
+          "blendMode": "normal",
+          "alpha": 1,
+          "contentBackgroundAlpha": 1
+        },
+        "fx": {
+          "name": null,
+          "bevel": {
+            "highlightColor": 16645629,
+            "highlightAlpha": 0.5,
+            "shadowColor": 3355443,
+            "shadowAlpha": 0.5,
+            "blurX": 0,
+            "blurY": 0,
+            "strength": 1,
+            "quality": 1,
+            "active": false,
+            "name": null,
+            "rev": "",
+            "uid": "731CECB5-8607-17E9-30D7-692F8B922522",
+            "distance": 0,
+            "angle": 45
+          },
+          "rev": "",
+          "uid": "07FCE003-8112-723D-0BA3-692F8B922ABA",
+          "blur": {
+            "name": null,
+            "blurX": 0,
+            "blurY": 0,
+            "rev": "",
+            "quality": 1,
+            "uid": "1C56219E-9911-634A-8DEF-692F8B9380BF",
+            "active": false
+          },
+          "glow": {
+            "blurX": 0,
+            "blurY": 0,
+            "strength": 1,
+            "knockout": false,
+            "quality": 1,
+            "active": false,
+            "alpha": 0.5,
+            "inner": false,
+            "name": null,
+            "rev": "",
+            "color": 0,
+            "uid": "79DEAA13-1F58-EB67-15A5-692F8B931325",
+            "distance": null,
+            "angle": null
+          },
+          "dropShadow": {
+            "blurX": 0,
+            "blurY": 0,
+            "strength": 1,
+            "knockout": false,
+            "quality": 1,
+            "active": false,
+            "alpha": 0.5,
+            "inner": false,
+            "name": null,
+            "rev": "",
+            "color": 0,
+            "uid": "E98D5A06-534A-B8FE-6FE1-692F8B94E1CD",
+            "distance": 0,
+            "angle": 45
+          }
+        },
+        "bounds": {
+          "width": 150,
+          "height": 75,
+          "x": 415,
+          "y": 183,
+          "z": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "position": {
+            "x": 415,
+            "y": 183,
+            "length": 453.5570526405691
+          },
+          "name": null,
+          "rev": "",
+          "uid": "3CA123B4-B848-CD16-2A5C-692F8B955B5D",
+          "scaleZ": 1,
+          "rotationX": 0,
+          "rotationZ": 0,
+          "depth": 0,
+          "dimensions": {
+            "x": 150,
+            "y": 75,
+            "length": 167.70509831248424
+          },
+          "rotationY": 0
+        },
+        "border": {
+          "name": null,
+          "rev": "",
+          "uid": "B9A616F6-3690-57ED-74B3-692F8B951EA6",
+          "cornerRadius": 0,
+          "dropShadowVisible": false,
+          "visible": true
+        },
+        "name": null,
+        "rev": "",
+        "parent": null,
+        "uid": "687F7E8E-273F-DAFC-FE19-692F8B95B9BA",
+        "images": {
+          "filterFunction": null,
+          "list": {
+            "uid": "A4ADE0C0-A6EC-3A18-068C-692F8B6A068A",
+            "source": [],
+            "length": 0
+          },
+          "sort": null,
+          "length": 0,
+          "source": []
+        },
+        "shapes": {
+          "filterFunction": null,
+          "list": {
+            "uid": "012C03BD-88AB-1274-7D25-692F8B6AFF89",
+            "source": [],
+            "length": 0
+          },
+          "sort": null,
+          "length": 0,
+          "source": []
+        },
+        "textBoxes": {
+          "filterFunction": null,
+          "list": {
+            "uid": "F6F7A8AB-2B8F-D94F-A5BA-692F8B6A9C14",
+            "source": [],
+            "length": 0
+          },
+          "sort": null,
+          "length": 0,
+          "source": []
+        },
+        "groups": {
+          "filterFunction": null,
+          "list": {
+            "uid": "59BA4C3B-55B4-0416-5914-692F8B6A78E7",
+            "source": [],
+            "length": 0
+          },
+          "sort": null,
+          "length": 0,
+          "source": []
+        },
+        "lines": {
+          "filterFunction": null,
+          "list": {
+            "uid": "7667170F-6035-1554-2649-692F8B6A0216",
+            "source": [],
+            "length": 0
+          },
+          "sort": null,
+          "length": 0,
+          "source": []
+        }
+      }
+    ]
+  },
+  "textBoxes": {
+    "filterFunction": null,
+    "list": {
+      "uid": "CC74618F-8E77-09F5-D391-692F7C3DB247",
+      "source": [],
+      "length": 0
+    },
+    "sort": null,
+    "length": 0,
+    "source": []
+  },
+  "version": 1,
+  "groups": {
+    "filterFunction": null,
+    "list": {
+      "uid": "F4655815-77F1-3E06-643E-692F7C3D710B",
+      "source": [],
+      "length": 0
+    },
+    "sort": null,
+    "length": 0,
+    "source": []
+  },
+  "lines": {
+    "filterFunction": null,
+    "list": {
+      "uid": "C8D4E4A5-2730-B79B-D226-692F7C3DCC9C",
+      "source": [],
+      "length": 0
+    },
+    "sort": null,
+    "length": 0,
+    "source": []
+  }
+}
